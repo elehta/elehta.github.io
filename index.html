@@ -13,7 +13,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     
-    <title>Web Bluetooth / Device Information Characteristics Sample</title>
+    <title>Web BT / Device Information Characteristics</title>
     <script>
       // Add a global error event listener early on in the page load, to help ensure that browsers
       // which don't support specific functionality still end up displaying a meaningful message.
@@ -69,7 +69,10 @@ target="_blank"
 href="https://developer.bluetooth.org/gatt/services/Pages/ServiceViewer.aspx?u=org.bluetooth.service.device_information.xml">Device
 Information Service</a> characteristics from a nearby Bluetooth Device. You may want to check out the <a href="device-information-characteristics-async-await.html">Device Information Characteristics (Async Await)</a> sample.</p>
 
-<button>Get Bluetooth Device Information Characteristics</button>
+<button id="getchar" onClick="getDeviceChar">Get Bluetooth Device Information Characteristics</button>
+<br>
+<input type="text" name="chars">
+<button id="sendchars" onClick="getDeviceChar">Send chars</button>
 
 <script>
   var ChromeSamples = {
@@ -118,11 +121,8 @@ Information Service</a> characteristics from a nearby Bluetooth Device. You may 
 </script>
 
 
-
-
-  
     
-      <script>function onButtonClick() {
+<script>function getDeviceChar() {
   log('Requesting any Bluetooth Device...');
   navigator.bluetooth.requestDevice(
     {filters: anyNamedDevice(), optionalServices: ['device_information']})
@@ -219,7 +219,7 @@ Information Service</a> characteristics from a nearby Bluetooth Device. You may 
     return queue;
   })
   .catch(error => {
-    log('Argh! ' + error);
+    log('Error! ' + error);
   });
 }
 
