@@ -3,6 +3,17 @@
 <!--
 Copyright 2017 Google Inc. All Rights Reserved.
 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 -->
 <html lang="en">
   <head>
@@ -26,7 +37,6 @@ Copyright 2017 Google Inc. All Rights Reserved.
     </script>
     
     
-    
 
     
     <link rel="stylesheet" href="../styles/main.css">
@@ -35,13 +45,26 @@ Copyright 2017 Google Inc. All Rights Reserved.
   </head>
 
   <body>
-
+    <img class="pageIcon" src="icon.png">
     <h1>Web Bluetooth / Device Information Characteristics Sample</h1>
+    <p class="availability">
+      Available in <a target="_blank" href="https://www.chromestatus.com/feature/5264933985976320">Chrome 50+</a> |
+      <a target="_blank" href="https://github.com/googlechrome/samples/blob/gh-pages/web-bluetooth/device-information-characteristics.html">View on GitHub</a> |
+      <a  href="index.html">Browse Samples</a>
+    </p>
+    <p>The <a href="https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web">Web Bluetooth
+  API</a> lets websites discover and communicate with devices over the
+Bluetooth 4 wireless standard using the Generic Attribute Profile (GATT). It is
+currently partially implemented in Android M, Chrome OS, Linux, and Mac.</p>
 
+<p>Note: In Chrome 53, it is also <a href="https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web#available-for-origin-trials">available
+for trials</a> so that websites can use it without any experimental flag.</p>
 
-
-
-
+<script>
+  if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js');
+  }
+</script>
 
 <script>
   window.addEventListener('DOMContentLoaded', function() {
@@ -249,7 +272,8 @@ function anyNamedDevice() {
 }
 </script>
     
-    
+  
+  
 
 
 
@@ -325,7 +349,7 @@ const valueToUsbVendorName = {
   0x1006: "Reply Group",
   0x1007: "Netframe Systems Inc.",
   0x1008: "Epson",
-  0x100A: "Ãâas Ltd. de Phoenix del ÃÆ de TecnologÃÆ",
+  0x100A: "Phoenix",
   0x100B: "National Semiconductors",
   0x100C: "Tseng Labs",
   0x100D: "AST Research",
@@ -1849,7 +1873,6 @@ const valueToUsbVendorName = {
   0xFA57: "Interagon AS",
 };
 </script>
-
 
 
   </body>
