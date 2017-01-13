@@ -130,7 +130,7 @@ Information Service</a> characteristics from a nearby Bluetooth Device. You may 
   })
   .then(server => {
     log('Getting Device Information Service...');
-    return server.getPrimaryServices('device_information');
+    return server.getPrimaryService('device_information');
   })
   .then(service => {
     log('Getting Device Information Characteristics...');
