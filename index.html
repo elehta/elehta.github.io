@@ -141,8 +141,8 @@ Information Service</a> characteristics from a nearby Bluetooth Device. You may 
   })
   .then(service => {
     log('Getting Device Information Characteristics...');
-    return service.getCharacteristics();
-	//return service.getCharacteristics('00001524-1212-efde-1523-785feabcd123');
+    //return service.getCharacteristics();
+	return service.getCharacteristics('00001525-1212-efde-1523-785feabcd123');
   })
   .then(characteristics => {
     let queue = Promise.resolve();
@@ -221,6 +221,15 @@ Information Service</a> characteristics from a nearby Bluetooth Device. You may 
 
         default: log('> Unknown Characteristic: ' + characteristic.uuid);
 		log(decoder.decode(characteristic.readValue()));
+		.then(characteristic => {
+		  // Writing 1 is the signal to reset energy expended.
+		  var setMeasOn = new Uint8Array([1]);
+		  return characteristic.writeValue(setMeasOn);
+		})
+		.then(_ => {
+		  console.log('Meas ON!');
+		})
+
       }
     });
     return queue;
