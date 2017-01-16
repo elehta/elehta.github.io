@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h1>Web BT/DUDE!? Information Sample</h1>
+    <h1>Web BT/DUDEz!! Information Sample</h1>
 
 	
 
@@ -128,6 +128,8 @@ Information Service</a> characteristics from a Bluetooth Device. Check out the <
     
 <script>
 var bluetoothDevice;
+var indi;
+
 function onButtonClick() {
   log('Requesting any Bluetooth Device...');
   navigator.bluetooth.requestDevice(
@@ -140,6 +142,7 @@ function onButtonClick() {
   })
   .then(server => {
     log('Getting Device Information Service...');
+	indi = server.getPrimaryService('1801');
 	return server.getPrimaryService('00001523-1212-efde-1523-785feabcd123');
     //return server.getPrimaryService('device_information');
   })
