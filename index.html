@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h1>Web BT/DUDE66 Information Sample</h1>
+    <h1>Web BT/DUDE626 Information Sample</h1>
 
 	
 
@@ -260,8 +260,8 @@ function onButtonClick() {
 
 function sendChars(charvalue) {
 	log('Sending characters: ' + charvalue);
-	return bluetoothDevice.gatt.connect();
-  .then(server => {
+	return bluetoothDevice.gatt.connect()
+	.then(server => {
     log('Getting Device Information Service...');
 	return server.getPrimaryService('00001523-1212-efde-1523-785feabcd123');
     //return server.getPrimaryService('device_information');
