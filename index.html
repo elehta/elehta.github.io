@@ -260,9 +260,8 @@ function onButtonClick() {
 
 function sendChars(charvalue) {
 	log('Sending characters: ' + charvalue);
-  bluetoothDevice.gatt.disconnect();
-  
-/*    .then(server => {
+	return bluetoothDevice.gatt.connect();
+  .then(server => {
     log('Getting Device Information Service...');
 	return server.getPrimaryService('00001523-1212-efde-1523-785feabcd123');
     //return server.getPrimaryService('device_information');
@@ -270,13 +269,23 @@ function sendChars(charvalue) {
   .then(service => {
 	let setter = service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
 	let getter = service.getCharacteristic('00001524-1212-efde-1523-785feabcd123');
-	let config = service.getCharacteristic('00002902-0000-1000-8000-00805f9b34fb');
+	//let config = service.getCharacteristic('00002902-0000-1000-8000-00805f9b34fb');
 	//return service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
     log('Got Device Information Characteristics...');
 	return setter;
-	
   })
-  */
+   .then(characteristic => {
+		  // Writing 1 is the signal to start measurement
+		  var setMeasOff = new Uint8Array([0]);
+		  return characteristic.writeValue(setMeasOff);
+		})
+		.then(_ => {
+		  log('Measurement OFF!');
+		})
+		
+  .catch(error => {
+    log('Error! ' + error);
+  });
   }
 
 
