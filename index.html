@@ -71,8 +71,10 @@ Information Service</a> characteristics from a nearby Bluetooth Device. You may 
 
 <button id="getchar">Get Bluetooth Device Information Characteristics</button>
 <br><br>
-<input type="text" name="thesechars">
-<button id="sendchars" onClick="sendChars(thesechars);">Send chars</button>
+
+<form method="post" name="chars" id="chars">
+	<input id="submit" type="submit" name="thesechars" value="Send" onclick="sendChars(); /">
+</form>
 
 <script>
   var ChromeSamples = {
