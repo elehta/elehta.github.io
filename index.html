@@ -256,10 +256,8 @@ Information Service</a> characteristics from a Bluetooth Device. Check out the <
 }
 
 function sendChars(charvalue) {
-	//log('Sending characters: ' + charvalue);
-	navigator.bluetooth.requestDevice({ filters: [{ name: 'APT_KM V29' }] })
-	.then(device => {
-	device.gatt.disconnect();
+	log('Sending characters: ' + charvalue);
+
 }
 
 function handleCharacteristicValueChanged(event) {
