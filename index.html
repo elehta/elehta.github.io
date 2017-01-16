@@ -136,11 +136,13 @@ Information Service</a> characteristics from a nearby Bluetooth Device. You may 
   })
   .then(server => {
     log('Getting Device Information Service...');
-    return server.getPrimaryService('device_information');
+	return server.getPrimaryService('00001523-1212-efde-1523-785feabcd123');
+    //return server.getPrimaryService('device_information');
   })
   .then(service => {
     log('Getting Device Information Characteristics...');
-    return service.getCharacteristics();
+    //return service.getCharacteristics();
+	return service.getCharacteristics('00001524-1212-efde-1523-785feabcd123');
   })
   .then(characteristics => {
     let queue = Promise.resolve();
@@ -228,7 +230,8 @@ Information Service</a> characteristics from a nearby Bluetooth Device. You may 
 }
 
 function sendChars(charvalue) {
-log('Sending characters ' + charvalue);
+	log('Sending characters: ' + charvalue);
+	
 }
 
 /* Utils */
