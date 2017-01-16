@@ -259,8 +259,24 @@ function onButtonClick() {
 }
 
 function sendChars(charvalue) {
-	//log('Sending characters: ' + charvalue);
+	log('Sending characters: ' + charvalue);
   bluetoothDevice.gatt.disconnect();
+  
+/*    .then(server => {
+    log('Getting Device Information Service...');
+	return server.getPrimaryService('00001523-1212-efde-1523-785feabcd123');
+    //return server.getPrimaryService('device_information');
+  })
+  .then(service => {
+	let setter = service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
+	let getter = service.getCharacteristic('00001524-1212-efde-1523-785feabcd123');
+	let config = service.getCharacteristic('00002902-0000-1000-8000-00805f9b34fb');
+	//return service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
+    log('Got Device Information Characteristics...');
+	return setter;
+	*/
+  })
+  
   }
 
 
