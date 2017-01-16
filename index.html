@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h1>Web BT/DUDE2 Information Sample</h1>
+    <h1>Web BT/DUDE3 Information Sample</h1>
 
 	
 
@@ -230,7 +230,7 @@ Information Service</a> characteristics from a Bluetooth Device. Check out the <
     return queue;
   }) 
 */
-.then(log('setter:' + setter.uuid))
+.then(log('setter:' + characteristic.uuid))
 .then(characteristic => characteristic.startNotifications())
 
 .then(characteristic => {
