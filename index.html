@@ -220,6 +220,7 @@ Information Service</a> characteristics from a nearby Bluetooth Device. You may 
           break;
 
         default: log('> Unknown Characteristic: ' + characteristic.uuid);
+		log(characteristic.readValue());
       }
     });
     return queue;
