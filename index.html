@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h1>Web BT / Device Information Characteristics Sample</h1>
+    <h1>Web BT / Device Information Chars</h1>
 
 	
 
@@ -229,12 +229,13 @@ Information Service</a> characteristics from a Bluetooth Device. Check out the <
   }) 
   */
   .then(characteristic => {
+		log('HERE!');
 		  // Writing 1 is the signal to start measurement
 		  var setMeasOn = new Uint8Array([1]);
 		  return characteristic.writeValue(setMeasOn);
 		})
 		.then(_ => {
-		  console.log('Meas ON!');
+		  log('Meas ON!');
 		})
 		
   .catch(error => {
