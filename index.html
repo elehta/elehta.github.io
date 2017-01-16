@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h1>Web BT / NODE Information Sample</h1>
+    <h1>Web BT/NODE Information Sample</h1>
 
 	
 
@@ -230,9 +230,10 @@ Information Service</a> characteristics from a Bluetooth Device. Check out the <
     return queue;
   }) 
   */
- .then(log('start!');
-	characteristic => characteristic.startNotifications())
-	
+ .then(
+ 	characteristic => characteristic.startNotifications();
+	log('started!');
+	)	
  .then(characteristic => {
 	log('listen!');
   characteristic.addEventListener('characteristicvaluechanged',
