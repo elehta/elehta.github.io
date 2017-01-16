@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h1>Web BT / Device Information Chars</h1>
+    <h1>Web BT / NODE Information Chars</h1>
 
 	
 
@@ -228,14 +228,20 @@ Information Service</a> characteristics from a Bluetooth Device. Check out the <
     return queue;
   }) 
   */
+ .then(characteristic => characteristic.startNotifications())
+ .then(characteristic => {
+  characteristic.addEventListener('characteristicvaluechanged',
+                                  handleCharacteristicValueChanged);
+  log('Notifications have been started.');
+})
+
   .then(characteristic => {
-		log('HERE!');
 		  // Writing 1 is the signal to start measurement
 		  var setMeasOn = new Uint8Array([1]);
 		  return characteristic.writeValue(setMeasOn);
 		})
 		.then(_ => {
-		  log('Meas ON!');
+		  log('Measurement ON!');
 		})
 		
   .catch(error => {
@@ -246,6 +252,13 @@ Information Service</a> characteristics from a Bluetooth Device. Check out the <
 function sendChars(charvalue) {
 	log('Sending characters: ' + charvalue);
 	
+}
+
+function handleCharacteristicValueChanged(event) {
+  var value = event.target.value;
+  console.log('Received value: ' + value);
+  // TODO: Parse Heart Rate Measurement value.
+  // See https://github.com/WebBluetoothCG/demos/blob/gh-pages/heart-rate-sensor/heartRateSensor.js
 }
 
 /* Utils */
