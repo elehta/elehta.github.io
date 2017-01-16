@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h1>Web BT/DUDE122 Information Sample</h1>
+    <h1>Web BT/DUDE22 Information Sample</h1>
 
 	
 
@@ -145,7 +145,7 @@ Information Service</a> characteristics from a Bluetooth Device. Check out the <
 	let config = service.getCharacteristic('00002902-0000-1000-8000-00805f9b34fb');
 	//return service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
     log('Got Device Information Characteristics...');
-	return config;
+	return setter;
   })
   
  /* .then(characteristics => {
@@ -231,14 +231,17 @@ Information Service</a> characteristics from a Bluetooth Device. Check out the <
     return queue;
   }) 
 */
+
+/* NOTIFICATIONS ON
 .then(characteristic => characteristic.startNotifications())
 
 .then(characteristic => {
 	characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicValueChanged);
 	log('Notifications have been started.');
 	})
+*/
 
-  .then(characteristic => {
+ .then(characteristic => {
 		  // Writing 1 is the signal to start measurement
 		  var setMeasOn = new Uint8Array([1]);
 		  return characteristic.writeValue(setMeasOn);
