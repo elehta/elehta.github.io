@@ -137,7 +137,7 @@ function onButtonClick() {
   .then(device => {
 	bluetoothDevice = device;
     log('Connecting to GATT Server...');
-	bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
+	//bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
     return device.gatt.connect();
   })
   .then(server => {
