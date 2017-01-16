@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h1>Web BT/DUDE! Information Sample</h1>
+    <h1>Web BT/DUDE!? Information Sample</h1>
 
 	
 
@@ -135,6 +135,7 @@ function onButtonClick() {
   .then(device => {
 	bluetoothDevice = device;
     log('Connecting to GATT Server...');
+	bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
     return device.gatt.connect();
   })
   .then(server => {
@@ -259,20 +260,13 @@ function onButtonClick() {
 }
 
 function sendChars(charvalue) {
-	log('Sending characters: ' + charvalue);
+	log('Setting Measurement off... ' + charvalue);
 	return bluetoothDevice.gatt.connect()
 	.then(server => {
-    log('Getting Device Information Service...');
 	return server.getPrimaryService('00001523-1212-efde-1523-785feabcd123');
-    //return server.getPrimaryService('device_information');
   })
   .then(service => {
-	let setter = service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
-	let getter = service.getCharacteristic('00001524-1212-efde-1523-785feabcd123');
-	//let config = service.getCharacteristic('00002902-0000-1000-8000-00805f9b34fb');
-	//return service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
-    log('Got Device Information Characteristics...');
-	return setter;
+	return service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
   })
    .then(characteristic => {
 		  // Writing 1 is the signal to start measurement
@@ -280,13 +274,13 @@ function sendChars(charvalue) {
 		  return characteristic.writeValue(setMeasOff);
 		})
 		.then(_ => {
-		  log('Measurement OFF!');
-		  bluetoothDevice.gatt.disconnect();
-		})
-		
+			bluetoothDevice.gatt.disconnect();
+			log('Measurement OFF!');
+		})	
   .catch(error => {
     log('Error! ' + error);
   });
+  
   }
 
 
