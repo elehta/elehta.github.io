@@ -141,8 +141,10 @@ Information Service</a> characteristics from a Bluetooth Device. Check out the <
   })
   .then(service => {
     log('Getting Device Information Characteristics...');
-    //return service.getCharacteristics();
-	return service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
+	let setter = service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
+	let getter = service.getCharacteristic('00001524-1212-efde-1523-785feabcd123');
+	//return service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
+	return setter;
   })
   
  /* .then(characteristics => {
