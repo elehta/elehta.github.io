@@ -129,7 +129,7 @@ Information Service</a> characteristics from a nearby Bluetooth Device. You may 
 <script>function onButtonClick() {
   log('Requesting any Bluetooth Device...');
   navigator.bluetooth.requestDevice(
-    {filters: anyNamedDevice(), optionalServices: ['device_information']})
+    {filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
   .then(device => {
     log('Connecting to GATT Server...');
     return device.gatt.connect();
