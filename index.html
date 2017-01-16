@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h1>Web BT/DUDE626 Information Sample</h1>
+    <h1>Web BT/DUDE! Information Sample</h1>
 
 	
 
@@ -281,6 +281,7 @@ function sendChars(charvalue) {
 		})
 		.then(_ => {
 		  log('Measurement OFF!');
+		  bluetoothDevice.gatt.disconnect();
 		})
 		
   .catch(error => {
