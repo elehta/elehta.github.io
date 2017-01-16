@@ -141,8 +141,8 @@ Information Service</a> characteristics from a nearby Bluetooth Device. You may 
   })
   .then(service => {
     log('Getting Device Information Characteristics...');
-    //return service.getCharacteristics();
-	return service.getCharacteristics('00001524-1212-efde-1523-785feabcd123');
+    return service.getCharacteristics();
+	//return service.getCharacteristics('00001524-1212-efde-1523-785feabcd123');
   })
   .then(characteristics => {
     let queue = Promise.resolve();
