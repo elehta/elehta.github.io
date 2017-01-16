@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h1>Web BT/DUDE33 Information Sample</h1>
+    <h1>Web BT/DUDE23 Information Sample</h1>
 
 	
 
@@ -256,15 +256,10 @@ Information Service</a> characteristics from a Bluetooth Device. Check out the <
 }
 
 function sendChars(charvalue) {
-	log('Sending characters: ' + charvalue);
-	
+	//log('Sending characters: ' + charvalue);
 	navigator.bluetooth.requestDevice({ filters: [{ name: 'APT_KM V29' }] })
-.then(device => {
+	.then(device => {
 	device.gatt.disconnect();
-})
-}
-
-	
 }
 
 function handleCharacteristicValueChanged(event) {
