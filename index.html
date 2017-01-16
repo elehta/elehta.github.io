@@ -262,7 +262,7 @@ function sendChars(charvalue) {
 	//log('Sending characters: ' + charvalue);
   bluetoothDevice.gatt.disconnect();
   }
-}
+
 
 function handleCharacteristicValueChanged(event) {
   var value = event.target.value;
