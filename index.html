@@ -74,7 +74,8 @@ Information Service</a> characteristics from a nearby Bluetooth Device. You may 
 
 <form method="post" name="chars" id="chars">
 	<input name="textbox1" type="text" />
-	<input id="submit" type="submit" name="submit" value="Send" onclick="sendChars(document.getElementById('textbox1').value); /">
+	
+	<input name="buttonSend" onclick="sendChars(document.getElementsByName('textbox1')[0].value)" type="button" value="Send" />
 </form>
 
 <script>
