@@ -71,8 +71,8 @@ Information Service</a> characteristics from a nearby Bluetooth Device. You may 
 
 <button id="getchar">Get Bluetooth Device Information Characteristics</button>
 <br><br>
-<input type="text" name="chars">
-<button id="sendchars" onClick="getDeviceChar">Send chars</button>
+<input type="text" name="thesechars">
+<button id="sendchars" onClick="sendChars(thesechars);">Send chars</button>
 
 <script>
   var ChromeSamples = {
@@ -221,6 +221,10 @@ Information Service</a> characteristics from a nearby Bluetooth Device. You may 
   .catch(error => {
     log('Error! ' + error);
   });
+}
+
+function sendChars(charvalue) {
+
 }
 
 /* Utils */
