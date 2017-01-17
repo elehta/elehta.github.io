@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node Weasel-up</h2>
+    <h2>WebBT / Measurement Node pump-up</h2>
 
 	
 
@@ -218,30 +218,29 @@ function handleCharacteristicValueChanged(event) {
   var value = event.target.value;
   log('value: ' + value.getUint8(0) + ' ' + value.getUint8(1)+ ' ' + value.getUint8(2) + ' ' + value.getUint8(3) + ' ' + value.getUint8(4) + ' ' + value.getUint8(5) + ' ' + value.getUint8(6) + ' ' + value.getUint8(7) + ' ' + value.getUint8(8) + ' ' + value.getUint8(9) + ' ' + value.getUint8(10) + ' ' + value.getUint8(11) + ' ' + value.getUint8(12) + ' ' + value.getUint8(13) + ' ' + value.getUint8(14) + ' ' + value.getUint8(15) + ' ' + value.getUint8(16) + ' ' + value.getUint8(17) + ' ' + value.getUint8(18) + ' ' + value.getUint8(19));
   
-  let dataType = value.getUint8(0);
+  var dataType = value.getUint8(0);
 
   if (dataType == 1) { 	// Acceleration data
-//		log('datatype: ' + DataType);		
-		let raw_data = value.getUint16(4, /*littleEndian=*/true);
-		log('raw4: ' + raw_data)
-		
-		let raw_data4 = value.getUint16(6, /*littleEndian=*/true);
-		log('raw6: ' + raw_data4)
-	
-/*		let raw_data = (((value[3] & 0xff)<<<8) + (value[3-1] & 0xff));
-		log('raw: ' + raw_data)*/
 
-		if (raw_data > 32767){
-			raw_data -= 65536;
-			}
-		let res = (9.81*(raw_data)/256.0);
-		log('x: ' + res)
+		var x1 = handleAccData(4, value);
+		var y1 = handleAccData(6, value);
+		var z1 = handleAccData(8, value);
+		log('x: ' + x1 + ' y: ' + y1 + ' z: ' + z1);
 		
 		
   }else if (dataType == 0){						// Environment data
   
     log('datatype: ' + DataType);
   
+  }
+  
+  function handleAccData(index, value) {
+  		
+		let raw_data = value.getUint16(index, /*littleEndian=*/true);
+		if (raw_data > 32767){
+			raw_data -= 65536;
+			}
+		let res = (9.81*(raw_data)/256.0); 
   }
  
   
