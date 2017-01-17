@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node ass-up</h2>
+    <h2>WebBT / Measurement Node lift-up</h2>
 
 	
 
@@ -222,11 +222,11 @@ function handleCharacteristicValueChanged(event) {
 
   if (DataType = 1) { 	// Acceleration data
 //		log('datatype: ' + DataType);		
-		let raw_data = value.getUint16(3, /*littleEndian=*/true);
-		log('raw3: ' + raw_data)
+		let raw_data = value.getUint16(4, /*littleEndian=*/true);
+		log('raw4: ' + raw_data)
 		
-		let raw_data4 = value.getUint16(4, /*littleEndian=*/true);
-		log('raw4: ' + raw_data4)
+		let raw_data4 = value.getUint16(6, /*littleEndian=*/true);
+		log('raw6: ' + raw_data4)
 	
 /*		let raw_data = (((value[3] & 0xff)<<<8) + (value[3-1] & 0xff));
 		log('raw: ' + raw_data)*/
