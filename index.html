@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node Test tst</h2>
+    <h2>WebBT / Measurement Node Test tsot</h2>
 
 	
 
@@ -220,7 +220,7 @@ function handleCharacteristicValueChanged(event) {
   
   let DataType = value.getUint8(0);
   
-  if (incomingDataType == 1) { 	// Acceleration data
+  if (DataType == 1) { 	// Acceleration data
   
 		int raw_data = (((value[3]&0xff)<<8) + (value[3-1]&0xff));
 		if (raw_data > 32767){
