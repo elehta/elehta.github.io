@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node weasel-up</h2>
+    <h2>WebBT / Measurement Node Weasel-up</h2>
 
 	
 
@@ -220,7 +220,7 @@ function handleCharacteristicValueChanged(event) {
   
   let dataType = value.getUint8(0);
 
-  if dataType == 1) { 	// Acceleration data
+  if (dataType == 1) { 	// Acceleration data
 //		log('datatype: ' + DataType);		
 		let raw_data = value.getUint16(4, /*littleEndian=*/true);
 		log('raw4: ' + raw_data)
