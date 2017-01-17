@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node tempmap</h2>
+    <h2>WebBT / Measurement Node tumppu</h2>
 
 	
 
@@ -231,6 +231,7 @@ function handleCharacteristicValueChanged(event) {
   }else if (dataType == 2){						// Environment data
   
     var tempdata = parseFloat(handleEnvData(6, value)).toFixed(2);
+	log('TEMPERATURE: ' + tempdata + ' C');
   
   }
   
