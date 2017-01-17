@@ -128,7 +128,8 @@ Information Service</a> characteristics from a BLE Device. See <a href="https://
     
 <script>
 var bluetoothDevice;
-var indi;
+var setter;
+var getter;
 
 function onButtonClick() {
   log('Requesting any Bluetooth Device...');
@@ -147,8 +148,8 @@ function onButtonClick() {
     //return server.getPrimaryService('device_information');
   })
   .then(service => {
-	let setter = service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
-	let getter = service.getCharacteristic('00001524-1212-efde-1523-785feabcd123');
+	setter = service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
+	getter = service.getCharacteristic('00001524-1212-efde-1523-785feabcd123');
 	//let config = service.getCharacteristic('00002902-0000-1000-8000-00805f9b34fb');
 	//let yh = service.getCharacteristic('0x2A05');
 	//return service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
@@ -252,10 +253,8 @@ function onButtonClick() {
 /* NOTIFICATIONS ON */
   
   
-  .then(service => {
     log('Change Characteristics to Setter...');
-	return service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
-  })
+	return setter.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
 
 
  .then(characteristic => {
