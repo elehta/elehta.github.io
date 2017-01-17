@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node sup</h2>
+    <h2>WebBT / Measurement Node wsup</h2>
 
 	
 
@@ -227,7 +227,7 @@ function handleCharacteristicValueChanged(event) {
 			raw_data -= 65536;
 			}
         let res = raw_data;
-		res = (float)(9.81*(raw_data)/256.0);
+		res = (9.81*(raw_data)/256.0);
 		log('x: ' + res)
   }else{						// Environment data
   
