@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h1>Web BT/DUDEe!! Information Sample</h1>
+    <h1>Web BT / Measurement Sample</h1>
 
 	
 
@@ -69,13 +69,13 @@ target="_blank"
 href="https://developer.bluetooth.org/gatt/services/Pages/ServiceViewer.aspx?u=org.bluetooth.service.device_information.xml">Device
 Information Service</a> characteristics from a Bluetooth Device. Check out the <a href="device-information-characteristics-async-await.html">Device Information Characteristics (Async Await)</a> sample.</p>
 
-<button id="getchar">Get BT Device Information Characteristics</button>
+<button id="getchar">Connect + Measure</button>
 <br><br>
 
 <form method="post" name="chars" id="chars">
 	<input name="textbox1" type="text" />
 	
-	<input name="buttonSend" onclick="sendChars(document.getElementsByName('textbox1')[0].value)" type="button" value="Send" />
+	<input name="buttonSend" onclick="sendChars(document.getElementsByName('textbox1')[0].value)" type="button" value="Disconnect" />
 </form>
 
 <script>
