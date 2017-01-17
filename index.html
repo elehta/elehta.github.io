@@ -247,10 +247,15 @@ function onButtonClick() {
 
 .then(characteristic => {
 	characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicValueChanged);
-	log('Notifications have been started!');
+	log('Notifications have been started to Getter!');
 	})
 /* NOTIFICATIONS ON */
-
+  
+  
+  .then(service => {
+    log('Change Characteristics to Setter...');
+	return service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
+  })
 
 
  .then(characteristic => {
