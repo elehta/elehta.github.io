@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node Tsup</h2>
+    <h2>WebBT / Measurement Node sup</h2>
 
 	
 
@@ -219,9 +219,9 @@ function handleCharacteristicValueChanged(event) {
   log('value: ' + value.getUint8(0) + ' ' + value.getUint8(1)+ ' ' + value.getUint8(2) + ' ' + value.getUint8(3) + ' ' + value.getUint8(4) + ' ' + value.getUint8(5) + ' ' + value.getUint8(6) + ' ' + value.getUint8(7) + ' ' + value.getUint8(8) + ' ' + value.getUint8(9) + ' ' + value.getUint8(10) + ' ' + value.getUint8(11) + ' ' + value.getUint8(12) + ' ' + value.getUint8(13) + ' ' + value.getUint8(14) + ' ' + value.getUint8(15) + ' ' + value.getUint8(16) + ' ' + value.getUint8(17) + ' ' + value.getUint8(18) + ' ' + value.getUint8(19));
   
   let DataType = value.getUint8(0);
-  log('datatype: ' + DataType);
+
   if (DataType = 1) { 	// Acceleration data
-		
+		log('datatype: ' + DataType);		
 		let raw_data = (((value[3]&0xff)<<8) + (value[3-1]&0xff));
 		if (raw_data > 32767){
 			raw_data -= 65536;
@@ -231,7 +231,7 @@ function handleCharacteristicValueChanged(event) {
 		log('x: ' + res)
   }else{						// Environment data
   
-  
+    log('datatype: ' + DataType);
   
   }
  
