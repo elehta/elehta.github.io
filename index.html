@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node TestX</h2>
+    <h2>WebBT / Measurement Node Test X</h2>
 
 	
 
@@ -164,8 +164,14 @@ function onButtonClick() {
   
   function turnMeasurementOn() {
  log('Change Characteristics to Setter...');
- return setter.getCharacteristic('00001525-1212-efde-1523-785feabcd123')
- .then(characteristic => {
+  return bluetoothDevice.gatt.connect()
+	.then(server => {
+	return server.getPrimaryService('00001523-1212-efde-1523-785feabcd123');
+  })
+  .then(service => {
+	return service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
+  })
+	.then(characteristic => {
 		  // Writing 1 is the signal to start measurement
 		  var setMeasOn = new Uint8Array([1]);
 		  return characteristic.writeValue(setMeasOn);
