@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node pump-up</h2>
+    <h2>WebBT / Measurement Node funk-up</h2>
 
 	
 
@@ -228,7 +228,7 @@ function handleCharacteristicValueChanged(event) {
 		log('x: ' + x1 + ' y: ' + y1 + ' z: ' + z1);
 		
 		
-  }else if (dataType == 0){						// Environment data
+  }else if (dataType == 2){						// Environment data
   
     log('datatype: ' + DataType);
   
@@ -241,6 +241,7 @@ function handleCharacteristicValueChanged(event) {
 			raw_data -= 65536;
 			}
 		let res = (9.81*(raw_data)/256.0); 
+		return res;
   }
  
   
