@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node meas-up</h2>
+    <h2>WebBT / Measurement Node weasel-up</h2>
 
 	
 
@@ -218,9 +218,9 @@ function handleCharacteristicValueChanged(event) {
   var value = event.target.value;
   log('value: ' + value.getUint8(0) + ' ' + value.getUint8(1)+ ' ' + value.getUint8(2) + ' ' + value.getUint8(3) + ' ' + value.getUint8(4) + ' ' + value.getUint8(5) + ' ' + value.getUint8(6) + ' ' + value.getUint8(7) + ' ' + value.getUint8(8) + ' ' + value.getUint8(9) + ' ' + value.getUint8(10) + ' ' + value.getUint8(11) + ' ' + value.getUint8(12) + ' ' + value.getUint8(13) + ' ' + value.getUint8(14) + ' ' + value.getUint8(15) + ' ' + value.getUint8(16) + ' ' + value.getUint8(17) + ' ' + value.getUint8(18) + ' ' + value.getUint8(19));
   
-  let DataType = value.getUint8(0);
+  let dataType = value.getUint8(0);
 
-  if (value.getUint8(0) > 0) { 	// Acceleration data
+  if dataType == 1) { 	// Acceleration data
 //		log('datatype: ' + DataType);		
 		let raw_data = value.getUint16(4, /*littleEndian=*/true);
 		log('raw4: ' + raw_data)
@@ -238,7 +238,7 @@ function handleCharacteristicValueChanged(event) {
 		log('x: ' + res)
 		
 		
-  }else{						// Environment data
+  }else if (dataType == 0){						// Environment data
   
     log('datatype: ' + DataType);
   
