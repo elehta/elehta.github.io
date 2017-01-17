@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node Test yep</h2>
+    <h2>WebBT / Measurement Node Test tst</h2>
 
 	
 
@@ -217,6 +217,24 @@ function handleCharacteristicValueChanged(event) {
   */
   var value = event.target.value;
   log('value: ' + value.getUint8(0) + ' ' + value.getUint8(1)+ ' ' + value.getUint8(2) + ' ' + value.getUint8(3) + ' ' + value.getUint8(4) + ' ' + value.getUint8(5) + ' ' + value.getUint8(6) + ' ' + value.getUint8(7) + ' ' + value.getUint8(8) + ' ' + value.getUint8(9) + ' ' + value.getUint8(10) + ' ' + value.getUint8(11) + ' ' + value.getUint8(12) + ' ' + value.getUint8(13) + ' ' + value.getUint8(14) + ' ' + value.getUint8(15) + ' ' + value.getUint8(16) + ' ' + value.getUint8(17) + ' ' + value.getUint8(18) + ' ' + value.getUint8(19));
+  
+  let DataType = value.getUint8(0);
+  
+  if (incomingDataType == 1) { 	// Acceleration data
+  
+		int raw_data = (((value[3]&0xff)<<8) + (value[3-1]&0xff));
+		if (raw_data > 32767){
+			raw_data -= 65536;
+			}
+        let res = raw_data;
+		res = (float)(9.81*(raw_data)/256.0);
+		log('x: ' + res)
+  }else{						// Environment data
+  
+  
+  
+  }
+ 
   
 }
 
