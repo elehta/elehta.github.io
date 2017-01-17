@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node Testing</h2>
+    <h2>WebBT / Measurement Node Test2</h2>
 
 	
 
@@ -253,10 +253,8 @@ function onButtonClick() {
 /* NOTIFICATIONS ON */
   
   
-    log('Change Characteristics to Setter...');
-	return setter.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
-
-
+ log('Change Characteristics to Setter...');
+ setter.getCharacteristic('00001525-1212-efde-1523-785feabcd123')
  .then(characteristic => {
 		  // Writing 1 is the signal to start measurement
 		  var setMeasOn = new Uint8Array([1]);
