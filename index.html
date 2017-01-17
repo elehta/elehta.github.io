@@ -240,14 +240,18 @@ function onButtonClick() {
   }) 
 */
 
-.then(characteristic => characteristic.startNotifications())
+
+
 /* NOTIFICATIONS ON
+.then(characteristic => characteristic.startNotifications())
 
 .then(characteristic => {
 	characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicValueChanged);
 	log('Notifications have been started.');
 	})
 */
+
+
 
  .then(characteristic => {
 		  // Writing 1 is the signal to start measurement
