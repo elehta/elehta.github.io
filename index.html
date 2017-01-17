@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node temp-up</h2>
+    <h2>WebBT / Measurement Node tempmap</h2>
 
 	
 
@@ -244,10 +244,10 @@ function handleCharacteristicValueChanged(event) {
 		return res;
   }
  
- function handleAccData(index, value) {
+ function handleEnvData(index, value) {
   
 		let raw_temp = value.getUint32(index, /*littleEndian=*/true);
-  
+		return raw_temp;
   }
 }
 
