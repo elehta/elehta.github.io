@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node funk-up</h2>
+    <h2>WebBT / Measurement Node dig-up</h2>
 
 	
 
@@ -222,15 +222,15 @@ function handleCharacteristicValueChanged(event) {
 
   if (dataType == 1) { 	// Acceleration data
 
-		var x1 = handleAccData(4, value);
-		var y1 = handleAccData(6, value);
-		var z1 = handleAccData(8, value);
+		var x1 = parseFloat(handleAccData(4, value)).toFixed(2);
+		var y1 = parseFloat(handleAccData(6, value)).toFixed(2);
+		var z1 = parseFloat(handleAccData(8, value)).toFixed(2);
 		log('x: ' + x1 + ' y: ' + y1 + ' z: ' + z1);
 		
 		
   }else if (dataType == 2){						// Environment data
   
-    log('datatype: ' + DataType);
+    log('datatype: ' + dataType);
   
   }
   
