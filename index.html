@@ -37,7 +37,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / TinyNode Demo</h2>
+    <h2>WebBT/TinyNode Demo</h2>
 
 	
 
@@ -65,7 +65,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 </script>
 
 
-<p>Using Web Bluetooth API to read data from VTT TinyNode. (+ smoothie.js)</p>
+<p>Using Web Bluetooth API (+ smoothie.js) to read data from VTT TinyNode.</p>
 
 <button id="getchar">Connect + Measure</button>
 <br>
@@ -133,7 +133,7 @@ var bluetoothDevice;
 var setter;
 var getter;
 var msgcounter;
-var chart = new SmoothieChart();
+var chart = new SmoothieChart({millisPerPixel:100,grid:{millisPerLine:9000}});
 var ts = new TimeSeries();
 
 
