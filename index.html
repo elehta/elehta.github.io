@@ -106,6 +106,11 @@ Information Service</a> characteristics from a BLE Device. See <a href="https://
   };
 </script>
 
+<h3>Data stream:</h3>
+<p id="p1">pressure</p>
+<p id="p2">temperature</p>
+<p id="p3">humidity</p>
+
 <h3>Live Output</h3>
 <div id="output" class="output">
   <div id="content"></div>
@@ -236,7 +241,11 @@ function handleCharacteristicValueChanged(event) {
     var tempdata = parseFloat(handleEnvData(7, value)).toFixed(1);
 	var humidata = parseFloat(handleEnvData(11, value)).toFixed(1);
 	
-	log('PRESSURE: ' + presdata + 'kPa; TEMPERATURE: ' + tempdata + ' C; HUMIDITY: ' + humidata + ' %');
+	//log('PRESSURE: ' + presdata + 'kPa; TEMPERATURE: ' + tempdata + ' C; HUMIDITY: ' + humidata + ' %');
+  
+  document.getElementById("p1").innerHTML = presdata;
+  document.getElementById("p2").innerHTML = tempdata;
+  document.getElementById("p3").innerHTML = humidata;
   
   }
   
