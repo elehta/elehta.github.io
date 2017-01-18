@@ -11,8 +11,9 @@ Copyright 2017 Google Inc. All Rights Reserved.
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Sample illustrating the use of Web Bluetooth / Device Information Characteristics.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    
+
+       <script type="text/javascript" src="../smoothie.js"></script>
+	   
     <title>Web BT / Device Information Characteristics</title>
     <script>
       // Add a global error event listener early on in the page load, to help ensure that browsers
@@ -102,6 +103,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 <p id="p2">Temperature:</p>
 <p id="p3">Humidity:</p>
 <p id="p4">Messages received:</p>
+<canvas id="env_chart" width="400" height="100"></canvas>
 
 	<input name="buttonSend" onclick="disconnect()" type="button" value="Disconnect" />
 	<br>
@@ -131,10 +133,15 @@ var bluetoothDevice;
 var setter;
 var getter;
 var msgcounter;
+var ts = new TimeSeries();
 
 
 function onButtonClick() {
 	msgcounter = 0;
+	var chart = new SmoothieChart();
+        chart.addTimeSeries(ts, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
+        chart.streamTo(document.getElementById("env_chart"), 100);
+		
   log('Searching Bluetooth Devices...');
   navigator.bluetooth.requestDevice(
     {filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
@@ -246,6 +253,12 @@ function handleCharacteristicValueChanged(event) {
   document.getElementById("p2").innerHTML = "Temperature: " + tempdata + "\u00B0" + "C";
   document.getElementById("p3").innerHTML = "Humidity: " + humidata + "%";
   document.getElementById("p4").innerHTML = "Messages received: " + msgcounter;
+  updateChart(msgcounter, tempdata);
+  }
+  
+  function updateChart(counter, value){
+   
+   ts.append(counter, value);
   
   }
   
