@@ -239,6 +239,20 @@ function disconnect() {
   // TODO implement your calculation using range.min and range.max
   var min = 20;
   var max = 30;
+  
+    switch (dataToStream)
+   {
+	case 'p1':  min = 980;
+				max = 1120;
+		break;
+	case 'p2':  min = 20;
+				max = 30;
+		break;
+	case 'p3':  min = 0;
+				max = 100;
+		break;
+   }
+  
   return {min: min, max: max};
 }
 
@@ -277,7 +291,7 @@ function handleCharacteristicValueChanged(event) {
   
   switch (dataToStream)
    {
-	case 'p1':  ts.append(new Date().getTime(), presdata);
+	case 'p1':  ts.append(new Date().getTime(), presdata);	
 		break;
 	case 'p2':  ts.append(new Date().getTime(), tempdata);
 		break;
