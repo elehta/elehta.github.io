@@ -141,10 +141,13 @@ var getter;
 var msgcounter;
 var chart = new SmoothieChart({millisPerPixel:100,maxValueScale:1.16,grid:{millisPerLine:9000},yRangeFunction:myYRangeFunction});
 var ts = new TimeSeries();
-
+var dataToStream = "p1";
 
 function onButtonClick() {
 	msgcounter = 0;
+		document.getElementById("p1").addEventListener("click", function(){dataToStream="p1";});
+		document.getElementById("p2").addEventListener("click", function(){dataToStream="p2";});
+		document.getElementById("p3").addEventListener("click", function(){dataToStream="p3";});
 		
   log('Searching Bluetooth Devices...');
   navigator.bluetooth.requestDevice(
@@ -272,7 +275,19 @@ function handleCharacteristicValueChanged(event) {
   document.getElementById("p3").innerHTML = "H: " + humidata + "%";
   document.getElementById("p4").innerHTML = "Messages received: " + msgcounter;
   
-  ts.append(new Date().getTime(), tempdata);
+  switch (dataToStream)
+   {
+	case 'p1':  ts.append(new Date().getTime(), presdata);
+		break;
+	case 'p2':  ts.append(new Date().getTime(), tempdata);
+		break;
+	case 'p3':  ts.append(new Date().getTime(), humidata);
+		break;
+		
+		
+	default:  ts.append(new Date().getTime(), tempdata)
+   }
+
    
   //updateChart(msgcounter, tempdata);
   }
