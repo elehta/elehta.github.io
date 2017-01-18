@@ -97,13 +97,12 @@ Copyright 2017 Google Inc. All Rights Reserved.
   };
 </script>
 
-<h3>Data stream:</h3>
+<h3>Data:</h3>
 <p id="p1">Pressure:</p>
 <p id="p2">Temperature:</p>
 <p id="p3">Humidity:</p>
 <p id="p4">Messages received:</p>
 
-	<br>
 	<input name="buttonSend" onclick="disconnect()" type="button" value="Disconnect" />
 	<br>
 	
@@ -219,7 +218,7 @@ function handleCharacteristicValueChanged(event) {
   /* var value = event.target.value;
   log('Received value: ' + value);
   */
-  msgcounter = msgcounter + 1;
+ 
   var value = event.target.value;
 //  log('value: ' + value.getUint8(0) + ' ' + value.getUint8(1)+ ' ' + value.getUint8(2) + ' ' + value.getUint8(3) + ' ' + value.getUint8(4) + ' ' + value.getUint8(5) + ' ' + value.getUint8(6) + ' ' + value.getUint8(7) + ' ' + value.getUint8(8) + ' ' + value.getUint8(9) + ' ' + value.getUint8(10) + ' ' + value.getUint8(11) + ' ' + value.getUint8(12) + ' ' + value.getUint8(13) + ' ' + value.getUint8(14) + ' ' + value.getUint8(15) + ' ' + value.getUint8(16) + ' ' + value.getUint8(17) + ' ' + value.getUint8(18) + ' ' + value.getUint8(19));
   
@@ -227,16 +226,16 @@ function handleCharacteristicValueChanged(event) {
 
   if (dataType == 1) { 	// Acceleration data
 
-		var x1 = parseFloat(handleAccData(4, value)).toFixed(2);
-		var y1 = parseFloat(handleAccData(6, value)).toFixed(2);
-		var z1 = parseFloat(handleAccData(8, value)).toFixed(2);
+//		var x1 = parseFloat(handleAccData(4, value)).toFixed(2);
+//		var y1 = parseFloat(handleAccData(6, value)).toFixed(2);
+//		var z1 = parseFloat(handleAccData(8, value)).toFixed(2);
 //		log('x: ' + x1 + ' y: ' + y1 + ' z: ' + z1);
 		
 		
   }else if (dataType == 2){						// Environment data
   
     // log('value: ' + value.getUint8(0) + ' ' + value.getUint8(1)+ ' ' + value.getUint8(2) + ' ' + value.getUint8(3) + ' ' + value.getUint8(4) + ' ' + value.getUint8(5) + ' ' + value.getUint8(6) + ' ' + value.getUint8(7) + ' ' + value.getUint8(8) + ' ' + value.getUint8(9) + ' ' + value.getUint8(10) + ' ' + value.getUint8(11) + ' ' + value.getUint8(12) + ' ' + value.getUint8(13) + ' ' + value.getUint8(14) + ' ' + value.getUint8(15) + ' ' + value.getUint8(16) + ' ' + value.getUint8(17) + ' ' + value.getUint8(18) + ' ' + value.getUint8(19));
-
+	msgcounter = msgcounter + 1;
     var presdata = parseFloat(handleEnvData(3, value)).toFixed(1);
     var tempdata = parseFloat(handleEnvData(7, value)).toFixed(1);
 	var humidata = parseFloat(handleEnvData(11, value)).toFixed(1);
