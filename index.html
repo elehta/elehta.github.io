@@ -99,9 +99,14 @@ Copyright 2017 Google Inc. All Rights Reserved.
 </script>
 
 <h3>Data:</h3>
-<p id="p1">Pressure:</p>
-<p id="p2">Temperature:</p>
-<p id="p3">Humidity:</p>
+ <table style="width:100%">
+  <tr>
+    <td><p id="p1">P:</p></td>
+    <td><p id="p2">T:</p></td>
+    <td><p id="p3">H:</p></td>
+  </tr>
+</table> 
+
 <p id="p4">Messages received:</p>
 <canvas id="env_chart" width="340" height="150"></canvas>
 
@@ -261,9 +266,9 @@ function handleCharacteristicValueChanged(event) {
 	
 	//log('PRESSURE: ' + presdata + 'kPa; TEMPERATURE: ' + tempdata + ' C; HUMIDITY: ' + humidata + ' %');
   
-  document.getElementById("p1").innerHTML = "Pressure: " + presdata + "kPa";
-  document.getElementById("p2").innerHTML = "Temperature: " + tempdata + "\u00B0" + "C";
-  document.getElementById("p3").innerHTML = "Humidity: " + humidata + "%";
+  document.getElementById("p1").innerHTML = "P: " + presdata + "kPa";
+  document.getElementById("p2").innerHTML = "T: " + tempdata + "\u00B0" + "C";
+  document.getElementById("p3").innerHTML = "H: " + humidata + "%";
   document.getElementById("p4").innerHTML = "Messages received: " + msgcounter;
   
   ts.append(new Date().getTime(), tempdata);
