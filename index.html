@@ -112,10 +112,16 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
 <canvas id="env_chart" width="345" height="200"></canvas>
 
-<p id="p4">Messages received:</p>
+ <table style="width:100%">
+  <tr>
+    <td><p id="p5">Event Log</p></td>
+	<td><p id="p4">Msgs:</p></td>
+  </tr>
+</table> 
+
 		
 <h3>Live output</h3>
-<div id="output" class="output">
+<div id="output" class="output" style="display:none;>
   <div id="content"></div>
   <div id="status"></div>
   <pre id="log"></pre>
@@ -148,23 +154,26 @@ function onButtonClick() {
 		document.getElementById("p1").addEventListener("click", function(){dataToStream="p1";});
 		document.getElementById("p2").addEventListener("click", function(){dataToStream="p2";});
 		document.getElementById("p3").addEventListener("click", function(){dataToStream="p3";});
-		
-  log('Searching Bluetooth Devices...');
+  //log('Searching Bluetooth Devices...');
+  document.getElementById("p5").innerHTML = "Searching Bluetooth Devices...";
   navigator.bluetooth.requestDevice(
     {filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
   .then(device => {
 	bluetoothDevice = device;
-    log('Connecting to Device...');
+    //log('Connecting to Device...');
+	  document.getElementById("p5").innerHTML = "Connecting to Device...";
     return device.gatt.connect();
   })
   .then(server => {
     //log('Getting Device Information Service...');
+	document.getElementById("p5").innerHTML = "Getting Device Information Service...";
 	return server.getPrimaryService('00001523-1212-efde-1523-785feabcd123');
   })
   .then(service => {
 	setter = service.getCharacteristic('00001525-1212-efde-1523-785feabcd123');
 	getter = service.getCharacteristic('00001524-1212-efde-1523-785feabcd123');
     //log('Got Device Information Characteristics...');
+	document.getElementById("p5").innerHTML = "Getting Device Information Characteristics...";	
 	return getter;
   })
   
@@ -175,6 +184,7 @@ function onButtonClick() {
 .then(characteristic => {
 	characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicValueChanged);
 	//log('Notifications have been started to Getter!');
+	document.getElementById("p5").innerHTML = "Starting Notifications...";
 	turnMeasurementOn();
 	})
 /* NOTIFICATIONS ON */
@@ -194,7 +204,8 @@ function onButtonClick() {
 		  return characteristic.writeValue(setMeasOn);
 		})
 		.then(_ => {
-		  log('Measurement ON!');
+		 //log('Measurement ON!');
+		document.getElementById("p5").innerHTML = "Measurement started.";
 		document.getElementById("connect").disabled = true;
 		document.getElementById("disconnect").disabled = false;
         chart.addTimeSeries(ts, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 3 });
@@ -209,7 +220,8 @@ function onButtonClick() {
 }
 
 function disconnect() {
-	log('Setting Measurement off... ');
+	//log('Setting Measurement off... ');
+	document.getElementById("p5").innerHTML = "Stopping Measurement...";
 	chart.stop();
 	return bluetoothDevice.gatt.connect()
 	.then(server => {
@@ -225,7 +237,8 @@ function disconnect() {
 		})
 		.then(_ => {
 			bluetoothDevice.gatt.disconnect();
-			log('Measurement OFF!');
+			//log('Measurement OFF!');
+			document.getElementById("p5").innerHTML = "Measurement stopped.";
 			document.getElementById("connect").disabled = false;
 			document.getElementById("disconnect").disabled = true;
 		})	
@@ -242,8 +255,8 @@ function disconnect() {
   
     switch (dataToStream)
    {
-	case 'p1':  min = 980;
-				max = 1120;
+	case 'p1':  min = 950;
+				max = 1080;
 		break;
 	case 'p2':  min = 20;
 				max = 30;
@@ -287,7 +300,7 @@ function handleCharacteristicValueChanged(event) {
   document.getElementById("p1").innerHTML = "P: " + presdata + "kPa";
   document.getElementById("p2").innerHTML = "T: " + tempdata + "\u00B0" + "C";
   document.getElementById("p3").innerHTML = "H: " + humidata + "%";
-  document.getElementById("p4").innerHTML = "Messages received: " + msgcounter;
+  document.getElementById("p4").innerHTML = "Msgs: " + msgcounter;
   
   switch (dataToStream)
    {
