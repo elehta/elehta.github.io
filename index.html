@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body>
 
-    <h2>WebBT / Measurement Node d</h2>
+    <h2>WebBT / TinyNode Demo</h2>
 
 	
 
@@ -243,9 +243,9 @@ function handleCharacteristicValueChanged(event) {
 	
 	//log('PRESSURE: ' + presdata + 'kPa; TEMPERATURE: ' + tempdata + ' C; HUMIDITY: ' + humidata + ' %');
   
-  document.getElementById("p1").innerHTML = presdata;
-  document.getElementById("p2").innerHTML = tempdata;
-  document.getElementById("p3").innerHTML = humidata;
+  document.getElementById("p1").innerHTML = "Pressure: " + presdata + "kPa";
+  document.getElementById("p2").innerHTML = "Temperature: " + tempdata + "\u00B0" + "C";
+  document.getElementById("p3").innerHTML = "Humidity: " + humidata + "%";
   
   }
   
