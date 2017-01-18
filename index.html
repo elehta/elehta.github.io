@@ -138,9 +138,6 @@ var ts = new TimeSeries();
 
 function onButtonClick() {
 	msgcounter = 0;
-	var chart = new SmoothieChart();
-        chart.addTimeSeries(ts, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
-        chart.streamTo(document.getElementById("env_chart"), 100);
 		
   log('Searching Bluetooth Devices...');
   navigator.bluetooth.requestDevice(
@@ -188,6 +185,10 @@ function onButtonClick() {
 		})
 		.then(_ => {
 		  log('Measurement ON!');
+		var chart = new SmoothieChart();
+        chart.addTimeSeries(ts, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
+        chart.streamTo(document.getElementById("env_chart"), 100);
+
 		})
 		
   .catch(error => {
@@ -253,7 +254,10 @@ function handleCharacteristicValueChanged(event) {
   document.getElementById("p2").innerHTML = "Temperature: " + tempdata + "\u00B0" + "C";
   document.getElementById("p3").innerHTML = "Humidity: " + humidata + "%";
   document.getElementById("p4").innerHTML = "Messages received: " + msgcounter;
-  updateChart(msgcounter, tempdata);
+  
+  ts.append(msgcounter, tempdata);
+   
+  //updateChart(msgcounter, tempdata);
   }
   
   function updateChart(counter, value){
