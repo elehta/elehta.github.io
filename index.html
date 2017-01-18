@@ -67,7 +67,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
 <p>Using Web Bluetooth API (+ smoothie.js) to read data from VTT TinyNode.</p>
 
-<button id="getchar">Connect + Measure</button>
+<button id="connect">Connect + Measure</button>
 <br>
 
 <script>
@@ -103,9 +103,9 @@ Copyright 2017 Google Inc. All Rights Reserved.
 <p id="p2">Temperature:</p>
 <p id="p3">Humidity:</p>
 <p id="p4">Messages received:</p>
-<canvas id="env_chart" width="350" height="150"></canvas>
+<canvas id="env_chart" width="340" height="150"></canvas>
 
-	<input name="buttonSend" onclick="disconnect()" type="button" value="Disconnect" />
+	<input name="disconnect" onclick="disconnect()" type="button" value="Disconnect" disabled="true"/>
 	<br>
 	
 <h3>Live Output</h3>
@@ -186,7 +186,8 @@ function onButtonClick() {
 		})
 		.then(_ => {
 		  log('Measurement ON!');
-		
+		document.getElementById("connect").disabled = true;
+		document.getElementById("disconnect").disabled = false;
         chart.addTimeSeries(ts, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 3 });
         chart.streamTo(document.getElementById("env_chart"), 2000);
 
@@ -216,7 +217,8 @@ function disconnect() {
 		.then(_ => {
 			bluetoothDevice.gatt.disconnect();
 			log('Measurement OFF!');
-			
+			document.getElementById("connect").disabled = false;
+			document.getElementById("disconnect").disabled = true;
 		})	
   .catch(error => {
     log('Error! ' + error);
