@@ -103,7 +103,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 <p id="p2">Temperature:</p>
 <p id="p3">Humidity:</p>
 <p id="p4">Messages received:</p>
-<canvas id="env_chart" width="400" height="100"></canvas>
+<canvas id="env_chart" width="350" height="120"></canvas>
 
 	<input name="buttonSend" onclick="disconnect()" type="button" value="Disconnect" />
 	<br>
@@ -187,7 +187,7 @@ function onButtonClick() {
 		  log('Measurement ON!');
 		var chart = new SmoothieChart();
         chart.addTimeSeries(ts, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
-        chart.streamTo(document.getElementById("env_chart"), 100);
+        chart.streamTo(document.getElementById("env_chart"), 500);
 
 		})
 		
@@ -214,6 +214,7 @@ function disconnect() {
 		.then(_ => {
 			bluetoothDevice.gatt.disconnect();
 			log('Measurement OFF!');
+			chart.stop();
 		})	
   .catch(error => {
     log('Error! ' + error);
@@ -255,7 +256,7 @@ function handleCharacteristicValueChanged(event) {
   document.getElementById("p3").innerHTML = "Humidity: " + humidata + "%";
   document.getElementById("p4").innerHTML = "Messages received: " + msgcounter;
   
-  ts.append(msgcounter, tempdata);
+  ts.append(new Date().getTime(), tempdata);
    
   //updateChart(msgcounter, tempdata);
   }
