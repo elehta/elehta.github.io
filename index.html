@@ -64,16 +64,10 @@ Copyright 2017 Google Inc. All Rights Reserved.
 </script>
 
 
-<p>Using Web Bluetooth API to read <a
-target="_blank"
-href="https://developer.bluetooth.org/gatt/services/Pages/ServiceViewer.aspx?u=org.bluetooth.service.device_information.xml">Device
-Information Service</a> characteristics from a BLE Device. See <a href="https://googlechrome.github.io/samples/web-bluetooth/index.html">more samples</a>.</p>
+<p>Using Web Bluetooth API to read data from VTT TinyNode.</p>
 
 <button id="getchar">Connect + Measure</button>
-<br><br>
-	
-
-
+<br>
 
 <script>
   var ChromeSamples = {
@@ -107,6 +101,7 @@ Information Service</a> characteristics from a BLE Device. See <a href="https://
 <p id="p1">Pressure:</p>
 <p id="p2">Temperature:</p>
 <p id="p3">Humidity:</p>
+<p id="p4">Messages received:</p>
 
 	<br>
 	<input name="buttonSend" onclick="disconnect()" type="button" value="Disconnect" />
@@ -136,18 +131,21 @@ Information Service</a> characteristics from a BLE Device. See <a href="https://
 var bluetoothDevice;
 var setter;
 var getter;
+var msgcounter;
+
 
 function onButtonClick() {
-  log('Requesting any Bluetooth Device...');
+	msgcounter = 0;
+  log('Searching Bluetooth Devices...');
   navigator.bluetooth.requestDevice(
     {filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
   .then(device => {
 	bluetoothDevice = device;
-    log('Connecting to GATT Server...');
+    log('Connecting to Device...');
     return device.gatt.connect();
   })
   .then(server => {
-    log('Getting Device Information Service...');
+    //log('Getting Device Information Service...');
 	return server.getPrimaryService('00001523-1212-efde-1523-785feabcd123');
   })
   .then(service => {
@@ -221,6 +219,7 @@ function handleCharacteristicValueChanged(event) {
   /* var value = event.target.value;
   log('Received value: ' + value);
   */
+  msgcounter = msgcounter + 1;
   var value = event.target.value;
 //  log('value: ' + value.getUint8(0) + ' ' + value.getUint8(1)+ ' ' + value.getUint8(2) + ' ' + value.getUint8(3) + ' ' + value.getUint8(4) + ' ' + value.getUint8(5) + ' ' + value.getUint8(6) + ' ' + value.getUint8(7) + ' ' + value.getUint8(8) + ' ' + value.getUint8(9) + ' ' + value.getUint8(10) + ' ' + value.getUint8(11) + ' ' + value.getUint8(12) + ' ' + value.getUint8(13) + ' ' + value.getUint8(14) + ' ' + value.getUint8(15) + ' ' + value.getUint8(16) + ' ' + value.getUint8(17) + ' ' + value.getUint8(18) + ' ' + value.getUint8(19));
   
@@ -247,6 +246,7 @@ function handleCharacteristicValueChanged(event) {
   document.getElementById("p1").innerHTML = "Pressure: " + presdata + "kPa";
   document.getElementById("p2").innerHTML = "Temperature: " + tempdata + "\u00B0" + "C";
   document.getElementById("p3").innerHTML = "Humidity: " + humidata + "%";
+  document.getElementById("p4").innerHTML = "Messages received: " + msgcounter;
   
   }
   
