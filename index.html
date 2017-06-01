@@ -128,7 +128,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 <script>
   var parameters = location.search.substring(1).split("&");
   var temp = parameters[0].split("=");
-   nodename = unescape(temp[1]);
+   var nodename = unescape(temp[1]);
    document.getElementById("p7").innerHTML = nodename;
 </script>
 		
@@ -170,7 +170,9 @@ function onButtonClick() {
   //log('Searching Bluetooth Devices...');
   document.getElementById("p5").innerHTML = "Searching Bluetooth Devices...";
   navigator.bluetooth.requestDevice(
-    {filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
+//{filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
+    {filters: {name: nodename}, optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
+//{name: 'ExampleName'}
   .then(device => {
 	bluetoothDevice = device;
     //log('Connecting to Device...');
