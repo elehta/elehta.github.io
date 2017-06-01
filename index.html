@@ -29,23 +29,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
     </script>
        
     <link rel="stylesheet" href="../styles/main.css">
-	
-	<script type="text/javascript">
-        function resize_canvas(){
-            canvas = document.getElementById("env_chart");
-            if (canvas.width  < window.innerWidth)
-            {
-                canvas.width  = 800;
-            }
-            if (canvas.width  > window.innerWidth)
-            {
-                canvas.width  = 345;
-            }
-
-
-        }
-    </script>
-    
+	  
     
   </head>
 
@@ -127,9 +111,9 @@ Copyright 2017 Google Inc. All Rights Reserved.
   </tr>
 </table> 
 
-<canvas id="env_chart" width="345" height="200" style="display: block; margin: 0 auto;"></canvas>
+<canvas id="env_chart" width="340" height="200" style="display: block; margin: 0 auto;"></canvas>
 
- <table style="width:100%;">
+ <table style="width:340;">
   <tr>
     <td style="text-align: left;"><p id="p5" style="font-family: 'Titillium Web'; font-size:11px;">Event Log</p></td>
 	<td style="text-align: right;"><p id="p4" style="font-family: 'Titillium Web'; font-size:11px;">Msgs</p></td>
