@@ -174,7 +174,6 @@ function onButtonClick() {
   document.getElementById("p5").innerHTML = "Searching for Bluetooth Devices...";
   navigator.bluetooth.requestDevice(
 	{filters: getDeviceName(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
-	
 	//{filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
     //{filters: [{name: nodename}], optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
   .then(device => {
@@ -386,7 +385,7 @@ function getDeviceName() {
 
 	if (nodename != '' && nodename != 'undefined'){
 		document.getElementById("p4").innerHTML = "dööv " + nodename;
-		return "{name: '" + nodename + "'}";
+		return [{name: nodename}];
 	}else{
 		document.getElementById("p4").innerHTML = "2";
 		return Array.from('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
