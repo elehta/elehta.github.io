@@ -120,7 +120,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
   <tr>
     <td><p id="p5" style="font-family: 'Titillium Web', monospace; font-size:10px;">Event Log</p></td>
 	<td><p id="p4" style="font-family: 'Titillium Web', monospace; font-size:10px;">Msgs</p></td>
-	<td><p id="p9" style="font-family: 'Titillium Web', monospace; font-size:10px;">nn</p></td>
+	<td><p id="p9" style="font-family: 'Titillium Web', monospace; font-size:10px;">mm</p></td>
   </tr>
 </table> 
 
@@ -172,8 +172,8 @@ function onButtonClick() {
   document.getElementById("p5").innerHTML = "Searching Bluetooth Devices...";
   document.getElementById("p9").innerHTML = nodename;
   navigator.bluetooth.requestDevice(
-	{filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
-    //{filters: [{name: nodename}], optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
+	//{filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
+    {filters: {name: [nodename]}, optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
   .then(device => {
 	bluetoothDevice = device;
     //log('Connecting to Device...');
