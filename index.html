@@ -111,7 +111,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
   </tr>
 </table> 
 
-<canvas id="env_chart" width="340" height="200" style="display: block; margin: 0 auto; border:1px solid #000000;"></canvas>
+<canvas id="env_chart" width="340" height="200" style="display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
 
  <table width="340" align="center">
   <tr>
@@ -129,7 +129,6 @@ Copyright 2017 Google Inc. All Rights Reserved.
 	  var nodename = unescape(temp[1]);
 	  document.getElementById("p7").innerHTML = " " + nodename;
   } else{
-	document.getElementById("p4").innerHTML = "tyhjä";
 	nodename = "";
 	document.getElementById("p7").innerHTML = "";
 }
@@ -384,10 +383,8 @@ function getUsbVendorName(value) {
 function getDeviceName() {
 
 	if (nodename != '' && nodename != 'undefined'){
-		document.getElementById("p4").innerHTML = "dööv " + nodename;
 		return [{name: nodename}];
 	}else{
-		document.getElementById("p4").innerHTML = "2";
 		return Array.from('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 		  .map(c => ({namePrefix: c}))
 		  .concat({name: ''});}
