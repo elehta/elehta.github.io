@@ -317,17 +317,17 @@ function handleCharacteristicValueChanged(event) {
    {
 	case 'p1':  ts.append(new Date().getTime(), presdata);	
 				document.getElementById("p1").style.borderBottom = "thick solid #33ff33"; 
-				document.getElementById("p2").style.borderBottom = "transparent"; 
-				document.getElementById("p3").style.borderBottom = "transparent"; 
+				document.getElementById("p2").style.borderBottom = "thick solid #ffffff";
+				document.getElementById("p3").style.borderBottom = "thick solid #ffffff";
 		break;
 	case 'p2':  ts.append(new Date().getTime(), tempdata);
-				document.getElementById("p1").style.borderBottom = "transparent"; 
+				document.getElementById("p1").style.borderBottom = "thick solid #ffffff";
 				document.getElementById("p2").style.borderBottom = "thick solid #33ff33";
-				document.getElementById("p3").style.borderBottom = "transparent"; 
+				document.getElementById("p3").style.borderBottom = "thick solid #ffffff";
 		break;
 	case 'p3':  ts.append(new Date().getTime(), humidata);
-				document.getElementById("p1").style.borderBottom = "transparent"; 
-				document.getElementById("p2").style.borderBottom = "transparent"; 
+				document.getElementById("p1").style.borderBottom = "thick solid #ffffff";
+				document.getElementById("p2").style.borderBottom = "thick solid #ffffff";
 				document.getElementById("p3").style.borderBottom = "thick solid #33ff33";
 		break;
 		
