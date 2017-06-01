@@ -125,10 +125,12 @@ Copyright 2017 Google Inc. All Rights Reserved.
 <script>
   var parameters = location.search.substring(1).split("&");
   if (parameters != ""){
+	document.getElementById("p4").innerHTML = "ei-tyhjä:" + parameters;
 	  var temp = parameters[0].split("=");
 	  var nodename = unescape(temp[1]);
 	  document.getElementById("p7").innerHTML = " " + nodename;
   } else{
+	document.getElementById("p4").innerHTML = "tyhjä";
 	nodename = "";
 	document.getElementById("p7").innerHTML = "";
 }
@@ -227,7 +229,7 @@ function onButtonClick() {
 		document.getElementById("disconnect").disabled = false;
         chart.addTimeSeries(ts, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 3 });
         chart.streamTo(document.getElementById("env_chart"), 2000);
-
+		document.getElementById("p7").innerHTML = " " + nodename;
 		})
 		
   .catch(error => {
@@ -386,12 +388,12 @@ function getDeviceName() {
 		document.getElementById("p4").innerHTML = "1";
 		return '[{name: ' + nodename + '}]';
 	}else{
-	document.getElementById("p4").innerHTML = "2";
-  return Array.from('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
-      .map(c => ({namePrefix: c}))
-      .concat({name: ''});}
-	    // This is the closest we can get for now to get all devices.
-		// https://github.com/WebBluetoothCG/web-bluetooth/issues/234
+		document.getElementById("p4").innerHTML = "2";
+		return Array.from('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+		  .map(c => ({namePrefix: c}))
+		  .concat({name: ''});}
+			// This is the closest we can get for now to get all devices.
+			// https://github.com/WebBluetoothCG/web-bluetooth/issues/234
 }
 
 function anyNamedDevice() {
