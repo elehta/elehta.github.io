@@ -171,9 +171,10 @@ function onButtonClick() {
 		document.getElementById("p2").addEventListener("click", function(){dataToStream="p2";});
 		document.getElementById("p3").addEventListener("click", function(){dataToStream="p3";});
   //log('Searching Bluetooth Devices...');
-  document.getElementById("p5").innerHTML = "Searching Bluetooth Devices...";
+  document.getElementById("p5").innerHTML = "Searching for Bluetooth Devices...";
   navigator.bluetooth.requestDevice(
 	{filters: getDeviceName(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
+	document.getElementById("p4").innerHTML = filters;
 	//{filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
     //{filters: [{name: nodename}], optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
   .then(device => {
