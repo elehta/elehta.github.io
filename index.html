@@ -76,12 +76,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
   </tr>
 </table> 
 
-<script>
-  var parameters = location.search.substring(1).split("&");
-  var temp = parameters[0].split("=");
-   nodename = unescape(temp[1]);
-   document.getElementById("p6").innerHTML = nodename;
-</script>
+
 
 <script>
   var ChromeSamples = {
@@ -125,10 +120,16 @@ Copyright 2017 Google Inc. All Rights Reserved.
   <tr>
     <td><p id="p5" style="font-family: 'Titillium Web', monospace; font-size:10px;">Event Log</p></td>
 	<td><p id="p4" style="font-family: 'Titillium Web', monospace; font-size:10px;">Msgs</p></td>
-	<td><p id="p6" style="font-family: 'Titillium Web', monospace; font-size:10px;"></p></td>
+	<td><p id="p6" style="font-family: 'Titillium Web', monospace; font-size:10px;">n</p></td>
   </tr>
 </table> 
 
+<script>
+  var parameters = location.search.substring(1).split("&");
+  var temp = parameters[0].split("=");
+   nodename = unescape(temp[1]);
+   document.getElementById("p6").innerHTML = nodename;
+</script>
 		
 <h3 style="display:none;>Live output</h3>
 <div id="output" class="output" style="display:none;>
