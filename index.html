@@ -27,16 +27,24 @@ Copyright 2017 Google Inc. All Rights Reserved.
         }
       });
     </script>
-    
-    
-
-    
+       
     <link rel="stylesheet" href="../styles/main.css">
+	
+	<script type="text/javascript">
+        function resize_canvas(){
+            canvas = document.getElementById("env_chart");
+            if (canvas.width  < window.innerWidth)
+            {
+                canvas.width  = window.innerWidth;
+            }
+
+        }
+    </script>
     
     
   </head>
 
-  <body style="font-family: 'Titillium Web', monospace; font-size:18px;">
+  <body onresize="resize_canvas()" style="font-family: 'Titillium Web', monospace; font-size:18px;">
 
     <h2>WebBT / TinyNode Demo</h2>
 
