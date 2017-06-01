@@ -79,8 +79,8 @@ Copyright 2017 Google Inc. All Rights Reserved.
 <p>Ready to read data from VTT TinyNode <a id="p7" style="font-weight:600"><a>.</p>
  <table style="width:100%">
   <tr>
-    <td style="width:50%"><button style="height:50px;width:100%" id="connect">Connect + Measure</button></td>
-    <td style="width:50%"><input style="height:50px;width:100%" id="disconnect" onclick="disconnect()" type="button" value="Disconnect" disabled="true" /></td>
+    <td style="width:50%"><button style="height:50px;width:100%" id="connect">CONNECT</button></td>
+    <td style="width:50%"><input style="height:50px;width:100%" id="disconnect" onclick="disconnect()" type="button" value="DISCONNECT" disabled="true" /></td>
   </tr>
 </table> 
 
@@ -114,7 +114,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
   };
 </script>
 
- <table style="width:100%">
+ <table style="width:100%; text-align: center;">
   <tr>
     <td><p id="p1">P:</p></td>
     <td><p id="p2">T:</p></td>
@@ -124,14 +124,14 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
 <canvas id="env_chart" width="345" height="200"></canvas>
 
- <table style="width:100%">
+ <table style="width:100%; text-align: center;">
   <tr>
     <td><p id="p5" style="font-family: 'Titillium Web'; font-size:10px;">Event Log</p></td>
 	<td><p id="p4" style="font-family: 'Titillium Web'; font-size:10px;">Msgs</p></td>
   </tr>
 </table> 
 
-<p style="font-family: 'Titillium Web'; font-size:10px; font-weight:600;">This page uses Web Bluetooth API + smoothie.js. Made by VTT Finland 2017.</p>
+<p style="font-family: 'Titillium Web'; font-size:10px; font-weight:600; text-align: center;">This page uses Web Bluetooth API + smoothie.js. Made by VTT Finland 2017.</p>
 
 <script>
   var parameters = location.search.substring(1).split("&");
