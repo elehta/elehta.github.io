@@ -332,10 +332,18 @@ function handleCharacteristicValueChanged(event) {
   switch (dataToStream)
    {
 	case 'p1':  ts.append(new Date().getTime(), presdata);	
+				document.getElementById("p1").style.backgroundColor = "lightblue"; 
+				document.getElementById("p2").style.backgroundColor = "none"; 
+				document.getElementById("p3").style.backgroundColor = "none"; 
 		break;
 	case 'p2':  ts.append(new Date().getTime(), tempdata);
+				document.getElementById("p1").style.backgroundColor = "none"; 
+				document.getElementById("p2").style.backgroundColor = "lightblue"; 
+				document.getElementById("p3").style.backgroundColor = "none"; 
 		break;
 	case 'p3':  ts.append(new Date().getTime(), humidata);
+				document.getElementById("p1").style.backgroundColor = "none"; 
+				document.getElementById("p2").style.backgroundColor = "none"; 
 				document.getElementById("p3").style.backgroundColor = "lightblue"; 
 		break;
 		
