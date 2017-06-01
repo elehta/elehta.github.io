@@ -65,7 +65,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
 
 
-<p>Ready to read data from VTT TinyNode <a id="p7" style="font-weight:600"><a>.</p>
+<p>Connect and read data from VTT TinyNode<a id="p7" style="font-weight:600"><a>.</p>
  <table style="width:100%">
   <tr>
     <td style="width:50%"><button style="height:50px;width:100%" id="connect">CONNECT</button></td>
@@ -126,7 +126,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
   var parameters = location.search.substring(1).split("&");
   var temp = parameters[0].split("=");
   var nodename = unescape(temp[1]);
-  document.getElementById("p7").innerHTML = nodename;
+  document.getElementById("p7").innerHTML = " " + nodename;
 </script>
 		
 <h3 style="display:none;>Live output</h3>
@@ -167,8 +167,9 @@ function onButtonClick() {
   //log('Searching Bluetooth Devices...');
   document.getElementById("p5").innerHTML = "Searching Bluetooth Devices...";
   navigator.bluetooth.requestDevice(
+	{filters: getDeviceName(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
 	//{filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
-    {filters: [{name: nodename}], optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
+    //{filters: [{name: nodename}], optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
   .then(device => {
 	bluetoothDevice = device;
     //log('Connecting to Device...');
@@ -374,12 +375,24 @@ function getUsbVendorName(value) {
       (value in valueToUsbVendorName ? ' (' + valueToUsbVendorName[value] + ')' : '');
 }
 
+function getDeviceName() {
+  if (nodename != ''){
+		return '[{name: nodename}]';
+		}else{
+  return Array.from('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+      .map(c => ({namePrefix: c}))
+      .concat({name: ''});}
+	    // This is the closest we can get for now to get all devices.
+		// https://github.com/WebBluetoothCG/web-bluetooth/issues/234
+}
+
 function anyNamedDevice() {
-  // This is the closest we can get for now to get all devices.
-  // https://github.com/WebBluetoothCG/web-bluetooth/issues/234
+
   return Array.from('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
       .map(c => ({namePrefix: c}))
       .concat({name: ''});
+	    // This is the closest we can get for now to get all devices.
+		// https://github.com/WebBluetoothCG/web-bluetooth/issues/234
 }
 </script>
     
