@@ -170,9 +170,9 @@ function onButtonClick() {
 		document.getElementById("p3").addEventListener("click", function(){dataToStream="p3";});
   //log('Searching Bluetooth Devices...');
   document.getElementById("p5").innerHTML = "Searching Bluetooth Devices...";
+  document.getElementById("p9").innerHTML = nodename;
   navigator.bluetooth.requestDevice(
 	//{filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
-	 document.getElementById("p9").innerHTML = nodename;
     {filters: {name: nodename}, optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
 //{name: 'ExampleName'}
   .then(device => {
