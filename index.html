@@ -68,7 +68,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
 
 
-<p>Ready to read data from VTT TinyNode <a id="p7" style="font-weight:600"><a>.</p>
+<p>Ready to connect to VTT TinyNode <a id="p7" style="font-weight:600"><a>.</p>
  <table style="width:100%">
   <tr>
     <td style="width:50%"><button style="height:50px;width:100%" id="connect">Connect + Measure</button></td>
@@ -128,8 +128,8 @@ Copyright 2017 Google Inc. All Rights Reserved.
 <script>
   var parameters = location.search.substring(1).split("&");
   var temp = parameters[0].split("=");
-   var nodename = unescape(temp[1]);
-   document.getElementById("p7").innerHTML = nodename;
+  var nodename = unescape(temp[1]);
+  document.getElementById("p7").innerHTML = nodename;
 </script>
 		
 <h3 style="display:none;>Live output</h3>
@@ -161,6 +161,7 @@ var msgcounter;
 var chart = new SmoothieChart({millisPerPixel:100,maxValueScale:1.16,grid:{millisPerLine:9000},yRangeFunction:myYRangeFunction});
 var ts = new TimeSeries();
 var dataToStream = "p1";
+var nodename = "p7";
 
 function onButtonClick() {
 	msgcounter = 0;
@@ -170,7 +171,7 @@ function onButtonClick() {
   //log('Searching Bluetooth Devices...');
   document.getElementById("p5").innerHTML = "Searching Bluetooth Devices...";
   navigator.bluetooth.requestDevice(
-//{filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
+	//{filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
     {filters: {name: nodename}, optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
 //{name: 'ExampleName'}
   .then(device => {
