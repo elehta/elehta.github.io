@@ -68,7 +68,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
 
 
-<p>Ready to connect to VTT TinyNode <a id="p7" style="font-weight:600"><a>.</p>
+<p>Ready to read data from VTT TinyNode <a id="p7" style="font-weight:600"><a>.</p>
  <table style="width:100%">
   <tr>
     <td style="width:50%"><button style="height:50px;width:100%" id="connect">Connect + Measure</button></td>
@@ -161,7 +161,6 @@ var msgcounter;
 var chart = new SmoothieChart({millisPerPixel:100,maxValueScale:1.16,grid:{millisPerLine:9000},yRangeFunction:myYRangeFunction});
 var ts = new TimeSeries();
 var dataToStream = "p1";
-var nodename = "p7";
 
 function onButtonClick() {
 	msgcounter = 0;
