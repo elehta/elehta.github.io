@@ -377,7 +377,7 @@ function getUsbVendorName(value) {
 
 function getDeviceName() {
 
-	if (nodename != ''){
+	if (nodename != '' && nodename != 'undefined'){
 		document.getElementById("p4").innerHTML = "1";
 		return '[{name: ' + nodename + '}]';
 	}else{
