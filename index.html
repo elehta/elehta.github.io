@@ -66,12 +66,12 @@ Copyright 2017 Google Inc. All Rights Reserved.
 </script>
 
 <script>
-document.getElementById("p6").innerHTML = nodename;
+ log('entering nodename...');
   var nodename = {
     var parameters = location.search.substring(1).split("&");
-document.getElementById("p6").innerHTML = parameters;
+log('params...');
     var temp = parameters[0].split("=");
-	document.getElementById("p6").innerHTML = temp;
+log('temp...');
     nodename = unescape(temp[1]);
    
   };
@@ -130,7 +130,7 @@ document.getElementById("p6").innerHTML = parameters;
   <tr>
     <td><p id="p5" style="font-family: 'Titillium Web', monospace; font-size:10px;">Event Log</p></td>
 	<td><p id="p4" style="font-family: 'Titillium Web', monospace; font-size:10px;">Msgs</p></td>
-	<td><p id="p6" style="font-family: 'Titillium Web', monospace; font-size:10px;">Node</p></td>
+	<td><p id="p6" style="font-family: 'Titillium Web', monospace; font-size:10px;">Noode</p></td>
   </tr>
 </table> 
 
