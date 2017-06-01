@@ -376,9 +376,11 @@ function getUsbVendorName(value) {
 }
 
 function getDeviceName() {
-  if (nodename != ''){
+	if (nodename != ''){
+		document.getElementById("p4").innerHTML = "1";
 		return '[{name: nodename}]';
-		}else{
+	}else{
+	document.getElementById("p4").innerHTML = "2";
   return Array.from('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
       .map(c => ({namePrefix: c}))
       .concat({name: ''});}
