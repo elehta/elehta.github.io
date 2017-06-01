@@ -124,9 +124,14 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
 <script>
   var parameters = location.search.substring(1).split("&");
-  var temp = parameters[0].split("=");
-  var nodename = unescape(temp[1]);
-  document.getElementById("p7").innerHTML = " " + nodename;
+  if (parameters != ""){
+	  var temp = parameters[0].split("=");
+	  var nodename = unescape(temp[1]);
+	  document.getElementById("p7").innerHTML = " " + nodename;
+  } else{
+	nodename = "";
+	document.getElementById("p7").innerHTML = "";
+}
 </script>
 		
 <h3 style="display:none;>Live output</h3>
