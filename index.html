@@ -118,13 +118,12 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
  <table style="width:100%">
   <tr>
-    <td><p id="p5" style="font-family: 'Titillium Web', monospace; font-size:10px;">Event Log</p></td>
-	<td><p id="p4" style="font-family: 'Titillium Web', monospace; font-size:10px;">Msgs</p></td>
-	<td><p id="p9" style="font-family: 'Titillium Web', monospace; font-size:10px;">hh</p></td>
+    <td><p id="p5" style="font-family: 'Titillium Web'; font-size:10px;">Event Log</p></td>
+	<td><p id="p4" style="font-family: 'Titillium Web'; font-size:10px;">Msgs</p></td>
   </tr>
 </table> 
 
-<p style="font-family: 'Titillium Web', monospace; font-size:10px;">This page uses Web Bluetooth API + smoothie.js. Made by VTT Finland 2017.</p>
+<p style="font-family: 'Titillium Web'; font-size:10px; font-weight:500;">This page uses Web Bluetooth API + smoothie.js. Made by VTT Finland 2017.</p>
 
 <script>
   var parameters = location.search.substring(1).split("&");
@@ -170,7 +169,6 @@ function onButtonClick() {
 		document.getElementById("p3").addEventListener("click", function(){dataToStream="p3";});
   //log('Searching Bluetooth Devices...');
   document.getElementById("p5").innerHTML = "Searching Bluetooth Devices...";
-  document.getElementById("p9").innerHTML = nodename;
   navigator.bluetooth.requestDevice(
 	//{filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
     {filters: [{name: nodename}], optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
