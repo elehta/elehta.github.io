@@ -131,8 +131,8 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
  <table style="width:100%; text-align: center;">
   <tr>
-    <td><p id="p5" style="font-family: 'Titillium Web'; font-size:10px;">Event Log</p></td>
-	<td><p id="p4" style="font-family: 'Titillium Web'; font-size:10px;">Msgs</p></td>
+    <td><p id="p5" style="font-family: 'Titillium Web'; font-size:11px;">Event Log</p></td>
+	<td><p id="p4" style="font-family: 'Titillium Web'; font-size:11px;">Msgs</p></td>
   </tr>
 </table> 
 
@@ -332,7 +332,7 @@ function handleCharacteristicValueChanged(event) {
   switch (dataToStream)
    {
 	case 'p1':  ts.append(new Date().getTime(), presdata);	
-				document.getElementById("p1").style.backgroundColor = "lightblue"; 
+				document.getElementById("p1").style.borderBottom = "thick solid #33ff33"; 
 				document.getElementById("p2").style.backgroundColor = "transparent"; 
 				document.getElementById("p3").style.backgroundColor = "transparent"; 
 		break;
