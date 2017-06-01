@@ -13,7 +13,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
        <script type="text/javascript" src="../smoothie.js"></script>
-	   <link href="https://fonts.googleapis.com/css?family=Overpass+Mono" rel="stylesheet"> 
+	   <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet"> 
 	   
     <title>Web BT / Device Information Characteristics</title>
     <script>
@@ -36,7 +36,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
     
   </head>
 
-  <body style="font-family: 'Overpass Mono', monospace; font-size:14px;">
+  <body style="font-family: 'Titillium Web', monospace; font-size:14px;">
 
     <h2>WebBT / TinyNode Demo</h2>
 
@@ -65,11 +65,21 @@ Copyright 2017 Google Inc. All Rights Reserved.
   });
 </script>
 
+<script>
+  
+    var parameters = location.search.substring(1).split("&");
+
+    var temp = parameters[0].split("=");
+    var nodename = unescape(temp[1]);
+    document.getElementById("p6").innerHTML = nodename;
+  
+</script>
+
 
 <p>Using Web Bluetooth API (+ smoothie.js) to read data from VTT TinyNode.</p>
  <table style="width:100%">
   <tr>
-    <td style="width:50%"><button style="height:50px;width:100%" id="connect">Connect + Measure</button></td>
+    <td style="width:50%"><button style="height:50px;width:100%" id="connect">Connect + Measure <p id="p6"></p></button></td>
     <td style="width:50%"><input style="height:50px;width:100%" id="disconnect" onclick="disconnect()" type="button" value="Disconnect" disabled="true" /></td>
   </tr>
 </table> 
@@ -115,8 +125,9 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
  <table style="width:100%">
   <tr>
-    <td><p id="p5" style="font-family: 'Overpass Mono', monospace; font-size:10px;">Event Log</p></td>
-	<td><p id="p4" style="font-family: 'Overpass Mono', monospace; font-size:10px;">Msgs</p></td>
+    <td><p id="p5" style="font-family: 'Titillium Web', monospace; font-size:10px;">Event Log</p></td>
+	<td><p id="p4" style="font-family: 'Titillium Web', monospace; font-size:10px;">Msgs</p></td>
+	<td><p id="p6" style="font-family: 'Titillium Web', monospace; font-size:10px;">Node</p></td>
   </tr>
 </table> 
 
@@ -138,6 +149,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
     }
   }
 </script>
+
 
 
     
@@ -259,10 +271,10 @@ function disconnect() {
 	case 'p1':  min = 950;
 				max = 1080;
 		break;
-	case 'p2':  min = 20;
-				max = 30;
+	case 'p2':  min = 10;
+				max = 40;
 		break;
-	case 'p3':  min = 0;
+	case 'p3':  min = 20;
 				max = 100;
 		break;
    }
@@ -366,9 +378,6 @@ function anyNamedDevice() {
     
   
   
-
-
-
 <script>
   document.querySelector('button').addEventListener('click', function() {
     if (isWebBluetoothEnabled()) {
