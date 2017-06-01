@@ -172,9 +172,8 @@ function onButtonClick() {
   document.getElementById("p5").innerHTML = "Searching Bluetooth Devices...";
   document.getElementById("p9").innerHTML = nodename;
   navigator.bluetooth.requestDevice(
-	//{filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
-    {filters: [{name: nodename}], optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
-//{name: 'ExampleName'}
+	{filters: anyNamedDevice(), optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
+    //{filters: [{name: nodename}], optionalServices: ['00001523-1212-efde-1523-785feabcd123']})
   .then(device => {
 	bluetoothDevice = device;
     //log('Connecting to Device...');
