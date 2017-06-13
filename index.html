@@ -123,6 +123,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 <p style="font-family: 'Titillium Web'; font-size:10px; font-weight:600; text-align: center;">This page uses Web Bluetooth API + smoothie.js. Made by VTT Finland 2017.</p>
 
 <script>
+$(function () {
   var parameters = location.search.substring(1).split("&");
   if (parameters != ""){
 	  var temp = parameters[0].split("=");
@@ -133,6 +134,8 @@ Copyright 2017 Google Inc. All Rights Reserved.
 	document.getElementById("p7").innerHTML = "";
 }
 $('#connect').click();
+});
+
 </script>
 		
 <h3 style="display:none;>Live output</h3>
@@ -412,6 +415,7 @@ function anyNamedDevice() {
       onButtonClick();
     }
   });
+  
 </script>
 
 <script>
