@@ -184,7 +184,7 @@ async function connect() {
     function success() {
 		log('> Bluetooth Device connected.');
 		  
-		let encoder = new TextEncoder('utf-8');
+/* 		let encoder = new TextEncoder('utf-8');
 		//let value = document.querySelector('#description').value;
 		try {
 			log('Setting Characteristic User Description...');
@@ -198,7 +198,8 @@ async function connect() {
     },
     function fail() {
       time('Failed to reconnect.');
-    });
+    }); 
+*/
 }
 
 function onDisconnected() {
