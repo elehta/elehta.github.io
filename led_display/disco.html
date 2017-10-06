@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT / Automatic Reconnect (Async Await) Sample 13:50</h1>
+    <h1>Web BT / Automatic Reconnect (Async Await) Sample 1402</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -222,7 +222,7 @@ async function exponentialBackoff(max, delay, toTry, success, fail) {
     }
     time('Retrying in ' + delay + 's... (' + max + ' tries left)');
     setTimeout(function() {
-      exponentialBackoff(--max, delay * 2, toTry, success, fail);
+      exponentialBackoff(--max, delay * 1, toTry, success, fail);
     }, delay * 1000);
   }
 }
