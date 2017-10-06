@@ -139,12 +139,11 @@ href="automatic-reconnect.html">Automatic Reconnect (Promises)</a> sample.</p>
   }
 </script>
 
-
-
-
-  
     
-      <script>var bluetoothDevice;
+<script>
+	  
+var bluetoothDevice;
+var myDescriptor;
 
 async function onButtonClick() {
   // TODO: Validate message text.
@@ -171,10 +170,10 @@ async function connect() {
 		time('Connecting to Bluetooth Device... ');
 		await bluetoothDevice.gatt.connect();
 	  
-/*		log('Getting Service...');
-		const service = await server.getPrimaryService(serviceUuid);
+		log('Getting Service...');
+		const service = await server.getPrimaryService('000015231212EFDE1523785FEABCD123');
 	
-		log('Getting Characteristic...');
+/*		log('Getting Characteristic...');
 		const characteristic = await service.getCharacteristic(characteristicUuid);
 
 		log('Getting Descriptor...');
