@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT / Automatic Reconnect (Async Await) Sample 14:18</h1>
+    <h1>Web BT/Async Await Sample 14:18</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -171,7 +171,7 @@ async function connect() {
 		await bluetoothDevice.gatt.connect();
 	  
 		log('Getting Service...');
-		const service = await server.getPrimaryService('00001523-1212-EFDE-1523-785FEABCD123');
+		const service = await server.getPrimaryService(00001523-1212-EFDE-1523-785FEABCD123);
 	
 /*		log('Getting Characteristic...');
 		const characteristic = await service.getCharacteristic(characteristicUuid);
