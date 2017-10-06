@@ -185,12 +185,12 @@ async function connect() {
 		log('> Bluetooth Device connected.');
 		  
 		let encoder = new TextEncoder('utf-8');
-		let value = document.querySelector('#description').value;
+		//let value = document.querySelector('#description').value;
 		try {
 			log('Setting Characteristic User Description...');
-			await myDescriptor.writeValue(encoder.encode(value));
+			await myDescriptor.writeValue(encoder.encode(displaymsg));
 
-			log('> Characteristic User Description changed to: ' + value);
+			log('> Characteristic User Description changed to: ' + displaymsg);
 			} catch(error)
 			{
 				log('Argh! ' + error);
