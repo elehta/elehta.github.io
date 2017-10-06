@@ -171,14 +171,14 @@ async function connect() {
 		time('Connecting to Bluetooth Device... ');
 		await bluetoothDevice.gatt.connect();
 	  
-		log('Getting Service...');
+/*		log('Getting Service...');
 		const service = await server.getPrimaryService(serviceUuid);
 	
 		log('Getting Characteristic...');
 		const characteristic = await service.getCharacteristic(characteristicUuid);
 
 		log('Getting Descriptor...');
-		myDescriptor = await characteristic.getDescriptor('gatt.characteristic_user_description');
+		myDescriptor = await characteristic.getDescriptor('gatt.characteristic_user_description'); */
 		
     },
     function success() {
