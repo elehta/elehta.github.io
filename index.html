@@ -33,7 +33,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
     
   </head>
 
-  <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px" onload="autoconnect()">
+  <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
     <h2>WebBT / TinyNode Demo</h2>
 
@@ -152,12 +152,6 @@ Copyright 2017 Google Inc. All Rights Reserved.
   }
 </script>
 
-<script type="text/javascript">
-    function autoconnect()
-    {
-        document.getElementById("connect").click(); // Simulates button click
-    }
-</script>
 
     
 <script>
@@ -170,6 +164,7 @@ var ts = new TimeSeries();
 var dataToStream = "p1";
 
 function onButtonClick() {
+    bluetoothDevice = null;
 	msgcounter = 0;
 		document.getElementById("p1").addEventListener("click", function(){dataToStream="p1";});
 		document.getElementById("p2").addEventListener("click", function(){dataToStream="p2";});
@@ -269,6 +264,27 @@ function disconnect() {
   });
   
   }
+  
+// This function keeps calling "toTry" until promise resolves or has
+// retried "max" number of times. First retry has a delay of "delay" seconds.
+// "success" is called upon success.
+function exponentialBackoff(max, delay, toTry, success, fail) {
+  toTry().then(result => success(result))
+  .catch(_ => {
+    if (max === 0) {
+      return fail();
+    }
+    time('Retrying in ' + delay + 's... (' + max + ' tries left)');
+	document.getElementById("p5").innerHTML = "Retrying in " + delay + "s... (" + max + " tries left...";
+    setTimeout(function() {
+      exponentialBackoff(--max, delay * 2, toTry, success, fail);
+    }, delay * 1000);
+  });
+}
+
+function time(text) {
+  log('[' + new Date().toJSON().substr(11, 8) + '] ' + text);
+}
 
   function myYRangeFunction(range) {
   // TODO implement your calculation using range.min and range.max
@@ -279,13 +295,13 @@ function disconnect() {
    {
 	case 'p1':  min = 950;
 				max = 1080;
-		break;
+				break;
 	case 'p2':  min = 10;
 				max = 40;
-		break;
+				break;
 	case 'p3':  min = 20;
 				max = 100;
-		break;
+				break;
    }
   
   return {min: min, max: max};
