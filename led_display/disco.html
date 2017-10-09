@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT/Async Await Sample 14:49</h1>
+    <h1>Web BT/Async Await Sample 11:21</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -143,6 +143,7 @@ algorithm</a>. You may want to check out the <a href="automatic-reconnect.html">
 	  
 var bluetoothDevice;
 var myDescriptor;
+const serviceUuid = 000015231212EFDE1523785FEABCD123;
 
 async function onButtonClick() {
   // TODO: Validate message text.
@@ -155,8 +156,9 @@ async function onButtonClick() {
     log('Requesting any Bluetooth Device...');
     bluetoothDevice = await navigator.bluetooth.requestDevice({
      // filters: [...] <- Prefer filters to save energy & show relevant devices.
-        acceptAllDevices: true});
-    bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
+        acceptAllDevices: true, optionalServices: [serviceUuid]});
+		
+	bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
     connect();
   } catch(error) {
     log('Argh! ' + error);
@@ -170,7 +172,7 @@ async function connect() {
 		await bluetoothDevice.gatt.connect();
 	  
 		log('Getting Service...');
-		const service = await server.getPrimaryService('000015231212EFDE1523785FEABCD123');
+		const service = await server.getPrimaryService(serviceUuid);
 	
 /*		log('Getting Characteristic...');
 		const characteristic = await service.getCharacteristic(characteristicUuid);
