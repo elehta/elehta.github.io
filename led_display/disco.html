@@ -144,6 +144,7 @@ algorithm</a>. You may want to check out the <a href="automatic-reconnect.html">
 var bluetoothDevice;
 var myDescriptor;
 const serviceUuid = '00001523-1212-efde-1523-785feabcd123';
+const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
 
 async function onButtonClick() {
   // TODO: Validate message text.
@@ -174,9 +175,9 @@ async function connect() {
 		log('Getting Service...');
 		const service = await server.getPrimaryService(serviceUuid);
 	
-/*		log('Getting Characteristic...');
+		log('Getting Characteristic...');
 		const characteristic = await service.getCharacteristic(characteristicUuid);
-
+/*
 		log('Getting Descriptor...');
 		myDescriptor = await characteristic.getDescriptor('gatt.characteristic_user_description'); */
 		
