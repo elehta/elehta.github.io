@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT/Async Await Sample 11:35</h1>
+    <h1>Web BT/Async Await Sample 11:50</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -170,7 +170,7 @@ async function connect() {
   exponentialBackoff(5 /* max retries */, 2 /* seconds delay */,
     async function toTry() {
 		time('Connecting to Bluetooth Device... ');
-		await bluetoothDevice.gatt.connect();
+		const server = await bluetoothDevice.gatt.connect();
 	  
 		log('Getting Service...');
 		const service = await server.getPrimaryService(serviceUuid);
