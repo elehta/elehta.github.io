@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT/Async Await Sample 11:50</h1>
+    <h1>Web BT/Async Await Sample 11:53</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -177,9 +177,11 @@ async function connect() {
 	
 		log('Getting Characteristic...');
 		const characteristic = await service.getCharacteristic(characteristicUuid);
-/*
+
 		log('Getting Descriptor...');
-		myDescriptor = await characteristic.getDescriptor('gatt.characteristic_user_description'); */
+		myDescriptor = await characteristic.getDescriptor('gatt.characteristic_user_description');
+		log(myDescriptor);
+		log(myDescriptor.readValue());
 		
     },
     function success() {
