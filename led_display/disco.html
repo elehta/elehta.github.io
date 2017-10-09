@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT/Async Await Sample 1205</h1>
+    <h1>Web BT/Async Await Sample 1207</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -180,6 +180,7 @@ async function connect() {
 
 			log('Getting Descriptors...');
 			const descriptors = await characteristic.getDescriptors();
+			log('ei');
 		    for (const descriptor of descriptors) {
 				switch (descriptor.uuid) {
 
