@@ -178,41 +178,7 @@ async function connect() {
 		log('Getting Characteristic...');
 		const characteristic = await service.getCharacteristic(characteristicUuid);
 
-			log('Getting Descriptors...');
-			const descriptors = await characteristic.getDescriptors();
-			log('ei');
-		    for (const descriptor of descriptors) {
-				switch (descriptor.uuid) {
-
-				case BluetoothUUID.getDescriptor('gatt.client_characteristic_configuration'):
-				  await descriptor.readValue().then(value => {
-					log('> Client Characteristic Configuration:');
-					let notificationsBit = value.getUint8(0) & 0b01;
-					log('  > Notifications: ' + (notificationsBit ? 'ON' : 'OFF'));
-					let indicationsBit = value.getUint8(0) & 0b10;
-					log('  > Indications: ' + (indicationsBit ? 'ON' : 'OFF'));
-				  });
-				  break;
-
-				case BluetoothUUID.getDescriptor('gatt.characteristic_user_description'):
-				  await descriptor.readValue().then(value => {
-					let decoder = new TextDecoder('utf-8');
-					log('> Characteristic User Description: ' + decoder.decode(value));
-				  });
-				  break;
-
-				case BluetoothUUID.getDescriptor('report_reference'):
-				  await descriptor.readValue().then(value => {
-					log('> Report Reference:');
-					log('  > Report ID: ' + value.getUint8(0));
-					log('  > Report Type: ' + getReportType(value));
-				  });
-				  break;
-
-				default: log('> Unknown Descriptor: ' + descriptor.uuid);
-			  }
-			}
-	
+			
 		
 /*		log('Getting Descriptor...');
 		myDescriptor = await characteristic.getDescriptor('gatt.characteristic_user_description');
@@ -226,14 +192,16 @@ async function connect() {
     },
     function success() {
 		log('> Bluetooth Device connected.');
-		  
-/* 		let encoder = new TextEncoder('utf-8');
+
+		//var setMeasOn = new Uint8Array([1]);
+		//return characteristic.writeValue(setMeasOn);		 
 		//let value = document.querySelector('#description').value;
 		try {
-			log('Setting Characteristic User Description...');
-			await myDescriptor.writeValue(encoder.encode(displaymsg));
+			log('Sending message...');
+			let encoder = new TextEncoder('utf-8');
+			await characteristic.writeValue(encoder.encode(displaymsg));
 
-			log('> Characteristic User Description changed to: ' + displaymsg);
+			log('> Message sent to display: ' + displaymsg);
 			} catch(error)
 			{
 				log('Argh! ' + error);
