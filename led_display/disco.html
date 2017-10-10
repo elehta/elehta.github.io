@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT/Async Await Sample 1551</h1>
+    <h1>Web BT/Async Await Sample 1554</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -178,9 +178,12 @@ async function connect() {
 		log('Getting Characteristic...');
 		const characteristic = await service.getCharacteristic(characteristicUuid);		
 		
+		const result = await characteristic.writeValue(encoder.encode(displaymsg));
+		
     },
     function success() {
-		log('> Bluetooth Device connected.');
+		
+		//log('> Bluetooth Device connected.');
 
 		//var setMeasOn = new Uint8Array([1]);
 		//return characteristic.writeValue(setMeasOn);		 
@@ -188,7 +191,7 @@ async function connect() {
 		try {
 		//	log('Sending message...');
 		//	let encoder = new TextEncoder('utf-8');
-			await characteristic.writeValue(encoder.encode(displaymsg));
+		//	await characteristic.writeValue(encoder.encode(displaymsg));
 
 			log('> Message sent to display: ' + displaymsg);
 			} catch(error)
