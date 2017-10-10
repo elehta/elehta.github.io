@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT/Async Await Sample 1824</h1>
+    <h1>Web BT/Async Await Sample 1830</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -151,7 +151,7 @@ async function onButtonClick() {
   // TODO: Validate message text.
   // let userinput = document.querySelector('#displaymsg').value;
   var userinput = document.getElementById('displaymsg').value;
-  var displaymessage = userinput.value;
+  var displaymessage = String(userinput.value);
   log('> ' + displaymessage);
 
   bluetoothDevice = null;
