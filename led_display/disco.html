@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT/Async Await Sample 1622</h1>
+    <h1>Web BT/Async Await Sample 1719</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -177,20 +177,22 @@ async function connect() {
 	
 		log('Getting Characteristic...');
 		const characteristic = await service.getCharacteristic(characteristicUuid);		
-		
-		
-		var result = [];
 
-		for(var i = 0; i < displaymsg.length; i+=2)
-			{
-				result.push(parseInt(s.substring(i, i + 2), 16));
-			}
-		result = Uint8Array.from(result)
-		log("Msg: " + result);
-		
-		//let encoder = new TextEncoder('utf-8');
-		let msg = Uint8Array.of(1);
-		await characteristic.writeValue(result);
+	let encoder = new TextEncoder('utf-8');
+	//var displaymsg = 'hoi';
+	var msg_data = new Uint8Array(20);
+
+	for(var i = 0; i < displaymsg.length; i++)
+	{
+		msg_data[i+4] = encoder.encode(displaymsg.substring(i, i+1));
+	}
+	msg_data[0] = 3;
+	msg_data[1] = displaymsg.length;
+	msg_data[2] = 0;
+	msg_data[3] = 0;
+
+	
+		await characteristic.writeValue(msg_data);
 		
     },
     function success() {
