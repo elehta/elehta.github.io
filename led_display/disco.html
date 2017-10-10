@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT/Async Await Sample 1811</h1>
+    <h1>Web BT/Async Await Sample 1814</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -88,7 +88,7 @@ href="https://en.wikipedia.org/wiki/Exponential_backoff">exponential backoff
 algorithm</a>. You may want to check out the <a href="automatic-reconnect.html">Automatic Reconnect (Promises)</a> sample.</p>
 
 <form>
-  <input id="displaymsg" type="text" size=30 placeholder="Alphanumeric characters allowed...">
+  <input id="displaymsg" type="text" size=40 placeholder="Alphanumeric characters allowed...">
   <button>SEND</button>
 </form>
 
@@ -151,7 +151,7 @@ async function onButtonClick() {
   // TODO: Validate message text.
   let userinput = document.querySelector('#displaymsg').value;
   var displaymsg = userinput.value;
-  log('> ' + msgvalue);
+  log('> ' + displaymsg);
   //let displaymsg = document.getElementById('displaymsg').value;
   bluetoothDevice = null;
   
