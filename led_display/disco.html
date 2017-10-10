@@ -176,18 +176,7 @@ async function connect() {
 		const service = await server.getPrimaryService(serviceUuid);
 	
 		log('Getting Characteristic...');
-		const characteristic = await service.getCharacteristic(characteristicUuid);
-
-			
-		
-/*		log('Getting Descriptor...');
-		myDescriptor = await characteristic.getDescriptor('gatt.characteristic_user_description');
-*/
-	//	log(myDescriptor);
-		
-		//const value = await myDescriptor.readValue();
-	//		let decoder = new TextDecoder('utf-8');
-		//	log('> Characteristic User Description: ' + decoder.decode(value));
+		const characteristic = await service.getCharacteristic(characteristicUuid);		
 		
     },
     function success() {
@@ -197,8 +186,8 @@ async function connect() {
 		//return characteristic.writeValue(setMeasOn);		 
 		//let value = document.querySelector('#description').value;
 		try {
-			log('Sending message...');
-			let encoder = new TextEncoder('utf-8');
+		//	log('Sending message...');
+		//	let encoder = new TextEncoder('utf-8');
 			await characteristic.writeValue(encoder.encode(displaymsg));
 
 			log('> Message sent to display: ' + displaymsg);
