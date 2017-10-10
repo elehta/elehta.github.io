@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT/Async Await Sample 1821</h1>
+    <h1>Web BT/Async Await Sample 1824</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -150,7 +150,7 @@ const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
 async function onButtonClick() {
   // TODO: Validate message text.
   // let userinput = document.querySelector('#displaymsg').value;
-  let userinput  = document.getElementById('displaymsg').value;
+  var userinput = document.getElementById('displaymsg').value;
   var displaymessage = userinput.value;
   log('> ' + displaymessage);
 
