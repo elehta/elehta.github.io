@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT/Async Await Sample 1554</h1>
+    <h1>Web BT/Async Await Sample 1602</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -178,7 +178,8 @@ async function connect() {
 		log('Getting Characteristic...');
 		const characteristic = await service.getCharacteristic(characteristicUuid);		
 		
-		const result = await characteristic.writeValue(encoder.encode(displaymsg));
+		let msg = Uint8Array.of(1);
+		await characteristic.writeValue(msg);
 		
     },
     function success() {
