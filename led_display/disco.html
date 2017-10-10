@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT/Async Await Sample 1739</h1>
+    <h1>Web BT/Async Await Sample 1742</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -133,7 +133,7 @@ algorithm</a>. You may want to check out the <a href="automatic-reconnect.html">
     // Let's log a warning if the sample is not supposed to execute on this
     // version of Chrome.
     if (55 > parseInt(RegExp.$1)) {
-      ChromeSamples.setStatus('Warning! Keep in mind this sample has been tested with Chrome ' + 55 + '.');
+      ChromeSamples.setStatus('Warning! This sample has been tested with Chrome ' + 55 + '.');
     }
   }
 </script>
@@ -161,7 +161,7 @@ async function onButtonClick() {
 	bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
     connect();
   } catch(error) {
-    log('Argh! ' + error);
+    log('Error! ' + error);
   }
 }
 
@@ -207,7 +207,7 @@ async function connect() {
 		//	let encoder = new TextEncoder('utf-8');
 		//	await characteristic.writeValue(encoder.encode(displaymsg));
 
-			log('> Message sent to display: ' + msgdata[4] + msgdata[5] + msgdata[6]+ msgdata[7]);
+			log('> Message sent to display: ' + msg_data[4] + msg_data[5] + msg_data[6]+ msg_data[7]);
 			} catch(error)
 			{
 				log('Argh! ' + error);
