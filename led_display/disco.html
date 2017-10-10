@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT/Async Await Sample 1722</h1>
+    <h1>Web BT/Async Await Sample 1725</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -143,6 +143,7 @@ algorithm</a>. You may want to check out the <a href="automatic-reconnect.html">
 	  
 var bluetoothDevice;
 var myDescriptor;
+var msg_data = new Uint8Array(20);
 const serviceUuid = '00001523-1212-efde-1523-785feabcd123';
 const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
 
@@ -180,13 +181,14 @@ async function connect() {
 
 	let encoder = new TextEncoder('utf-8');
 	//var displaymsg = 'hoi';
-	var msg_data = new Uint8Array(20);
+	
 
 	for(var i = 0; i < displaymsg.length; i++)
 	{
 		msg_data[i+4] = encoder.encode(displaymsg.substring(i, i+1));
 	}
-	msg_data[0] = 1;
+	//msg_data[0] = 3;
+	msg_data[0] = encoder.encode(displaymsg.substring(0,1));
 	msg_data[1] = displaymsg.length;
 	msg_data[2] = 0;
 	msg_data[3] = 0;
