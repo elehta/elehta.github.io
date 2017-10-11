@@ -8,7 +8,7 @@
     <meta name="description" content="Sample illustrating the use of Web Bluetooth / Automatic Reconnect (Async Await).">
     <meta name="viewport" content="width=device-width, initial-scale=1">
    
-   <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet"> 
+   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
 		   
     <title>Web BT / Automatic Reconnect</title>
     <script>
@@ -22,13 +22,8 @@
         }
       });
     </script>
-    
-    
-    
+        
     <link rel="icon" href="icon.png">
-    
-    <link rel="stylesheet" href="../styles/main.css">
-    
     
   </head>
 
@@ -83,11 +78,12 @@
   });
 </script>
 
-<p>Connect send data to display using Web Bluetooth API and VTT TinyNode. <a id="p7" style="font-weight:600; color:#33ff33;"><a>.</p>
+<p>Connect and send data to display using Web Bluetooth API and VTT TinyNode.</p>
+</p>
 
 <form>
   <input id="displaymsg" type="text" size=40 placeholder="Alphanumeric characters allowed...">
-  <button>SEND</button>
+  <button style="height:50px;width:100px">SEND</button>
 </form>
 
 <script>
@@ -118,8 +114,15 @@
   };
 </script>
 
-<h3>Live Output...</h3>
-<div id="output" class="output">
+ <table width="340" align="center">
+  <tr>
+    <td style="text-align: left;"><p id="p5" style="font-family: 'Open Sans'; font-size:11px;">Ready for connection...</p></td>
+	<td style="text-align: right;"><p id="p4" style="font-family: 'Open Sans'; font-size:11px;">Messages: 0</p></td>
+  </tr>
+</table>
+
+<h3 style="display:none;>Live output</h3>
+<div id="output" class="output" style="display:none>
   <div id="content"></div>
   <div id="status"></div>
   <pre id="log"></pre>
@@ -161,6 +164,7 @@ async function onButtonClick() {
   
   try {
     log('Requesting any Bluetooth Device...');
+	document.getElementById("p5").innerHTML = "Searching for Bluetooth Devices...";
     bluetoothDevice = await navigator.bluetooth.requestDevice({
      // filters: [...] <- Prefer filters to save energy & show relevant devices.
         acceptAllDevices: true, optionalServices: [serviceUuid]});
@@ -175,15 +179,16 @@ async function onButtonClick() {
 async function connect() {
   exponentialBackoff(5 /* max retries */, 2 /* seconds delay */,
     async function toTry() {
-		time('Connecting to Bluetooth Device... ');
+		time('Connecting to Bluetooth device... ');
 		const server = await bluetoothDevice.gatt.connect();
-	  
+		document.getElementById("p5").innerHTML = "Connecting to Bluetooth device...";
+		
 		log('Getting Service...');
 		const service = await server.getPrimaryService(serviceUuid);
 	
 		log('Getting Characteristic...');
 		const characteristic = await service.getCharacteristic(characteristicUuid);		
-
+		document.getElementById("p5").innerHTML = "Connection to device established...";
 
 	log('> ' + displaymessage);
 
@@ -202,6 +207,7 @@ async function connect() {
 	msg_data[displaymessage.length + 4] = 0;
 	
 	await characteristic.writeValue(msg_data);
+	document.getElementById("p5").innerHTML = "Sent message '" + displaymessage + "' to led display...";
 		
     },
     function success() {
