@@ -166,19 +166,24 @@ async function onButtonClick() {
 
   //var displaymessage = String(userinput.value);
   log('>>> ' + displaymessage);
-  bluetoothDevice = null;
   
+  if (bluetoothDevice != null) {
+      connect();
+	  }
+  //bluetoothDevice = null;
+  else{
   try {
     log('Requesting any Bluetooth Device...');
 	document.getElementById("p5").innerHTML = "Searching for Bluetooth Devices...";
     bluetoothDevice = await navigator.bluetooth.requestDevice({
      // filters: [...] <- Prefer filters to save energy & show relevant devices.
-        acceptAllDevices: true, optionalServices: [serviceUuid]});
+    acceptAllDevices: true, optionalServices: [serviceUuid]});
 		
 	bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
     connect();
   } catch(error) {
     log('Error! ' + error);
+  }
   }
 }
 
