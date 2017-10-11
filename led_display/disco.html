@@ -32,7 +32,7 @@
 
   <body>
     <img class="pageIcon" src="icon.png">
-    <h1>Web BT/Async Await Sample 1009</h1>
+    <h1>Web BT/Led display</h1>
     
 <script>
   if('serviceWorker' in navigator) {
@@ -120,7 +120,7 @@ algorithm</a>. You may want to check out the <a href="automatic-reconnect.html">
   };
 </script>
 
-<h3>Live Output ++</h3>
+<h3>Live Output</h3>
 <div id="output" class="output">
   <div id="content"></div>
   <div id="status"></div>
@@ -183,7 +183,7 @@ async function connect() {
 		const characteristic = await service.getCharacteristic(characteristicUuid);		
 
 	let encoder = new TextEncoder('utf-8');
-	//var displaymessage = '1perttivaan';
+
 	log('> ' + displaymessage);
 
 	for(var i = 0; i < displaymessage.length; i++)
@@ -212,7 +212,7 @@ async function connect() {
 		//	let encoder = new TextEncoder('utf-8');
 		//	await characteristic.writeValue(encoder.encode(displaymsg));
 
-			log('> Message sent to display: ' + msg_data[4] + ' ' + msg_data[5] + ' ' + msg_data[6] + ' ' + msg_data[7]);
+			log('> Message sent to display: ' + msg_data[0] + msg_data[1] + msg_data[2] + msg_data[3] + msg_data[4] + ' ' + msg_data[5] + ' ' + msg_data[6] + ' ' + msg_data[7]);
 			} catch(error)
 			{
 				log('Argh! ' + error);
