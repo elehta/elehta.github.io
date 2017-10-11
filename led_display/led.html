@@ -124,7 +124,7 @@
   </tr>
 </table>
 
-<h3>Live output..</h3>
+<h3>Live output.</h3>
 <div id="output" class="output">
   <div id="content"></div>
   <div id="status"></div>
@@ -202,7 +202,7 @@ async function connect() {
 		document.getElementById("p5").innerHTML = "Connection to device established...";
 		
 		var num_msgs = Math.floor((displaymessage.length+1)/number_payload_bytes);
-		if ((displaymessage.length+1) % number_payload_bytes) != 0{
+		if ((displaymessage.length+1) % number_payload_bytes != 0){
 			num_msgs = num_msgs + 1;
 		} 
 		
