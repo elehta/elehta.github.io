@@ -165,7 +165,7 @@ async function onButtonClick() {
   var replace_scandic_char_3 = replace_scandic_char_2.replace(/ö/g, "o");
   var replace_scandic_char_4 = replace_scandic_char_3.replace(/Ö/g, "O");
   
-  displaymessage = replace_scandic_char_4.replace(/[^a-z0-9!#%&?_-\ ]/gi,'');
+  displaymessage = replace_scandic_char_4.replace(/[^a-z0-9!#%&?_\- ]/gi,'');
 
   //var displaymessage = String(userinput.value);
   log('>>> ' + displaymessage);
