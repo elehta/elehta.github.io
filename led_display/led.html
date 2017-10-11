@@ -160,7 +160,9 @@ async function onButtonClick() {
   // TODO: Validate message text.
 
   var rawdisplaymessage = document.getElementById('displaymsg').value;
-  displaymessage = rawdisplaymessage.replace(/[^a-z0-9_\ ]/gi,'');
+  var replace_scandic_char_1 = rawdisplaymessage.replace("ä", "a");
+  var replace_scandic_char_2 = replace_scandic_char_1.replace("ö", "o");
+  displaymessage = replace_scandic_char_2.replace(/[^a-z0-9_\ ]/gi,'');
 
   //var displaymessage = String(userinput.value);
   log('>>> ' + displaymessage);
