@@ -254,11 +254,12 @@ async function connect() {
 		}
 		
 		
-	document.getElementById("p5").innerHTML = "Sent message '" + displaymessage + "' to led display...";
+	
 		
     },
     function success() {
-		
+	
+		document.getElementById("p5").innerHTML = "Sent message '" + displaymessage + "' to led display...";
 		//log('> Bluetooth Device connected.');
 
 		//var setMeasOn = new Uint8Array([1]);
