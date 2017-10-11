@@ -165,10 +165,7 @@ async function onButtonClick() {
   log('>>> ' + displaymessage);
   
   if (bluetoothDevice != null) {
-      try{
-	  connect();
-	  } catch(error) {
-		log('Error! ' + error);
+      connect();
 	  }
   else{
 	  try {
