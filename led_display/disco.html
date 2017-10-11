@@ -186,19 +186,22 @@ async function connect() {
 		log('Getting Characteristic...');
 		const characteristic = await service.getCharacteristic(characteristicUuid);		
 
-	let encoder = new TextEncoder('utf-8');
 
 	log('> ' + displaymessage);
 
-	msg_data[0] = encoder.encode(cmd_update_display);		// command to be sent (uint8_t)
-	msg_data[1] = encoder.encode(displaymessage.length);	// message data length (uint8_t)
+	msg_data[0] = cmd_update_display;						// command to be sent (uint8_t)
+	msg_data[1] = displaymessage.length + 1;				// message data length + end of string char (uint8_t) 
 	msg_data[2] = 0; 										// data start index 2(uint16_t)
 	msg_data[3] = 0; 										// data start index 1(uint16_t)
+
+	let encoder = new TextEncoder('utf-8');
 
 	for(var i = 0; i < displaymessage.length; i++)
 	{
 		msg_data[i+4] = encoder.encode(displaymessage.substring(i, i+1));
 	}	
+	
+	msg_data[displaymessage.length + 4] = 0;
 	
 	await characteristic.writeValue(msg_data);
 		
