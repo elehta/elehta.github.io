@@ -120,7 +120,7 @@ algorithm</a>. You may want to check out the <a href="automatic-reconnect.html">
   };
 </script>
 
-<h3>Live Output </h3>
+<h3>Live Output +</h3>
 <div id="output" class="output">
   <div id="content"></div>
   <div id="status"></div>
@@ -149,8 +149,8 @@ const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
 
 async function onButtonClick() {
   // TODO: Validate message text.
-   var userinput = document.querySelector('#displaymsg').value;
-  //let userinput = document.getElementById('displaymsg').value;
+//   var userinput = document.querySelector('#displaymsg').value;
+  var userinput = document.getElementById('displaymsg').value;
 
   var displaymessage = String(userinput.value);
   log('> ' + displaymessage);
