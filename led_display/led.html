@@ -236,7 +236,7 @@ async function connect() {
 			}
 			log(' >>> ' + m + ': ' + msg_fraction);
 			await characteristic.writeValue(msg_data);
-		
+		log('> Message sent to display: ' + msg_data[0] + ' ' + msg_data[1] + ' ' + msg_data[2] + ' ' + msg_data[3] + ' ' + msg_data[4] + ' ' + msg_data[5] + ' ' + msg_data[6] + ' ' + msg_data[7] + ' ' + msg_data[8] + ' ' + msg_data[9] + ' ' + msg_data[10] + ' ' + msg_data[11] + ' ' + msg_data[12] + ' ' + msg_data[13] + ' ' + msg_data[14] + ' ' + msg_data[15] + ' ' + msg_data[16] + ' ' + msg_data[17] + ' ' + msg_data[18] + ' ' + msg_data[19]);
 		}
 		
 		
@@ -255,7 +255,7 @@ async function connect() {
 		//	let encoder = new TextEncoder('utf-8');
 		//	await characteristic.writeValue(encoder.encode(displaymsg));
 
-			log('> Message sent to display: ' + msg_data[0] + ' ' + msg_data[1] + ' ' + msg_data[2] + ' ' + msg_data[3] + ' ' + msg_data[4] + ' ' + msg_data[5] + ' ' + msg_data[6] + ' ' + msg_data[7] + ' ' + msg_data[8] + ' ' + msg_data[9] + ' ' + msg_data[10] + ' ' + msg_data[11]);
+			
 			} catch(error)
 			{
 				log('Argh! ' + error);
