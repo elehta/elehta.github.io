@@ -120,7 +120,7 @@ algorithm</a>. You may want to check out the <a href="automatic-reconnect.html">
   };
 </script>
 
-<h3>Live Output +</h3>
+<h3>Live Output +++</h3>
 <div id="output" class="output">
   <div id="content"></div>
   <div id="status"></div>
@@ -150,10 +150,10 @@ const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
 async function onButtonClick() {
   // TODO: Validate message text.
 //   var userinput = document.querySelector('#displaymsg').value;
-  var userinput = document.getElementById('displaymsg').value;
+  var displaymessage = document.getElementById('displaymsg').value;
 
-  var displaymessage = String(userinput.value);
-  log('> ' + displaymessage);
+  //var displaymessage = String(userinput.value);
+  log('>>> ' + displaymessage);
   bluetoothDevice = null;
   
   try {
@@ -182,7 +182,7 @@ async function connect() {
 		const characteristic = await service.getCharacteristic(characteristicUuid);		
 
 	let encoder = new TextEncoder('utf-8');
-	var displaymessage = '1perttivaan';
+	//var displaymessage = '1perttivaan';
 	log('> ' + displaymessage);
 
 	for(var i = 0; i < displaymessage.length; i++)
