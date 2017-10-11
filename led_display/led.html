@@ -201,7 +201,10 @@ async function connect() {
 		const characteristic = await service.getCharacteristic(characteristicUuid);		
 		document.getElementById("p5").innerHTML = "Connection to device established...";
 		
-		var num_msgs = Math.floor((displaymessage.length+1)/number_payload_bytes)+1;
+		var num_msgs = Math.floor((displaymessage.length+1)/number_payload_bytes);
+		if ((displaymessage.length+1) % number_payload_bytes) <> 0{
+			num_msgs = num_msgs + 1;
+		} 
 		
 		for(var m = 0; m < num_msgs;m++){
 		
@@ -226,14 +229,17 @@ async function connect() {
 
 			var msg_fraction = displaymessage.substring(m*number_payload_bytes, m*number_payload_bytes+number_payload_bytes)
 			
-			for(var i = 0; i < msg_fraction.length; i++)
-			{
-				msg_data[i+4] = encoder.encode(msg_fraction.substring(i, i+1));
-			}	
-			
-			if (msg_fraction.length < number_payload_bytes){
-				msg_data[msg_fraction.length + 4] = 0;
+			if (msg_fraction.length > 0) {
+				for(var i = 0; i < msg_fraction.length; i++)
+				{
+					msg_data[i+4] = encoder.encode(msg_fraction.substring(i, i+1));
+				}	
 			}
+			
+				if (msg_fraction.length < number_payload_bytes){
+					msg_data[msg_fraction.length + 4] = 0;
+				}
+			
 			log(' >>> ' + m + ': ' + msg_fraction);
 			await characteristic.writeValue(msg_data);
 		log('> Message sent to display: ' + msg_data[0] + ' ' + msg_data[1] + ' ' + msg_data[2] + ' ' + msg_data[3] + ' ' + msg_data[4] + ' ' + msg_data[5] + ' ' + msg_data[6] + ' ' + msg_data[7] + ' ' + msg_data[8] + ' ' + msg_data[9] + ' ' + msg_data[10] + ' ' + msg_data[11] + ' ' + msg_data[12] + ' ' + msg_data[13] + ' ' + msg_data[14] + ' ' + msg_data[15] + ' ' + msg_data[16] + ' ' + msg_data[17] + ' ' + msg_data[18] + ' ' + msg_data[19]);
