@@ -124,7 +124,7 @@
   </tr>
 </table>
 
-<h3>Live output</h3>
+<h3>Live output...</h3>
 <div id="output" class="output">
   <div id="content"></div>
   <div id="status"></div>
@@ -200,10 +200,8 @@ async function connect() {
 		log('Getting Characteristic...');
 		const characteristic = await service.getCharacteristic(characteristicUuid);		
 		document.getElementById("p5").innerHTML = "Connection to device established...";
-
-		log('> ' + displaymessage);
 		
-		var num_msgs = Math.floor((displaymessage.length+1)/number_payload_bytes);
+		var num_msgs = Math.floor((displaymessage.length+1)/number_payload_bytes)+1;
 		
 		for(var m = 0; m < num_msgs;m++){
 		
@@ -236,7 +234,7 @@ async function connect() {
 			if (msg_fraction.length < number_payload_bytes){
 				msg_data[msg_fraction.length + 4] = 0;
 			}
-			log(' >>> ' + msg_fraction);
+			log(' >>> ' + m + ': ' + msg_fraction);
 			await characteristic.writeValue(msg_data);
 		
 		}
