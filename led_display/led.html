@@ -158,29 +158,31 @@ const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
 
 async function onButtonClick() {
   // TODO: Validate message text.
-//   var userinput = document.querySelector('#displaymsg').value;
+
   displaymessage = document.getElementById('displaymsg').value;
 
   //var displaymessage = String(userinput.value);
   log('>>> ' + displaymessage);
   
   if (bluetoothDevice != null) {
-      connect();
+      try{
+	  connect();
+	  } catch(error) {
+		log('Error! ' + error);
 	  }
-  //bluetoothDevice = null;
   else{
-  try {
-    log('Requesting any Bluetooth Device...');
-	document.getElementById("p5").innerHTML = "Searching for Bluetooth Devices...";
-    bluetoothDevice = await navigator.bluetooth.requestDevice({
-     // filters: [...] <- Prefer filters to save energy & show relevant devices.
-    acceptAllDevices: true, optionalServices: [serviceUuid]});
-		
-	bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
-    connect();
-  } catch(error) {
-    log('Error! ' + error);
-  }
+	  try {
+		log('Requesting any Bluetooth Device...');
+		document.getElementById("p5").innerHTML = "Searching for Bluetooth Devices...";
+		bluetoothDevice = await navigator.bluetooth.requestDevice({
+		 // filters: [...] <- Prefer filters to save energy & show relevant devices.
+		acceptAllDevices: true, optionalServices: [serviceUuid]});
+			
+		bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
+		connect();
+	  } catch(error) {
+		log('Error! ' + error);
+	  }
   }
 }
 
