@@ -165,7 +165,7 @@ async function onButtonClick() {
   var replace_scandic_char_3 = replace_scandic_char_2.replace(/ö/g, "o");
   var replace_scandic_char_4 = replace_scandic_char_3.replace(/Ö/g, "O");
   
-  displaymessage = replace_scandic_char_4.replace(/[^a-z0-9!#%&?_\ -]/gi,'');
+  displaymessage = replace_scandic_char_4.replace(/[^a-z0-9!#%&?_-\ ]/gi,'');
 
   //var displaymessage = String(userinput.value);
   log('>>> ' + displaymessage);
@@ -259,7 +259,7 @@ async function connect() {
     },
     function success() {
 	
-		document.getElementById("p5").innerHTML = "Sent message '" + displaymessage + "' to led display...";
+		
 		//log('> Bluetooth Device connected.');
 
 		//var setMeasOn = new Uint8Array([1]);
@@ -270,7 +270,7 @@ async function connect() {
 		//	let encoder = new TextEncoder('utf-8');
 		//	await characteristic.writeValue(encoder.encode(displaymsg));
 
-			
+			document.getElementById("p5").innerHTML = "Sent message '" + displaymessage + "' to led display...";
 			} catch(error)
 			{
 				log('Argh! ' + error);
@@ -284,7 +284,7 @@ async function connect() {
 }
 
 function onDisconnected() {
-  log('> Bluetooth Device disconnected');
+  log('> Bluetooth device disconnected');
   connect();
 }
 
