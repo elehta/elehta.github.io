@@ -120,7 +120,7 @@ algorithm</a>. You may want to check out the <a href="automatic-reconnect.html">
   };
 </script>
 
-<h3>Live Output.</h3>
+<h3>Live Output:</h3>
 <div id="output" class="output">
   <div id="content"></div>
   <div id="status"></div>
@@ -145,6 +145,10 @@ var bluetoothDevice;
 var myDescriptor;
 var msg_data = new Uint8Array(20);
 var displaymessage;
+
+const cmd_update_buffer = 2;
+const cmd_update_display = 3;
+const cmd_save_to_flash = 4;
 const serviceUuid = '00001523-1212-efde-1523-785feabcd123';
 const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
 
@@ -190,12 +194,11 @@ async function connect() {
 	{
 		msg_data[i+4] = encoder.encode(displaymessage.substring(i, i+1));
 	}
-	//msg_data[0] = 3;
-	msg_data[0] = encoder.encode(displaymessage.substring(0,1));
-	msg_data[1] = displaymessage.length;
-	msg_data[2] = 0;
-	msg_data[3] = 0;
 
+	msg_data[0] = encoder.encode(cmd_update_display);		// command to be sent (uint8_t)
+	msg_data[1] = encoder.encode(displaymessage.length);	// message data length (uint8_t)
+	msg_data[2] = 0; 										// data start index 2(uint16_t)
+	msg_data[3] = 0; 										// data start index 1(uint16_t)
 	
 		await characteristic.writeValue(msg_data);
 		
@@ -212,7 +215,7 @@ async function connect() {
 		//	let encoder = new TextEncoder('utf-8');
 		//	await characteristic.writeValue(encoder.encode(displaymsg));
 
-			log('> Message sent to display: ' + msg_data[0] + ' ' + msg_data[1] + ' ' + msg_data[2] + ' ' + msg_data[3] + ' ' + msg_data[4] + ' ' + msg_data[5] + ' ' + msg_data[6] + ' ' + msg_data[7]);
+			log('> Message sent to display: ' + msg_data[0] + ' ' + msg_data[1] + ' ' + msg_data[2] + ' ' + msg_data[3] + ' ' + msg_data[4] + ' ' + msg_data[5] + ' ' + msg_data[6] + ' ' + msg_data[7] + ' ' + msg_data[8] + ' ' + msg_data[9] + ' ' + msg_data[10] + ' ' + msg_data[11]);
 			} catch(error)
 			{
 				log('Argh! ' + error);
