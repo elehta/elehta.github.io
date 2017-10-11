@@ -161,8 +161,11 @@ async function onButtonClick() {
 
   var rawdisplaymessage = document.getElementById('displaymsg').value;
   var replace_scandic_char_1 = rawdisplaymessage.replace(/ä/g, "a");
-  var replace_scandic_char_2 = replace_scandic_char_1.replace(/ö/g, "o");
-  displaymessage = replace_scandic_char_2.replace(/[^a-z0-9_\ ]/gi,'');
+  var replace_scandic_char_2 = replace_scandic_char_1.replace(/Ä/g, "A");
+  var replace_scandic_char_3 = replace_scandic_char_2.replace(/ö/g, "o");
+  var replace_scandic_char_4 = replace_scandic_char_3.replace(/Ö/g, "O");
+  
+  displaymessage = replace_scandic_char_4.replace(/[^a-z0-9_\ ]/gi,'');
 
   //var displaymessage = String(userinput.value);
   log('>>> ' + displaymessage);
