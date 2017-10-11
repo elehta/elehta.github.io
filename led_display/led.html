@@ -171,6 +171,7 @@ async function onButtonClick() {
   log('>>> ' + displaymessage);
   
   if (displaymessage.length < 1) {
+	document.getElementById("p5").innerHTML = "Message could not be parsed...";
 	return;}
   
   if (bluetoothDevice != null) {
