@@ -149,7 +149,7 @@ const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
 
 async function onButtonClick() {
   // TODO: Validate message text.
-   let userinput = document.querySelector('#displaymsg').value;
+   var userinput = document.querySelector('#displaymsg').textcontent;
   //let userinput = document.getElementById('displaymsg').value;
 
   var displaymessage = String(userinput.value);
