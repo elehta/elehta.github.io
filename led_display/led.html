@@ -28,8 +28,7 @@
   </head>
 
   <body>
-    <h1 style="font-family: 'Open Sans';font-weight:800;font-size:24px;color: #000080"><img class="pageIcon" src="vtt_logo.jpg" align="top">    
-	LED DISPLAY DEMO</h1>
+    <h1 style="font-family: 'Open Sans';font-weight:800;font-size:24px;color: #000080"><img class="pageIcon" src="vtt_logo.jpg" align="top"> LED DISPLAY DEMO</h1>
 	<hr>
     
 <script>
@@ -156,6 +155,7 @@ var displaymessage;
 const cmd_update_buffer = 2;
 const cmd_update_display = 3;
 const cmd_save_to_flash = 4;
+const number_payload_bytes = 16;
 const serviceUuid = '00001523-1212-efde-1523-785feabcd123';
 const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
 
@@ -201,23 +201,47 @@ async function connect() {
 		const characteristic = await service.getCharacteristic(characteristicUuid);		
 		document.getElementById("p5").innerHTML = "Connection to device established...";
 
-	log('> ' + displaymessage);
+		log('> ' + displaymessage);
+		
+		var num_msgs = Math.floor((displaymessage.length+1)/number_payload_bytes);
+		
+		for(var m = 0; m < num_msgs;m++){
+		
+			if (num_msgs - m > 1)
+				{
+				msg_data[0] = cmd_update_buffer;			// command to be sent (uint8_t)
+				msg_data[1] = number_payload_bytes;			// message data length + end of string char (uint8_t) 
 
-	msg_data[0] = cmd_update_display;						// command to be sent (uint8_t)
-	msg_data[1] = displaymessage.length + 1;				// message data length + end of string char (uint8_t) 
-	msg_data[2] = 0; 										// data start index 2(uint16_t)
-	msg_data[3] = 0; 										// data start index 1(uint16_t)
+				}
+			else
+				{
+				msg_data[0] = cmd_update_display;
+				msg_data[1] = (displaymessage.length+1) % number_payload_bytes;
+				}								
 
-	let encoder = new TextEncoder('utf-8');
+			msg_data[2] = 0; 										// data start index 2(uint16_t)
+			msg_data[3] = m; 										// data start index 1(uint16_t)
+			
+			//msg_data[4-19] contain the data to be displayed
+		
+			let encoder = new TextEncoder('utf-8');
 
-	for(var i = 0; i < displaymessage.length; i++)
-	{
-		msg_data[i+4] = encoder.encode(displaymessage.substring(i, i+1));
-	}	
-	
-	msg_data[displaymessage.length + 4] = 0;
-	
-	await characteristic.writeValue(msg_data);
+			var msg_fraction = displaymessage.substring(m*number_payload_bytes, m*number_payload_bytes+number_payload_bytes)
+			
+			for(var i = 0; i < msg_fraction.length; i++)
+			{
+				msg_data[i+4] = encoder.encode(msg_fraction.substring(i, i+1));
+			}	
+			
+			if (msg_fraction.length < number_payload_bytes){
+				msg_data[msg_fraction.length + 4] = 0;
+			}
+			
+			await characteristic.writeValue(msg_data);
+		
+		}
+		
+		
 	document.getElementById("p5").innerHTML = "Sent message '" + displaymessage + "' to led display...";
 		
     },
