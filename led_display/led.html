@@ -167,6 +167,9 @@ async function onButtonClick() {
   //var displaymessage = String(userinput.value);
   log('>>> ' + displaymessage);
   
+  if (displaymessage.length < 1) {
+	return;}
+  
   if (bluetoothDevice != null) {
       connect();
 	  }
