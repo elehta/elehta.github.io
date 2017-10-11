@@ -236,7 +236,7 @@ async function connect() {
 			if (msg_fraction.length < number_payload_bytes){
 				msg_data[msg_fraction.length + 4] = 0;
 			}
-			
+			log(' >>> ' + msg_fraction);
 			await characteristic.writeValue(msg_data);
 		
 		}
