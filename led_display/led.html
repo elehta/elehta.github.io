@@ -90,7 +90,7 @@
 </div>
 <table width="100%" align="center">
   <tr>
-    <td style="text-align: left;background-color: #f8f9f9;"><p id="p5" style="font-family: 'Open Sans'; font-size:11px;">> Ready for connection...</p></td>
+    <td style="text-align: left;background-color: #f8f9f9;"><p id="p5" style="font-family: 'Open Sans'; font-size:11px;"> > Ready for connection...</p></td>
   </tr>
 </table>
 <script>
@@ -171,7 +171,7 @@ async function onButtonClick() {
   log('>>> ' + displaymessage);
   
   if (displaymessage.length < 1) {
-	document.getElementById("p5").innerHTML = "> Message could not be parsed...";
+	document.getElementById("p5").innerHTML = " > Message could not be parsed...";
 	return;
 	}
   
@@ -181,7 +181,7 @@ async function onButtonClick() {
   else{
 	  try {
 		log('Requesting any Bluetooth Device...');
-		document.getElementById("p5").innerHTML = "> Searching for Bluetooth device...";
+		document.getElementById("p5").innerHTML = " > Searching for Bluetooth device...";
 		bluetoothDevice = await navigator.bluetooth.requestDevice({
 		 // filters: [...] <- Prefer filters to save energy & show relevant devices.
 		acceptAllDevices: true, optionalServices: [serviceUuid]});
@@ -190,7 +190,7 @@ async function onButtonClick() {
 		connect();
 	  } catch(error) {
 		log('Error! ' + error);
-		document.getElementById("p5").innerHTML = "> Connection failed...";
+		document.getElementById("p5").innerHTML = " > Connection failed...";
 	  }
   }
 }
@@ -200,14 +200,14 @@ async function connect() {
     async function toTry() {
 		time('Connecting to Bluetooth device... ');
 		const server = await bluetoothDevice.gatt.connect();
-		document.getElementById("p5").innerHTML = "> Connecting to Bluetooth device...";
+		document.getElementById("p5").innerHTML = " > Connecting to Bluetooth device...";
 		
 		log('Getting Service...');
 		const service = await server.getPrimaryService(serviceUuid);
 	
 		log('Getting Characteristic...');
 		const characteristic = await service.getCharacteristic(characteristicUuid);		
-		document.getElementById("p5").innerHTML = "> Connection to device established...";
+		document.getElementById("p5").innerHTML = " > Connection to device established...";
 		
 		var num_msgs = Math.floor((displaymessage.length+1)/number_payload_bytes);
 		if ((displaymessage.length+1) % number_payload_bytes != 0){
@@ -270,7 +270,7 @@ async function connect() {
 		//	let encoder = new TextEncoder('utf-8');
 		//	await characteristic.writeValue(encoder.encode(displaymsg));
 
-			document.getElementById("p5").innerHTML = "> Sent message '" + displaymessage + "' to led display...";
+			document.getElementById("p5").innerHTML = " > Sent message '" + displaymessage + "' to led display...";
 			} catch(error)
 			{
 				log('Argh! ' + error);
@@ -284,7 +284,7 @@ async function connect() {
 }
 
 function onDisconnected() {
-  log('> Bluetooth device disconnected');
+  log(' > Bluetooth device disconnected');
   document.getElementById("p5").innerHTML = "> Bluetooth device disconnected";
   connect();
 }
