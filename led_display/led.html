@@ -183,7 +183,7 @@ async function onButtonClick() {
 		log('Requesting any Bluetooth Device...');
 		document.getElementById("p5").innerHTML = "&nbsp;> Searching for Bluetooth device...";
 		bluetoothDevice = await navigator.bluetooth.requestDevice({
-		 // filters: [...] <- Prefer filters to save energy & show relevant devices.
+		  filters: [{name: 'ExampleName'}], // <- Prefer filters to save energy & show relevant devices.
 		acceptAllDevices: true, optionalServices: [serviceUuid]});
 			
 		bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
