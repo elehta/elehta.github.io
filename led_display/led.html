@@ -31,7 +31,16 @@
   <body>
     <h1 style="font-family: 'Open Sans';font-weight:800;font-size:24px;padding-left:10px;color: #000080";><img class="pageIcon" src="vtt_logo.jpg" align="top" style="padding-top:3px;padding-right:12px;">LED DISPLAY DEMO</h1>
 	<hr>
-    
+<script>
+  var parameters = location.search.substring(1).split("&");
+  if (parameters != ""){
+	  var temp = parameters[0].split("=");
+	  var nodename = unescape(temp[1]);
+  } else{
+	nodename = "";
+}
+</script>    
+	
 <script>
   if('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js');
@@ -182,8 +191,9 @@ async function onButtonClick() {
 	  try {
 		log('Requesting any Bluetooth Device...');
 		document.getElementById("p5").innerHTML = "&nbsp;> Searching for Bluetooth device...";
-		bluetoothDevice = await navigator.bluetooth.requestDevice({
-		  filters: [{namePrefix: 'APT'}], // <- Prefer filters to save energy & show relevant devices.
+		bluetoothDevice = await navigator.bluetooth.requestDevice(
+		  {filters: getDeviceName(),
+		  //filters: [{namePrefix: 'FlMatrix'}], // <- Prefer filters to save energy & show relevant devices.
 		optionalServices: [serviceUuid]});
 			
 		bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
@@ -287,6 +297,18 @@ function onDisconnected() {
   log(' > Bluetooth device disconnected');
   document.getElementById("p5").innerHTML = "&nbsp;> Bluetooth device disconnected";
   connect();
+}
+
+function getDeviceName() {
+
+	if (nodename != '' && nodename != 'undefined'){
+		return [{namePrefix: nodename}];
+	}else{
+		return Array.from('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+		  .map(c => ({name: c}))
+		  .concat({name: ''});}
+			// This is the closest we can get for now to get all devices.
+			// https://github.com/WebBluetoothCG/web-bluetooth/issues/234
 }
 
 /* Utils */
