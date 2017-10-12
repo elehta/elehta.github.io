@@ -192,9 +192,8 @@ async function onButtonClick() {
 		log('Requesting any Bluetooth Device...');
 		document.getElementById("p5").innerHTML = "&nbsp;> Searching for Bluetooth device...";
 		bluetoothDevice = await navigator.bluetooth.requestDevice(
-		  {filters: getDeviceName(),
+		  {filters: getDeviceName(), optionalServices: [serviceUuid]});
 		  //filters: [{namePrefix: 'FlMatrix'}], // <- Prefer filters to save energy & show relevant devices.
-		optionalServices: [serviceUuid]});
 			
 		bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
 		connect();
@@ -305,7 +304,7 @@ function getDeviceName() {
 		return [{namePrefix: nodename}];
 	}else{
 		return Array.from('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
-		  .map(c => ({name: c}))
+		  .map(c => ({namePrefix: c}))
 		  .concat({name: ''});}
 			// This is the closest we can get for now to get all devices.
 			// https://github.com/WebBluetoothCG/web-bluetooth/issues/234
