@@ -225,16 +225,19 @@ async function connect() {
 		
 		for(var m = 0; m < num_msgs;m++){
 		
-			if (num_msgs - m > 1)
+			if (num_msgs - m > 1) // more messages to come
 				{
 				msg_data[0] = cmd_update_buffer;			// command to be sent (uint8_t)
 				msg_data[1] = number_payload_bytes;			// message data length + end of string char (uint8_t) 
 
 				}
-			else
+			else	// This is last message
 				{
-				msg_data[0] = cmd_update_display;
-				msg_data[1] = (displaymessage.length+1) % number_payload_bytes;
+				msg_data[0] = cmd_update_display;			// command to be sent (uint8_t)
+				if ((displaymessage.length+1) = number_payload_bytes)			
+					msg_data[1] = number_payload_bytes;	// message data length + end of string char length (uint8_t) 
+				else
+					msg_data[1] = (displaymessage.length+1) % number_payload_bytes;	// message data length + end of string char length (uint8_t) 
 				}								
 
 			msg_data[2] = m; 										// data start index 2(uint16_t)
