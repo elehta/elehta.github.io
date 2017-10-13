@@ -234,7 +234,7 @@ async function connect() {
 			else	// This is last message
 				{
 				msg_data[0] = cmd_update_display;			// command to be sent (uint8_t)
-				if ((displaymessage.length+1) = number_payload_bytes)			
+				if ((displaymessage.length+1) == number_payload_bytes)			
 					msg_data[1] = number_payload_bytes;	// message data length + end of string char length (uint8_t) 
 				else
 					msg_data[1] = (displaymessage.length+1) % number_payload_bytes;	// message data length + end of string char length (uint8_t) 
