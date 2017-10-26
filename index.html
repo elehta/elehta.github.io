@@ -68,8 +68,8 @@ Copyright 2017 Google Inc. All Rights Reserved.
 <p>Connect and read data from VTT TinyNode<a id="p7" style="font-weight:600; color:#33ff33;"><a>.</p>
  <table style="width:100%">
  <tr>
-	<td style="width:50%"><input type="radio" name="gender" value="male" checked> Male<br></td>
-	<td style="width:50%"><input type="radio" name="gender" value="female"> Female<br></td>
+	<td style="width:50%"><input type="radio" name="gender" value="env" checked> Environment<br></td>
+	<td style="width:50%"><input type="radio" name="gender" value="acc"> Acceleration<br></td>
  </tr>
   <tr>
     <td style="width:50%"><button style="height:50px;width:100%" id="connect">CONNECT</button></td>
@@ -315,13 +315,13 @@ function handleCharacteristicValueChanged(event) {
   /* var value = event.target.value;
   log('Received value: ' + value);
   */
- 
+  var selectedData = document.getElementById("gender").value;
   var value = event.target.value;
   log('value: ' + value.getUint8(0) + ' ' + value.getUint8(1)+ ' ' + value.getUint8(2) + ' ' + value.getUint8(3) + ' ' + value.getUint8(4) + ' ' + value.getUint8(5) + ' ' + value.getUint8(6) + ' ' + value.getUint8(7) + ' ' + value.getUint8(8) + ' ' + value.getUint8(9) + ' ' + value.getUint8(10) + ' ' + value.getUint8(11) + ' ' + value.getUint8(12) + ' ' + value.getUint8(13) + ' ' + value.getUint8(14) + ' ' + value.getUint8(15) + ' ' + value.getUint8(16) + ' ' + value.getUint8(17) + ' ' + value.getUint8(18) + ' ' + value.getUint8(19));
   
   var dataType = value.getUint8(0);
 
-  if (dataType == 1) { 	// Acceleration data
+  if (dataType == 1 && selectedData == 'acc') { 	// Acceleration data
 
   msgcounter = msgcounter + 1;
   
