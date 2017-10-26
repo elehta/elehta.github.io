@@ -166,6 +166,7 @@ var msgcounter;
 var chart = new SmoothieChart({millisPerPixel:100,maxValueScale:1.16,grid:{millisPerLine:9000},yRangeFunction:myYRangeFunction});
 var ts = new TimeSeries();
 var dataToStream = "p1";
+var selectedData;
 
 function onButtonClick() {
     bluetoothDevice = null;
@@ -297,9 +298,15 @@ function time(text) {
   
     switch (dataToStream)
    {
-	case 'p1':  min = 950;
-				max = 1080;
-				break;
+	case 'p1':  if (selectedData == 'env'){
+					min = 950;
+					max = 1080;
+					break;
+				}else{
+					min = -5;
+					max = 5;
+					break;
+				}
 	case 'p2':  min = 10;
 				max = 40;
 				break;
@@ -318,7 +325,7 @@ function handleCharacteristicValueChanged(event) {
   */
   
   //var selectedData = document.getElementById("gender").value;
-  var selectedData = document.querySelector('input[name="gender"]:checked').value;
+  selectedData = document.querySelector('input[name="gender"]:checked').value;
   
   var value = event.target.value;
   log('value: ' + value.getUint8(0) + ' ' + value.getUint8(1)+ ' ' + value.getUint8(2) + ' ' + value.getUint8(3) + ' ' + value.getUint8(4) + ' ' + value.getUint8(5) + ' ' + value.getUint8(6) + ' ' + value.getUint8(7) + ' ' + value.getUint8(8) + ' ' + value.getUint8(9) + ' ' + value.getUint8(10) + ' ' + value.getUint8(11) + ' ' + value.getUint8(12) + ' ' + value.getUint8(13) + ' ' + value.getUint8(14) + ' ' + value.getUint8(15) + ' ' + value.getUint8(16) + ' ' + value.getUint8(17) + ' ' + value.getUint8(18) + ' ' + value.getUint8(19));
