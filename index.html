@@ -34,7 +34,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/VTT TinyNode Demo</h2>
+    <h2>WebBT/VTT TinyNode Demoo</h2>
 	
 
 <script>
@@ -104,9 +104,9 @@ Copyright 2017 Google Inc. All Rights Reserved.
 		<td colspan="3" style="width:50%; margin-bottom: 2px;"><input type="radio" onclick="handleClick(this);" name="ch_type" value="2"> Acceleration</td>
 	</tr>
   <tr>
-    <td colspan="2"><p id="p1" onselectstart="return false" style="visibility:hidden;padding-left:3px;height:18px;">P:</p></td>
-    <td colspan="2"><p id="p2" onselectstart="return false" style="visibility:hidden;height:18px;">T:</p></td>
-    <td colspan="2"><p id="p3" onselectstart="return false" style="visibility:hidden;padding-right:3px;height:18px;">H:</p></td>
+    <td colspan="2"><p id="p1" onselectstart="return false" style="visibility:hidden;padding-left:8px;height:10px;">P:</p></td>
+    <td colspan="2"><p id="p2" onselectstart="return false" style="visibility:hidden;height:10px;">T:</p></td>
+    <td colspan="2"><p id="p3" onselectstart="return false" style="visibility:hidden;padding-right:8px;height:10px;">H:</p></td>
   </tr>
 </table> 
 
@@ -263,8 +263,8 @@ function onButtonClick() {
         acc_chart.addTimeSeries(ts_acc2, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 1 });
         acc_chart.addTimeSeries(ts_acc3, { strokeStyle: 'rgba(255, 255, 0, 1)', lineWidth: 1 });
 				
-		env_chart.streamTo(document.getElementById("env_chart_canvas"), 500);
-		acc_chart.streamTo(document.getElementById("acc_chart_canvas"), 30);
+		env_chart.streamTo(document.getElementById("env_chart_canvas"), 800);
+		acc_chart.streamTo(document.getElementById("acc_chart_canvas"), 10);
 
 		document.getElementById("p7").innerHTML = " " + bluetoothDevice.name;
 		})
