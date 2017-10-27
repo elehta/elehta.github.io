@@ -34,7 +34,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/VTT TinyNode Demoh</h2>
+    <h2>WebBT/VTT TinyNode Demox</h2>
 	
 
 <script>
@@ -181,8 +181,8 @@ var bluetoothDevice;
 var setter;
 var getter;
 var msgcounter;
-var env_chart = new SmoothieChart({millisPerPixel:3,maxValueScale:1.16,grid:{millisPerLine:6000},yRangeFunction:envYRangeFunction});
-var acc_chart = new SmoothieChart({millisPerPixel:20,maxValueScale:1.16,grid:{millisPerLine:6000},yRangeFunction:accYRangeFunction});
+var env_chart = new SmoothieChart({millisPerPixel:3,maxValueScale:1.16,grid:{millisPerLine:1000},yRangeFunction:envYRangeFunction});
+var acc_chart = new SmoothieChart({millisPerPixel:20,maxValueScale:1.16,grid:{millisPerLine:1000},yRangeFunction:accYRangeFunction});
 var ts1 = new TimeSeries();
 var ts_acc1 = new TimeSeries();
 var ts_acc2 = new TimeSeries();
@@ -270,6 +270,9 @@ function onButtonClick() {
 		})
 		.then(_ => {
 		 //log('Measurement ON!');
+		document.getElementById("p1").style.visibility='visible';
+		document.getElementById("p2").style.visibility='visible';
+		document.getElementById("p3").style.visibility='visible';
 		document.getElementById("p5").innerHTML = "Measurement started...";
 		document.getElementById("connect").disabled = true;
 		document.getElementById("disconnect").disabled = false;		
