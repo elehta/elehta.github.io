@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/ TinyNode Demo</h2>
+    <h2>WebBT/TinyNode Demo x</h2>
 
 	
 
@@ -163,8 +163,9 @@ var bluetoothDevice;
 var setter;
 var getter;
 var msgcounter;
-var chart = new SmoothieChart({millisPerPixel:50,maxValueScale:1.16,grid:{millisPerLine:6000},yRangeFunction:myYRangeFunction});
-var ts = new TimeSeries();
+var env_chart = new SmoothieChart({millisPerPixel:10,maxValueScale:1.16,grid:{millisPerLine:6000},yRangeFunction:myYRangeFunction});
+
+var ts1 = new TimeSeries();
 var dataToStream = "p1";
 var selectedData;
 
@@ -230,8 +231,8 @@ function onButtonClick() {
 		document.getElementById("p5").innerHTML = "Measurement started...";
 		document.getElementById("connect").disabled = true;
 		document.getElementById("disconnect").disabled = false;
-        chart.addTimeSeries(ts, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 2 });
-        chart.streamTo(document.getElementById("env_chart"), 500);
+        env_chart.addTimeSeries(ts1, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 2 });
+        env_chart.streamTo(document.getElementById("env_chart"), 500);
 		document.getElementById("p7").innerHTML = " " + bluetoothDevice.name;
 		})
 		
@@ -244,7 +245,7 @@ function onButtonClick() {
 function disconnect() {
 	//log('Setting Measurement off... ');
 	document.getElementById("p5").innerHTML = "Stopping Measurement...";
-	chart.stop();
+	env_chart.stop();
 	return bluetoothDevice.gatt.connect()
 	.then(server => {
 	return server.getPrimaryService('00001523-1212-efde-1523-785feabcd123');
@@ -347,7 +348,7 @@ function handleCharacteristicValueChanged(event) {
 		  document.getElementById("p3").innerHTML = "Z: " + z1;
 		  document.getElementById("p4").innerHTML = "Messages: " + msgcounter;
 		  
-		  ts.append(new Date().getTime(), x1)
+		  ts1.append(new Date().getTime(), x1)
 		
   }else if (dataType == 2 && selectedData == 'env'){						// Environment data
   
@@ -367,27 +368,27 @@ function handleCharacteristicValueChanged(event) {
   switch (dataToStream)
    {
 	case 'p1':  if(selectedData == 'env'){
-					ts.append(new Date().getTime(), presdata);
+					ts1.append(new Date().getTime(), presdata);
 					}else{
-					ts.append(new Date().getTime(), x1);
+					ts1.append(new Date().getTime(), x1);
 					}
 				document.getElementById("p1").style.borderBottom = "thick solid #33ff33"; 
 				document.getElementById("p2").style.borderBottom = "thick solid #ffffff";
 				document.getElementById("p3").style.borderBottom = "thick solid #ffffff";
 		break;
-	case 'p2':  ts.append(new Date().getTime(), tempdata);
+	case 'p2':  ts1.append(new Date().getTime(), tempdata);
 				document.getElementById("p1").style.borderBottom = "thick solid #ffffff";
 				document.getElementById("p2").style.borderBottom = "thick solid #33ff33";
 				document.getElementById("p3").style.borderBottom = "thick solid #ffffff";
 		break;
-	case 'p3':  ts.append(new Date().getTime(), humidata);
+	case 'p3':  ts1.append(new Date().getTime(), humidata);
 				document.getElementById("p1").style.borderBottom = "thick solid #ffffff";
 				document.getElementById("p2").style.borderBottom = "thick solid #ffffff";
 				document.getElementById("p3").style.borderBottom = "thick solid #33ff33";
 		break;
 		
 		
-	default:  ts.append(new Date().getTime(), tempdata)
+	default:  ts1.append(new Date().getTime(), tempdata)
    }
 
    
@@ -396,7 +397,7 @@ function handleCharacteristicValueChanged(event) {
   
   function updateChart(counter, value){
    
-   ts.append(counter, value);
+   ts1.append(counter, value);
   
   }
   
