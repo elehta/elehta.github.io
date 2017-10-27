@@ -30,13 +30,11 @@ Copyright 2017 Google Inc. All Rights Reserved.
        
     <link rel="stylesheet" href="../styles/main.css">
 	  
-    
   </head>
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo 2g</h2>
-
+    <h2>WebBT/TinyNode Demo 22g</h2>
 	
 
 <script>
@@ -303,6 +301,7 @@ function disconnect() {
 	//log('Setting Measurement off... ');
 	document.getElementById("p5").innerHTML = "Stopping Measurement...";
 	env_chart.stop();
+	acc_chart.stop();
 	return bluetoothDevice.gatt.connect()
 	.then(server => {
 	return server.getPrimaryService('00001523-1212-efde-1523-785feabcd123');
@@ -400,6 +399,10 @@ function handleCharacteristicValueChanged(event) {
 		var z1 = parseFloat(handleAccData(8, value)).toFixed(2);
 		log('x: ' + x1 + ' y: ' + y1 + ' z: ' + z1);
 		
+		document.getElementById("p1").style.borderBottom = "thick solid #E6E0F8";
+		document.getElementById("p2").style.borderBottom = "thick solid #E6E0F8";
+		document.getElementById("p3").style.borderBottom = "thick solid #E6E0F8";
+		
 		  document.getElementById("p1").innerHTML = "X: " + x1;
 		  document.getElementById("p2").innerHTML = "Y: " + y1;
 		  document.getElementById("p3").innerHTML = "Z: " + z1;
@@ -426,9 +429,7 @@ function handleCharacteristicValueChanged(event) {
   
   switch (dataToStream)
    {
-	case 'p1':  
-					ts1.append(new Date().getTime(), presdata);
-					
+	case 'p1':  ts1.append(new Date().getTime(), presdata);	
 				document.getElementById("p1").style.borderBottom = "thick solid #33ff33"; 
 				document.getElementById("p2").style.borderBottom = "thick solid #E6E0F8";
 				document.getElementById("p3").style.borderBottom = "thick solid #E6E0F8";
