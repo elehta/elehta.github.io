@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo c</h2>
+    <h2>WebBT/TinyNode Demo d</h2>
 
 	
 
@@ -78,17 +78,17 @@ Copyright 2017 Google Inc. All Rights Reserved.
 </table> 
 
 <script>
+document.getElementById("ch_type").onclick=function(){
+  swapCanvases();
+};
 
-
- document.myForm.ch_type.onclick = function() {
-  if(env_chart.style.visibility=='visible'){
-    env_chart.style.visibility='hidden';
-    acc_chart.style.visibility='visible';
-	document.getElementById("p7").innerHTML = "acc visible";
+function swapCanvases(){
+  if(env.style.visibility=='visible'){
+    env.style.visibility='hidden';
+    acc.style.visibility='visible';
   }else{
-    env_chart.style.visibility='visible';
-    acc_chart.style.visibility='hidden';
-	document.getElementById("p7").innerHTML = "env visible";
+    env.style.visibility='visible';
+    acc.style.visibility='hidden';
   }
 }
 </script>
