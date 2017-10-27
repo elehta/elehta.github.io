@@ -77,6 +77,21 @@ Copyright 2017 Google Inc. All Rights Reserved.
  </tr>
 </table> 
 
+<script>
+
+
+ document.myForm.ch_type.onclick = function() {
+  if(env_chart.style.visibility=='visible'){
+    env_chart.style.visibility='hidden';
+    acc_chart.style.visibility='visible';
+	document.getElementById("p7").innerHTML = "acc visible";
+  }else{
+    env_chart.style.visibility='visible';
+    acc_chart.style.visibility='hidden';
+	document.getElementById("p7").innerHTML = "env visible";
+  }
+}
+</script>
 
 
 <script>
@@ -118,31 +133,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 <canvas id="env_chart" width="340" height="200" style="display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
 <canvas id="acc_chart" width="340" height="200" style="display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9; visibility: hidden;"></canvas>
 
-<script>
-    var rad = document.myForm.ch_type;
-    var prev = null;
-    for(var i = 0; i < rad.length; i++) {
-        rad[i].onclick = function() {
-            (prev)? console.log(prev.value):null;
-            if(this !== prev) {
-                prev = this;
-            }
-			swapCanvases();
-        };
-    }
 
-function swapCanvases(){
-  if(env_chart.style.visibility=='visible'){
-    env_chart.style.visibility='hidden';
-    acc_chart.style.visibility='visible';
-	document.getElementById("p7").innerHTML = "acc visible";
-  }else{
-    env_chart.style.visibility='visible';
-    acc_chart.style.visibility='hidden';
-	document.getElementById("p7").innerHTML = "env visible";
-  }
-}
-</script>
 
  <table width="340" align="center">
   <tr>
