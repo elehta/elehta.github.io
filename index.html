@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo e</h2>
+    <h2>WebBT/TinyNode Demo f</h2>
 
 	
 
@@ -86,11 +86,11 @@ function swapCanvases(){
   if(env.style.visibility=='visible'){
     env.style.visibility='hidden';
     acc.style.visibility='visible';
-	document.getElementById("p7").innerHTML = " acc";
+	document.getElementById("p7").innerHTML = "acc";
   }else{
     env.style.visibility='visible';
     acc.style.visibility='hidden';
-	document.getElementById("p7").innerHTML = " aenv";
+	document.getElementById("p9").innerHTML = "env";
   }
 }
 </script>
@@ -132,9 +132,10 @@ function swapCanvases(){
   </tr>
 </table> 
 
-<canvas id="env_chart" width="340" height="200" style="display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
-<canvas id="acc_chart" width="340" height="200" style="display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9; visibility: hidden;"></canvas>
-
+<div id=wrapper style="position:relative;">
+	<canvas id="env_chart" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
+	<canvas id="acc_chart" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9; visibility: hidden;"></canvas>
+</div>
 
 
  <table width="340" align="center">
@@ -143,6 +144,8 @@ function swapCanvases(){
 	<td style="text-align: right;"><p id="p4" style="font-family: 'Titillium Web'; font-size:11px;">Messages: 0</p></td>
   </tr>
 </table> 
+
+<p id="p9">debug</p>
 
 <p style="font-family: 'Titillium Web'; font-size:10px; font-weight:600; text-align: center;">This page uses Web Bluetooth API + smoothie.js. Made by VTT Finland 2017.</p>
 
