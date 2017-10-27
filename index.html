@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo</h2>
+    <h2>WebBT/ TinyNode Demo</h2>
 
 	
 
@@ -67,14 +67,14 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
 <p>Connect and read data from VTT TinyNode<a id="p7" style="font-weight:600; color:#33ff33;"><a>.</p>
  <table style="width:100%">
- <tr>
-	<td style="width:50%"><input type="radio" name="gender" value="env" checked> Environment<br></td>
-	<td style="width:50%"><input type="radio" name="gender" value="acc"> Acceleration<br></td>
- </tr>
   <tr>
     <td style="width:50%"><button style="height:50px;width:100%" id="connect">CONNECT</button></td>
     <td style="width:50%"><input style="height:50px;width:100%" id="disconnect" onclick="disconnect()" type="button" value="DISCONNECT" disabled="true" /></td>
   </tr>
+   <tr>
+	<td style="width:50%"><input type="radio" name="gender" value="env" checked> Environment<br></td>
+	<td style="width:50%"><input type="radio" name="gender" value="acc"> Acceleration<br></td>
+ </tr>
 </table> 
 
 
@@ -230,8 +230,8 @@ function onButtonClick() {
 		document.getElementById("p5").innerHTML = "Measurement started...";
 		document.getElementById("connect").disabled = true;
 		document.getElementById("disconnect").disabled = false;
-        chart.addTimeSeries(ts, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 3 });
-        chart.streamTo(document.getElementById("env_chart"), 2000);
+        chart.addTimeSeries(ts, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 2 });
+        chart.streamTo(document.getElementById("env_chart"), 500);
 		document.getElementById("p7").innerHTML = " " + bluetoothDevice.name;
 		})
 		
