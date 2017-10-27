@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo m</h2>
+    <h2>WebBT/TinyNode Demo p</h2>
 
 	
 
@@ -65,37 +65,13 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
 
 
-<p>Connect and read data from VTT TinyNode<a id="p7" style="font-weight:600; color:#33ff33;"><a>.</p>
+<p>Connect to read data from VTT TinyNode<a id="p7" style="font-weight:600; color:#33ff33;"><a>.</p>
  <table style="width:100%">
   <tr>
     <td style="width:50%"><button style="height:50px;width:100%" id="connect">CONNECT</button></td>
     <td style="width:50%"><input style="height:50px;width:100%" id="disconnect" onclick="disconnect()" type="button" value="DISCONNECT" disabled="true" /></td>
   </tr>
 </table> 
-
-<script>
-  <!-- document.querySelector('ch_type').addEventListener('click', function() { -->
-		<!-- document.getElementById("p9").innerHTML = "klik"; -->
-        <!-- swapCanvases(); -->
-    <!-- } -->
-  <!-- }); -->
-document.getElementById("ch_type").onclick=function(){
-	document.getElementById("p9").innerHTML = "klik";
-	<!-- swapCanvases(); -->
-};
-
-function swapCanvases(){
-  if(env_chart.style.visibility=='visible'){
-    env_chart.style.visibility='hidden';
-    acc_chart.style.visibility='visible';
-	document.getElementById("p9").innerHTML = "acc";
-  }else{
-    env_chart.style.visibility='visible';
-    acc_chart.style.visibility='hidden';
-	document.getElementById("p9").innerHTML = "env";
-  }
-}
-</script>
 
 
 <script>
@@ -128,8 +104,8 @@ function swapCanvases(){
 
  <table style="width:100%; text-align: center; font-weight:600; border-spacing: 0px; margin-top:10px;  background-color:#E6E0F8">
     <tr>
-		<td colspan="3" style="width:50%;"><input type="radio" name="ch_type" value="env" checked> Environment</td>
-		<td colspan="3" style="width:50%;"><input type="radio" name="ch_type" value="acc"> Acceleration</td>
+		<td colspan="3" style="width:50%;"><input type="radio" onclick="handleClick(this);" name="ch_type" value="env" checked> Environment</td>
+		<td colspan="3" style="width:50%;"><input type="radio" onclick="handleClick(this);" name="ch_type" value="acc"> Acceleration</td>
 	</tr>
   <tr>
     <td colspan="2"><p id="p1" onselectstart="return false">P:</p></td>
@@ -138,7 +114,44 @@ function swapCanvases(){
   </tr>
 </table> 
 
+<script>
 
+var currentValue = 0;
+function handleClick(myRadio) {
+    //alert('Old value: ' + currentValue);
+    //alert('New value: ' + myRadio.value);
+    currentValue = myRadio.value;
+    swapCanvases(currentValue);
+}
+
+function swapCanvases(value){
+  if(value==1 || value==0){
+    env_chart.style.visibility='hidden';
+    acc_chart.style.visibility='visible';
+  }else if(value==2){
+    env_chart.style.visibility='visible';
+    acc_chart.style.visibility='hidden';
+  }
+}
+
+
+<!-- document.getElementById("ch_type").onclick=function(){ -->
+	<!-- document.getElementById("p9").innerHTML = "klik"; -->
+	<!-- <!-- swapCanvases(); --> -->
+<!-- }; -->
+
+<!-- function swapCanvases(){ -->
+  <!-- if(env_chart.style.visibility=='visible'){ -->
+    <!-- env_chart.style.visibility='hidden'; -->
+    <!-- acc_chart.style.visibility='visible'; -->
+	<!-- document.getElementById("p9").innerHTML = "acc"; -->
+  <!-- }else{ -->
+    <!-- env_chart.style.visibility='visible'; -->
+    <!-- acc_chart.style.visibility='hidden'; -->
+	<!-- document.getElementById("p9").innerHTML = "env"; -->
+  <!-- } -->
+<!-- } -->
+</script>
 
 
  <table width="340" align="center">
@@ -406,17 +419,17 @@ function handleCharacteristicValueChanged(event) {
 					ts1.append(new Date().getTime(), x1);
 					}
 				document.getElementById("p1").style.borderBottom = "thick solid #33ff33"; 
-				document.getElementById("p2").style.borderBottom = "thick solid #ffffff";
-				document.getElementById("p3").style.borderBottom = "thick solid #ffffff";
+				document.getElementById("p2").style.borderBottom = "thick solid #E6E0F8";
+				document.getElementById("p3").style.borderBottom = "thick solid #E6E0F8";
 		break;
 	case 'p2':  ts1.append(new Date().getTime(), tempdata);
-				document.getElementById("p1").style.borderBottom = "thick solid #ffffff";
+				document.getElementById("p1").style.borderBottom = "thick solid #E6E0F8";
 				document.getElementById("p2").style.borderBottom = "thick solid #33ff33";
-				document.getElementById("p3").style.borderBottom = "thick solid #ffffff";
+				document.getElementById("p3").style.borderBottom = "thick solid #E6E0F8";
 		break;
 	case 'p3':  ts1.append(new Date().getTime(), humidata);
-				document.getElementById("p1").style.borderBottom = "thick solid #ffffff";
-				document.getElementById("p2").style.borderBottom = "thick solid #ffffff";
+				document.getElementById("p1").style.borderBottom = "thick solid #E6E0F8";
+				document.getElementById("p2").style.borderBottom = "thick solid #E6E0F8";
 				document.getElementById("p3").style.borderBottom = "thick solid #33ff33";
 		break;
 		
