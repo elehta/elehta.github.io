@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo f</h2>
+    <h2>WebBT/TinyNode Demo g</h2>
 
 	
 
@@ -83,13 +83,13 @@ document.getElementById("ch_type").onclick=function(){
 };
 
 function swapCanvases(){
-  if(env.style.visibility=='visible'){
-    env.style.visibility='hidden';
-    acc.style.visibility='visible';
-	document.getElementById("p7").innerHTML = "acc";
+  if(env_chart.style.visibility=='visible'){
+    env_chart.style.visibility='hidden';
+    acc_chart.style.visibility='visible';
+	document.getElementById("p9").innerHTML = "acc";
   }else{
-    env.style.visibility='visible';
-    acc.style.visibility='hidden';
+    env_chart.style.visibility='visible';
+    acc_chart.style.visibility='hidden';
 	document.getElementById("p9").innerHTML = "env";
   }
 }
