@@ -34,7 +34,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo das</h2>
+    <h2>WebBT/VTT TinyNode Demoh</h2>
 	
 
 <script>
@@ -59,8 +59,6 @@ Copyright 2017 Google Inc. All Rights Reserved.
     });
   });
 </script>
-
-
 
 
 <p>Connect to read data from VTT TinyNode<a id="p7" style="font-weight:600; color:#33ff33;"><a>.</p>
@@ -100,15 +98,15 @@ Copyright 2017 Google Inc. All Rights Reserved.
   };
 </script>
 
- <table style="width:100%; text-align: center; font-weight:600; border-spacing: 0px; margin-top:10px; background-color:#E6E0F8; padding:6px;">
+ <table style="width:100%; text-align: center; font-weight:600; border-spacing: 0px; margin-top:10px; background-color:#E6E0F8; padding-top:8px;">
     <tr>
-		<td colspan="3" style="width:50%;"><input type="radio" onclick="handleClick(this);" name="ch_type" value="1" checked> Environment</td>
-		<td colspan="3" style="width:50%;"><input type="radio" onclick="handleClick(this);" name="ch_type" value="2"> Acceleration</td>
+		<td colspan="3" style="width:50%; margin-bottom: 5px;"><input type="radio" onclick="handleClick(this);" name="ch_type" value="1" checked> Environment</td>
+		<td colspan="3" style="width:50%; margin-bottom: 5px;"><input type="radio" onclick="handleClick(this);" name="ch_type" value="2"> Acceleration</td>
 	</tr>
   <tr>
-    <td colspan="2"><p id="p1" onselectstart="return false">P:</p></td>
-    <td colspan="2"><p id="p2" onselectstart="return false">T:</p></td>
-    <td colspan="2"><p id="p3" onselectstart="return false">H:</p></td>
+    <td colspan="2"><p id="p1" onselectstart="return false" style="visibility:hidden;">P:</p></td>
+    <td colspan="2"><p id="p2" onselectstart="return false" style="visibility:hidden;">T:</p></td>
+    <td colspan="2"><p id="p3" onselectstart="return false" style="visibility:hidden;">H:</p></td>
   </tr>
 </table> 
 
@@ -118,18 +116,15 @@ Copyright 2017 Google Inc. All Rights Reserved.
 	<td style="text-align: right;"><p id="p4" style="font-family: 'Titillium Web'; font-size:11px;">Messages: 0</p></td>
   </tr>
 </table> 
-<p style="font-family: 'Titillium Web'; font-size:10px; font-weight:600; text-align: center;">This page uses Web Bluetooth API + smoothie.js. Made by VTT Finland 2017.</p>
-<p style="font-family: 'Titillium Web'; font-size:10px;" id="p9">debug</p>
 
 <div id="wrapper" style="position:relative;">
 	<canvas id="env_chart_canvas" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
-	<canvas id="acc_chart_canvas" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #ffffff; background: #e5e7e9; visibility: hidden;"></canvas>
+	<canvas id="acc_chart_canvas" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #0099cc; background: #e5e7e9; visibility: hidden;"></canvas>
 </div>
 
+<p style="font-family: 'Titillium Web'; font-size:10px; font-weight:600; text-align: center; margin-top:210px;">This page uses Web Bluetooth API + smoothie.js. Made by VTT Finland 2017.</p>
+
 <script>
-
-
-
 
 <!-- document.getElementById("ch_type").onclick=function(){ -->
 	<!-- document.getElementById("p9").innerHTML = "klik"; -->
@@ -186,8 +181,8 @@ var bluetoothDevice;
 var setter;
 var getter;
 var msgcounter;
-var env_chart = new SmoothieChart({millisPerPixel:10,maxValueScale:1.16,grid:{millisPerLine:6000},yRangeFunction:envYRangeFunction});
-var acc_chart = new SmoothieChart({millisPerPixel:10,maxValueScale:1.16,grid:{millisPerLine:6000},yRangeFunction:accYRangeFunction});
+var env_chart = new SmoothieChart({millisPerPixel:3,maxValueScale:1.16,grid:{millisPerLine:6000},yRangeFunction:envYRangeFunction});
+var acc_chart = new SmoothieChart({millisPerPixel:20,maxValueScale:1.16,grid:{millisPerLine:6000},yRangeFunction:accYRangeFunction});
 var ts1 = new TimeSeries();
 var ts_acc1 = new TimeSeries();
 var ts_acc2 = new TimeSeries();
@@ -204,9 +199,7 @@ function handleClick(myRadio) {
 }
 
 function swapCanvases(value){
-    
-	document.getElementById("p9").innerHTML = value;
-	
+    	
 	if(value==1 || value==0){
 	document.getElementById("env_chart_canvas").style.visibility='visible';
 	document.getElementById("acc_chart_canvas").style.visibility='hidden';
@@ -371,8 +364,8 @@ function time(text) {
 
  function accYRangeFunction(range) {
   // TODO implement your calculation using range.min and range.max
-  var min = -5;
-  var max = 5;
+  var min = -20;
+  var max = 20;
     
   return {min: min, max: max};
 }
