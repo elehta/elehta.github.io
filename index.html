@@ -231,8 +231,9 @@ function onButtonClick() {
 		document.getElementById("p5").innerHTML = "Measurement started...";
 		document.getElementById("connect").disabled = true;
 		document.getElementById("disconnect").disabled = false;
+		env_chart.visibility = false;
         env_chart.addTimeSeries(ts1, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 2 });
-        env_chart.streamTo(document.getElementById("env_chart"), 500);
+        env_chart.streamTo(document.getElementById("env_chart"), 200);
 		document.getElementById("p7").innerHTML = " " + bluetoothDevice.name;
 		})
 		
