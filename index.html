@@ -98,10 +98,10 @@ Copyright 2017 Google Inc. All Rights Reserved.
   };
 </script>
 
- <table style="width:100%; text-align: center; font-weight:600; border-spacing: 0px; margin-top:10px; background-color:#E6E0F8; padding-top:8px;">
+ <table style="width:100%; text-align: center; font-weight:600; border-spacing: 0px; margin-top:10px; margin-bottom: 8px; background-color:#E6E0F8; padding-top:8px;">
     <tr>
-		<td colspan="3" style="width:50%; margin-bottom: 5px;"><input type="radio" onclick="handleClick(this);" name="ch_type" value="1" checked> Environment</td>
-		<td colspan="3" style="width:50%; margin-bottom: 5px;"><input type="radio" onclick="handleClick(this);" name="ch_type" value="2"> Acceleration</td>
+		<td colspan="3" style="width:50%; margin-bottom: 2px;"><input type="radio" onclick="handleClick(this);" name="ch_type" value="1" checked> Environment</td>
+		<td colspan="3" style="width:50%; margin-bottom: 2px;"><input type="radio" onclick="handleClick(this);" name="ch_type" value="2"> Acceleration</td>
 	</tr>
   <tr>
     <td colspan="2"><p id="p1" onselectstart="return false" style="visibility:hidden;">P:</p></td>
@@ -110,39 +110,21 @@ Copyright 2017 Google Inc. All Rights Reserved.
   </tr>
 </table> 
 
- <table width="340" align="center">
-  <tr>
-    <td style="text-align: left;"><p id="p5" style="font-family: 'Titillium Web'; font-size:11px;">Ready for connection...</p></td>
-	<td style="text-align: right;"><p id="p4" style="font-family: 'Titillium Web'; font-size:11px;">Messages: 0</p></td>
-  </tr>
-</table> 
-
 <div id="wrapper" style="position:relative;">
 	<canvas id="env_chart_canvas" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
 	<canvas id="acc_chart_canvas" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #0099cc; background: #e5e7e9; visibility: hidden;"></canvas>
 </div>
 
-<p style="font-family: 'Titillium Web'; font-size:10px; font-weight:600; text-align: center; margin-top:210px;">This page uses Web Bluetooth API + smoothie.js. Made by VTT Finland 2017.</p>
+ <table width="340" align="center" style=" margin-top:200px; padding:0px;">
+  <tr>
+    <td style="text-align: left;"><p id="p5" style="font-family: 'Titillium Web'; font-size:11px;">Ready for connection...</p></td>
+	<td style="text-align: right;"><p id="p4" style="font-family: 'Titillium Web'; font-size:11px;">Messages: 0</p></td>
+  </tr>
+   <td colspan="2"><p style="font-family: 'Titillium Web'; font-size:10px; font-weight:600; text-align: center;">This page uses Web Bluetooth API + smoothie.js. Made by VTT Finland 2017.</p>
+   </td>
+</table> 
 
-<script>
 
-<!-- document.getElementById("ch_type").onclick=function(){ -->
-	<!-- document.getElementById("p9").innerHTML = "klik"; -->
-	<!-- <!-- swapCanvases(); --> -->
-<!-- }; -->
-
-<!-- function swapCanvases(){ -->
-  <!-- if(env_chart.style.visibility=='visible'){ -->
-    <!-- env_chart.style.visibility='hidden'; -->
-    <!-- acc_chart.style.visibility='visible'; -->
-	<!-- document.getElementById("p9").innerHTML = "acc"; -->
-  <!-- }else{ -->
-    <!-- env_chart.style.visibility='visible'; -->
-    <!-- acc_chart.style.visibility='hidden'; -->
-	<!-- document.getElementById("p9").innerHTML = "env"; -->
-  <!-- } -->
-<!-- } -->
-</script>
 
 <script>
   var parameters = location.search.substring(1).split("&");
@@ -281,8 +263,8 @@ function onButtonClick() {
         acc_chart.addTimeSeries(ts_acc2, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 1 });
         acc_chart.addTimeSeries(ts_acc3, { strokeStyle: 'rgba(255, 255, 0, 1)', lineWidth: 1 });
 				
-		env_chart.streamTo(document.getElementById("env_chart_canvas"), 1000);
-		acc_chart.streamTo(document.getElementById("acc_chart_canvas"), 50);
+		env_chart.streamTo(document.getElementById("env_chart_canvas"), 500);
+		acc_chart.streamTo(document.getElementById("acc_chart_canvas"), 30);
 
 		document.getElementById("p7").innerHTML = " " + bluetoothDevice.name;
 		})
