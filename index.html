@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo c</h2>
+    <h2>WebBT/TinyNode Demo d</h2>
 
 	
 
@@ -286,14 +286,9 @@ function onButtonClick() {
         acc_chart.addTimeSeries(ts_acc1, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 1 });
         acc_chart.addTimeSeries(ts_acc2, { strokeStyle: 'rgba(0, 255, 51, 1)', lineWidth: 1 });
         acc_chart.addTimeSeries(ts_acc3, { strokeStyle: 'rgba(0, 255, 255, 1)', lineWidth: 1 });
-		
-		alert('Now: ' + currentValue);
-		
-		if (currentValue == 1 || currentValue == 0){
-			env_chart.streamTo(document.getElementById("env_chart"), 200);
-		}else if (currentValue == 2){
-			acc_chart.streamTo(document.getElementById("acc_chart"), 200);
-		}
+				
+		env_chart.streamTo(document.getElementById("env_chart"), 200);
+
 		document.getElementById("p7").innerHTML = " " + bluetoothDevice.name;
 		})
 		
