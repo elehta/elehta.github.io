@@ -32,7 +32,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 	  
   </head>
 
-  <body style="font-family: 'Titillium Web', monospace; font-size:16px; margin:10px">
+  <body style="font-family: 'Titillium Web', monospace; font-size:16px; margin:5px; padding:2px;">
 
     <h2 style="margin-bottom:-5px;">WebBT/VTT TinyNode Demo</h2>
 	
@@ -110,7 +110,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
   </tr>
 </table> 
 
-<div id="wrapper" style="position:relative;">
+<div id="wrapper" style="position:relative; margin: 10px auto; ">
 	<canvas id="env_chart_canvas" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
 	<canvas id="acc_chart_canvas" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #0099cc; background: #e5e7e9; visibility: hidden;"></canvas>
 </div>
@@ -120,7 +120,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
     <td style="text-align: left;"><p id="p5" style="font-family: 'Titillium Web'; font-size:11px;">Ready for connection...</p></td>
 	<td style="text-align: right;"><p id="p4" style="font-family: 'Titillium Web'; font-size:11px;">Messages: 0</p></td>
   </tr>
-   <td colspan="2"><p style="font-family: 'Titillium Web'; font-size:10px; font-weight:600; text-align: center;">This page uses Web Bluetooth API + smoothie.js. Made by VTT Finland 2017.</p>
+   <td colspan="2"><p style="font-family: 'Titillium Web'; font-size:10px; font-weight:600; text-align: center; margin-top:-5px;">This page uses Web Bluetooth API + smoothie.js. Made by VTT Finland 2017.</p>
    </td>
 </table> 
 
@@ -263,7 +263,7 @@ function onButtonClick() {
         acc_chart.addTimeSeries(ts_acc2, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 1 });
         acc_chart.addTimeSeries(ts_acc3, { strokeStyle: 'rgba(255, 255, 0, 1)', lineWidth: 1 });
 				
-		env_chart.streamTo(document.getElementById("env_chart_canvas"), 800);
+		env_chart.streamTo(document.getElementById("env_chart_canvas"), 1000);
 		acc_chart.streamTo(document.getElementById("acc_chart_canvas"), 10);
 
 		document.getElementById("p7").innerHTML = " " + bluetoothDevice.name;
