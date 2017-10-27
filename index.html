@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo y</h2>
+    <h2>WebBT/TinyNode Demo z</h2>
 
 	
 
@@ -80,6 +80,10 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
 
 <script>
+document.getElementById("gender").onclick=function(){
+  swapCanvases();
+};
+
   var ChromeSamples = {
     log: function() {
       var line = Array.prototype.slice.call(arguments).map(function(argument) {
@@ -116,6 +120,19 @@ Copyright 2017 Google Inc. All Rights Reserved.
 </table> 
 
 <canvas id="env_chart" width="340" height="200" style="display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
+<canvas id="acc_chart" width="340" height="200" style="display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
+
+<script>
+function swapCanvases(){
+  if(env_chart.style.visibility=='visible'){
+    env_chart.style.visibility='hidden';
+    acc_chart.style.visibility='visible';
+  }else{
+    env_chart.style.visibility='visible';
+    acc_chart.style.visibility='hidden';
+  }
+}
+</script>
 
  <table width="340" align="center">
   <tr>
@@ -232,9 +249,7 @@ function onButtonClick() {
 		 //log('Measurement ON!');
 		document.getElementById("p5").innerHTML = "Measurement started...";
 		document.getElementById("connect").disabled = true;
-		document.getElementById("disconnect").disabled = false;
-		env_chart.visibility = 'hidden';
-		
+		document.getElementById("disconnect").disabled = false;		
         env_chart.addTimeSeries(ts1, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 2 });
         env_chart.streamTo(document.getElementById("env_chart"), 200);
 		document.getElementById("p7").innerHTML = " " + bluetoothDevice.name;
