@@ -110,7 +110,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
   </tr>
 </table> 
 
-<div id="wrapper" style="position:relative; margin: 0px auto; ">
+<div id="wrapper" style="position:relative; margin: 0px auto;">
 	<canvas id="env_chart_canvas" height="200" width="340" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
 	<canvas id="acc_chart_canvas" height="200" width="340" style="position:absolute; display: block; margin: 0 auto; border:1px solid #0099cc; background: #e5e7e9; visibility: hidden;"></canvas>
 </div>
@@ -184,7 +184,6 @@ function swapCanvases(value){
     	
 	if(value==1 || value==0){
 	document.getElementById("env_chart_canvas").style.visibility='visible';
-	//document.getElementById("env_chart_canvas").width = window.innerWidth;
 	document.getElementById("acc_chart_canvas").style.visibility='hidden';
 		//env_chart_canvas.style.visibility='hidden';
 		//acc_chart_canvas.style.visibility='visible';
