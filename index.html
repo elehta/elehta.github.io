@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo r</h2>
+    <h2>WebBT/TinyNode Demo s</h2>
 
 	
 
@@ -133,26 +133,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
 <script>
 
-var currentValue = 0;
-function handleClick(myRadio) {
-    //alert('Old value: ' + currentValue);
-    //alert('New value: ' + myRadio.value);
-    currentValue = myRadio.value;
-    swapCanvases(currentValue);
-}
 
-function swapCanvases(value){
-  if(value==1 || value==0){
-    document.getElementById("p9").innerHTML = "acc";
-	env_chart.style.visibility='hidden';
-    acc_chart.style.visibility='visible';
-  }else if(value==2){
-  	document.getElementById("p9").innerHTML = "env";
-    env_chart.style.visibility='visible';
-    acc_chart.style.visibility='hidden';
-
-  }
-}
 
 
 <!-- document.getElementById("ch_type").onclick=function(){ -->
@@ -213,10 +194,31 @@ var msgcounter;
 var env_chart = new SmoothieChart({millisPerPixel:10,maxValueScale:1.16,grid:{millisPerLine:6000},yRangeFunction:myYRangeFunction});
 var acc_chart = new SmoothieChart({millisPerPixel:10,maxValueScale:1.16,grid:{millisPerLine:6000},yRangeFunction:myYRangeFunction});
 var ts1 = new TimeSeries();
-var ts2 = new TimeSeries();
-var ts3 = new TimeSeries();
+var ts_acc1 = new TimeSeries();
+var ts_acc2 = new TimeSeries();
+var ts_acc3 = new TimeSeries();
 var dataToStream = "p1";
 var selectedData;
+var currentValue = 0;
+
+function handleClick(myRadio) {
+    //alert('Old value: ' + currentValue);
+    //alert('New value: ' + myRadio.value);
+    currentValue = myRadio.value;
+    swapCanvases(currentValue);
+}
+
+function swapCanvases(value){
+  if(value==1 || value==0){
+    document.getElementById("p9").innerHTML = "acc";
+	env_chart.style.visibility='hidden';
+    acc_chart.style.visibility='visible';
+  }else if(value==2){
+  	document.getElementById("p9").innerHTML = "env";
+    env_chart.style.visibility='visible';
+    acc_chart.style.visibility='hidden';
+  }
+}
 
 function onButtonClick() {
     bluetoothDevice = null;
@@ -281,6 +283,10 @@ function onButtonClick() {
 		document.getElementById("connect").disabled = true;
 		document.getElementById("disconnect").disabled = false;		
         env_chart.addTimeSeries(ts1, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 2 });
+        acc_chart.addTimeSeries(ts_acc1, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 1 });
+        acc_chart.addTimeSeries(ts_acc2, { strokeStyle: 'rgba(0, 255, 51, 1)', lineWidth: 1 });
+        acc_chart.addTimeSeries(ts_acc3, { strokeStyle: 'rgba(0, 255, 255, 1)', lineWidth: 1 });
+		
         env_chart.streamTo(document.getElementById("env_chart"), 200);
 		document.getElementById("p7").innerHTML = " " + bluetoothDevice.name;
 		})
