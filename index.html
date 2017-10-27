@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo 2u</h2>
+    <h2>WebBT/TinyNode Demo u</h2>
 
 	
 
@@ -389,7 +389,7 @@ function handleCharacteristicValueChanged(event) {
   var dataType = value.getUint8(0);
 	
 	//document.getElementById("p7").innerHTML = "dada " + selectedData;
-  if (dataType == 1 && currentValue==2) { 	// Acceleration data
+  if (dataType == 1 && selectedData == 'acc') { 	// Acceleration data
 
   msgcounter = msgcounter + 1;
   
@@ -405,7 +405,7 @@ function handleCharacteristicValueChanged(event) {
 		  
 		  ts1.append(new Date().getTime(), x1)
 		
-  }else if (dataType == 2 && currentValue==1){						// Environment data
+  }else if (dataType == 2 && selectedData == 'env'){						// Environment data
   
     // log('value: ' + value.getUint8(0) + ' ' + value.getUint8(1)+ ' ' + value.getUint8(2) + ' ' + value.getUint8(3) + ' ' + value.getUint8(4) + ' ' + value.getUint8(5) + ' ' + value.getUint8(6) + ' ' + value.getUint8(7) + ' ' + value.getUint8(8) + ' ' + value.getUint8(9) + ' ' + value.getUint8(10) + ' ' + value.getUint8(11) + ' ' + value.getUint8(12) + ' ' + value.getUint8(13) + ' ' + value.getUint8(14) + ' ' + value.getUint8(15) + ' ' + value.getUint8(16) + ' ' + value.getUint8(17) + ' ' + value.getUint8(18) + ' ' + value.getUint8(19));
 	msgcounter = msgcounter + 1;
