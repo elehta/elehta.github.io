@@ -132,10 +132,7 @@ function swapCanvases(){
   </tr>
 </table> 
 
-<div id="wrapper" style="position:relative;">
-	<canvas id="env_chart" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
-	<canvas id="acc_chart" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9; visibility: hidden;"></canvas>
-</div>
+
 
 
  <table width="340" align="center">
@@ -144,10 +141,15 @@ function swapCanvases(){
 	<td style="text-align: right;"><p id="p4" style="font-family: 'Titillium Web'; font-size:11px;">Messages: 0</p></td>
   </tr>
 </table> 
-
-<p id="p9">debug</p>
-
 <p style="font-family: 'Titillium Web'; font-size:10px; font-weight:600; text-align: center;">This page uses Web Bluetooth API + smoothie.js. Made by VTT Finland 2017.</p>
+<p style="font-family: 'Titillium Web'; font-size:10px;" id="p9">debug</p>
+
+<div id="wrapper" style="position:relative;">
+	<canvas id="env_chart" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
+	<canvas id="acc_chart" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9; visibility: hidden;"></canvas>
+</div>
+
+
 
 <script>
   var parameters = location.search.substring(1).split("&");
