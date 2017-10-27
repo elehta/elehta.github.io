@@ -34,7 +34,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo 24g</h2>
+    <h2>WebBT/TinyNode Demo 28g</h2>
 	
 
 <script>
@@ -111,9 +111,6 @@ Copyright 2017 Google Inc. All Rights Reserved.
     <td colspan="2"><p id="p3" onselectstart="return false">H:</p></td>
   </tr>
 </table> 
-
-
-
 
  <table width="340" align="center">
   <tr>
@@ -207,15 +204,16 @@ function handleClick(myRadio) {
 }
 
 function swapCanvases(value){
-  if(value==1 || value==0){
-    document.getElementById("p9").innerHTML = "env";
-	env_chart_canvas.style.visibility='hidden';
-    acc_chart_canvas.style.visibility='visible';
-  }else if(value==2){
-  	document.getElementById("p9").innerHTML = "acc";
-    env_chart_canvas.style.visibility='visible';
-    acc_chart_canvas.style.visibility='hidden';
-  }
+    
+	document.getElementById("p9").innerHTML = value;
+	
+	if(value==1 || value==0){
+		env_chart_canvas.style.visibility='hidden';
+		acc_chart_canvas.style.visibility='visible';
+	}else if(value==2){
+		env_chart_canvas.style.visibility='visible';
+		acc_chart_canvas.style.visibility='hidden';
+	}
 }
 
 function onButtonClick() {
@@ -281,9 +279,9 @@ function onButtonClick() {
 		document.getElementById("connect").disabled = true;
 		document.getElementById("disconnect").disabled = false;		
         env_chart.addTimeSeries(ts1, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 2 });
-        acc_chart.addTimeSeries(ts_acc1, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 1 });
-        acc_chart.addTimeSeries(ts_acc2, { strokeStyle: 'rgba(0, 255, 51, 1)', lineWidth: 1 });
-        acc_chart.addTimeSeries(ts_acc3, { strokeStyle: 'rgba(0, 255, 255, 1)', lineWidth: 1 });
+        acc_chart.addTimeSeries(ts_acc1, { strokeStyle: 'rgba(255, 0, 0, 1)', lineWidth: 1 });
+        acc_chart.addTimeSeries(ts_acc2, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 1 });
+        acc_chart.addTimeSeries(ts_acc3, { strokeStyle: 'rgba(255, 255, 0, 1)', lineWidth: 1 });
 				
 		env_chart.streamTo(document.getElementById("env_chart_canvas"), 200);
 		acc_chart.streamTo(document.getElementById("acc_chart_canvas"), 200);
