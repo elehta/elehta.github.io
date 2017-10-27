@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo e</h2>
+    <h2>WebBT/TinyNode Demo f</h2>
 
 	
 
@@ -127,8 +127,8 @@ Copyright 2017 Google Inc. All Rights Reserved.
 <p style="font-family: 'Titillium Web'; font-size:10px;" id="p9">debug</p>
 
 <div id="wrapper" style="position:relative;">
-	<canvas id="env_chart" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
-	<canvas id="acc_chart" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9; visibility: hidden;"></canvas>
+	<canvas id="env_chart_canvas" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
+	<canvas id="acc_chart_canvas" width="340" height="200" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9; visibility: hidden;"></canvas>
 </div>
 
 <script>
@@ -211,12 +211,12 @@ function handleClick(myRadio) {
 function swapCanvases(value){
   if(value==1 || value==0){
     document.getElementById("p9").innerHTML = "env";
-	env_chart.style.visibility='hidden';
-    acc_chart.style.visibility='visible';
+	env_chart_canvas.style.visibility='hidden';
+    acc_chart_canvas.style.visibility='visible';
   }else if(value==2){
   	document.getElementById("p9").innerHTML = "acc";
-    env_chart.style.visibility='visible';
-    acc_chart.style.visibility='hidden';
+    env_chart_canvas.style.visibility='visible';
+    acc_chart_canvas.style.visibility='hidden';
   }
 }
 
@@ -287,8 +287,8 @@ function onButtonClick() {
         acc_chart.addTimeSeries(ts_acc2, { strokeStyle: 'rgba(0, 255, 51, 1)', lineWidth: 1 });
         acc_chart.addTimeSeries(ts_acc3, { strokeStyle: 'rgba(0, 255, 255, 1)', lineWidth: 1 });
 				
-		env_chart.streamTo(document.getElementById("env_chart"), 200);
-		acc_chart.streamTo(document.getElementById("acc_chart"), 200);
+		env_chart.streamTo(document.getElementById("env_chart_canvas"), 200);
+		acc_chart.streamTo(document.getElementById("acc_chart_canvas"), 200);
 
 		document.getElementById("p7").innerHTML = " " + bluetoothDevice.name;
 		})
