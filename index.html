@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo h</h2>
+    <h2>WebBT/TinyNode Demo i</h2>
 
 	
 
@@ -78,10 +78,15 @@ Copyright 2017 Google Inc. All Rights Reserved.
 </table> 
 
 <script>
-document.getElementById("ch_type").onclick=function(){
-	document.getElementById("p9").innerHTML = "klik";
-	swapCanvases();
-};
+  document.querySelector('ch_type').addEventListener('click', function() {
+        swapCanvases();
+    }
+  });
+
+<!-- document.getElementById("ch_type").onclick=function(){ -->
+	<!-- document.getElementById("p9").innerHTML = "klik"; -->
+	<!-- swapCanvases(); -->
+<!-- }; -->
 
 function swapCanvases(){
   if(env_chart.style.visibility=='visible'){
@@ -489,11 +494,7 @@ function anyNamedDevice() {
       onButtonClick();
     }
   });
-  
-  document.querySelector('ch_type').addEventListener('click', function() {
-        swapCanvases();
-    }
-  });
+ 
 </script>
 
 <script>
