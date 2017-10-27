@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo s</h2>
+    <h2>WebBT/TinyNode Demo t</h2>
 
 	
 
@@ -286,8 +286,12 @@ function onButtonClick() {
         acc_chart.addTimeSeries(ts_acc1, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 1 });
         acc_chart.addTimeSeries(ts_acc2, { strokeStyle: 'rgba(0, 255, 51, 1)', lineWidth: 1 });
         acc_chart.addTimeSeries(ts_acc3, { strokeStyle: 'rgba(0, 255, 255, 1)', lineWidth: 1 });
-		
-        env_chart.streamTo(document.getElementById("env_chart"), 200);
+		if (currentValue == 1){
+			env_chart.streamTo(document.getElementById("env_chart"), 200);
+			}
+		if(currentValue == 2){
+			acc_chart.streamTo(document.getElementById("acc_chart"), 200);
+			}
 		document.getElementById("p7").innerHTML = " " + bluetoothDevice.name;
 		})
 		
@@ -381,15 +385,15 @@ function handleCharacteristicValueChanged(event) {
   */
   
   //var selectedData = document.getElementById("ch_type").value;
-  selectedData = document.querySelector('input[name="ch_type"]:checked').value;
+  //selectedData = document.querySelector('input[name="ch_type"]:checked').value;
   
   var value = event.target.value;
-  log('value: ' + value.getUint8(0) + ' ' + value.getUint8(1)+ ' ' + value.getUint8(2) + ' ' + value.getUint8(3) + ' ' + value.getUint8(4) + ' ' + value.getUint8(5) + ' ' + value.getUint8(6) + ' ' + value.getUint8(7) + ' ' + value.getUint8(8) + ' ' + value.getUint8(9) + ' ' + value.getUint8(10) + ' ' + value.getUint8(11) + ' ' + value.getUint8(12) + ' ' + value.getUint8(13) + ' ' + value.getUint8(14) + ' ' + value.getUint8(15) + ' ' + value.getUint8(16) + ' ' + value.getUint8(17) + ' ' + value.getUint8(18) + ' ' + value.getUint8(19));
+  //log('value: ' + value.getUint8(0) + ' ' + value.getUint8(1)+ ' ' + value.getUint8(2) + ' ' + value.getUint8(3) + ' ' + value.getUint8(4) + ' ' + value.getUint8(5) + ' ' + value.getUint8(6) + ' ' + value.getUint8(7) + ' ' + value.getUint8(8) + ' ' + value.getUint8(9) + ' ' + value.getUint8(10) + ' ' + value.getUint8(11) + ' ' + value.getUint8(12) + ' ' + value.getUint8(13) + ' ' + value.getUint8(14) + ' ' + value.getUint8(15) + ' ' + value.getUint8(16) + ' ' + value.getUint8(17) + ' ' + value.getUint8(18) + ' ' + value.getUint8(19));
   
   var dataType = value.getUint8(0);
 	
 	//document.getElementById("p7").innerHTML = "dada " + selectedData;
-  if (dataType == 1 && selectedData == 'acc') { 	// Acceleration data
+  if (dataType == 1 && currentValue == 2) { 	// Acceleration data
 
   msgcounter = msgcounter + 1;
   
@@ -403,9 +407,12 @@ function handleCharacteristicValueChanged(event) {
 		  document.getElementById("p3").innerHTML = "Z: " + z1;
 		  document.getElementById("p4").innerHTML = "Messages: " + msgcounter;
 		  
-		  ts1.append(new Date().getTime(), x1)
+		  ts_acc1.append(new Date().getTime(), x1);
+		  ts_acc2.append(new Date().getTime(), y1);
+		  ts_acc3.append(new Date().getTime(), z1);
+		  
 		
-  }else if (dataType == 2 && selectedData == 'env'){						// Environment data
+  }else if (dataType == 2 && currentValue == 1){						// Environment data
   
     // log('value: ' + value.getUint8(0) + ' ' + value.getUint8(1)+ ' ' + value.getUint8(2) + ' ' + value.getUint8(3) + ' ' + value.getUint8(4) + ' ' + value.getUint8(5) + ' ' + value.getUint8(6) + ' ' + value.getUint8(7) + ' ' + value.getUint8(8) + ' ' + value.getUint8(9) + ' ' + value.getUint8(10) + ' ' + value.getUint8(11) + ' ' + value.getUint8(12) + ' ' + value.getUint8(13) + ' ' + value.getUint8(14) + ' ' + value.getUint8(15) + ' ' + value.getUint8(16) + ' ' + value.getUint8(17) + ' ' + value.getUint8(18) + ' ' + value.getUint8(19));
 	msgcounter = msgcounter + 1;
