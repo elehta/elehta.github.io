@@ -34,7 +34,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo 28g</h2>
+    <h2>WebBT/TinyNode Demo 232</h2>
 	
 
 <script>
@@ -283,8 +283,8 @@ function onButtonClick() {
         acc_chart.addTimeSeries(ts_acc2, { strokeStyle: 'rgba(0, 255, 0, 1)', lineWidth: 1 });
         acc_chart.addTimeSeries(ts_acc3, { strokeStyle: 'rgba(255, 255, 0, 1)', lineWidth: 1 });
 				
-		env_chart.streamTo(document.getElementById("env_chart_canvas"), 200);
-		acc_chart.streamTo(document.getElementById("acc_chart_canvas"), 200);
+		env_chart.streamTo(document.getElementById("env_chart_canvas"), 1000);
+		acc_chart.streamTo(document.getElementById("acc_chart_canvas"), 100);
 
 		document.getElementById("p7").innerHTML = " " + bluetoothDevice.name;
 		})
@@ -389,7 +389,6 @@ function handleCharacteristicValueChanged(event) {
   
   var dataType = value.getUint8(0);
 	
-	//document.getElementById("p7").innerHTML = "dada " + selectedData;
   if (dataType == 1 && selectedData == 2) { 	// Acceleration data
 
   msgcounter = msgcounter + 1;
@@ -446,7 +445,7 @@ function handleCharacteristicValueChanged(event) {
 		break;
 		
 		
-	default:  ts1.append(new Date().getTime(), tempdata)
+	default:  ts1.append(new Date().getTime(), presdata)
    }
 
    
