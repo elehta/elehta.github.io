@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo p</h2>
+    <h2>WebBT/TinyNode Demo r</h2>
 
 	
 
@@ -128,9 +128,11 @@ function swapCanvases(value){
   if(value==1 || value==0){
     env_chart.style.visibility='hidden';
     acc_chart.style.visibility='visible';
+	document.getElementById("p9").innerHTML = "acc";
   }else if(value==2){
     env_chart.style.visibility='visible';
     acc_chart.style.visibility='hidden';
+	document.getElementById("p9").innerHTML = "env";
   }
 }
 
