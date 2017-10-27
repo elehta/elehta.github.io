@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo s</h2>
+    <h2>WebBT/TinyNode Demo a</h2>
 
 	
 
@@ -72,8 +72,8 @@ Copyright 2017 Google Inc. All Rights Reserved.
     <td style="width:50%"><input style="height:50px;width:100%" id="disconnect" onclick="disconnect()" type="button" value="DISCONNECT" disabled="true" /></td>
   </tr>
    <tr>
-	<td style="width:50%"><input type="radio" name="gender" value="env" checked> Environment<br></td>
-	<td style="width:50%"><input type="radio" name="gender" value="acc"> Acceleration<br></td>
+	<td style="width:50%"><input type="radio" name="ch_type" value="env" checked> Environment<br></td>
+	<td style="width:50%"><input type="radio" name="ch_type" value="acc"> Acceleration<br></td>
  </tr>
 </table> 
 
@@ -119,10 +119,18 @@ Copyright 2017 Google Inc. All Rights Reserved.
 <canvas id="acc_chart" width="340" height="200" style="display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
 
 <script>
-
-document.getElementById("gender").onclick=function(){
-  swapCanvases();
-};
+    var rad = document.myForm.ch_type;
+    var prev = null;
+    for(var i = 0; i < rad.length; i++) {
+        rad[i].onclick = function() {
+            (prev)? console.log(prev.value):null;
+            if(this !== prev) {
+                prev = this;
+            }
+			swapCanvases();
+        };
+    }
+</script>
 
 function swapCanvases(){
   if(env_chart.style.visibility=='visible'){
@@ -345,8 +353,8 @@ function handleCharacteristicValueChanged(event) {
   log('Received value: ' + value);
   */
   
-  //var selectedData = document.getElementById("gender").value;
-  selectedData = document.querySelector('input[name="gender"]:checked').value;
+  //var selectedData = document.getElementById("ch_type").value;
+  selectedData = document.querySelector('input[name="ch_type"]:checked').value;
   
   var value = event.target.value;
   log('value: ' + value.getUint8(0) + ' ' + value.getUint8(1)+ ' ' + value.getUint8(2) + ' ' + value.getUint8(3) + ' ' + value.getUint8(4) + ' ' + value.getUint8(5) + ' ' + value.getUint8(6) + ' ' + value.getUint8(7) + ' ' + value.getUint8(8) + ' ' + value.getUint8(9) + ' ' + value.getUint8(10) + ' ' + value.getUint8(11) + ' ' + value.getUint8(12) + ' ' + value.getUint8(13) + ' ' + value.getUint8(14) + ' ' + value.getUint8(15) + ' ' + value.getUint8(16) + ' ' + value.getUint8(17) + ' ' + value.getUint8(18) + ' ' + value.getUint8(19));
