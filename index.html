@@ -34,7 +34,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/VTT TinyNode Demox</h2>
+    <h2>WebBT/VTT TinyNode Demo</h2>
 	
 
 <script>
@@ -182,7 +182,7 @@ var setter;
 var getter;
 var msgcounter;
 var env_chart = new SmoothieChart({millisPerPixel:20,maxValueScale:1.16,grid:{millisPerLine:1000},yRangeFunction:envYRangeFunction});
-var acc_chart = new SmoothieChart({millisPerPixel:3,maxValueScale:1.16,grid:{millisPerLine:1000},yRangeFunction:accYRangeFunction});
+var acc_chart = new SmoothieChart({millisPerPixel:5,maxValueScale:1.16,grid:{millisPerLine:1000},yRangeFunction:accYRangeFunction});
 var ts1 = new TimeSeries();
 var ts_acc1 = new TimeSeries();
 var ts_acc2 = new TimeSeries();
@@ -282,7 +282,7 @@ function onButtonClick() {
         acc_chart.addTimeSeries(ts_acc3, { strokeStyle: 'rgba(255, 255, 0, 1)', lineWidth: 1 });
 				
 		env_chart.streamTo(document.getElementById("env_chart_canvas"), 1000);
-		acc_chart.streamTo(document.getElementById("acc_chart_canvas"), 100);
+		acc_chart.streamTo(document.getElementById("acc_chart_canvas"), 50);
 
 		document.getElementById("p7").innerHTML = " " + bluetoothDevice.name;
 		})
