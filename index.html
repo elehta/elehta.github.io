@@ -35,7 +35,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:18px; margin:10px">
 
-    <h2>WebBT/TinyNode Demo k</h2>
+    <h2>WebBT/TinyNode Demo m</h2>
 
 	
 
@@ -71,10 +71,6 @@ Copyright 2017 Google Inc. All Rights Reserved.
     <td style="width:50%"><button style="height:50px;width:100%" id="connect">CONNECT</button></td>
     <td style="width:50%"><input style="height:50px;width:100%" id="disconnect" onclick="disconnect()" type="button" value="DISCONNECT" disabled="true" /></td>
   </tr>
-   <tr>
-	<td style="width:50%"><input type="radio" name="ch_type" value="env" checked> Environment<br></td>
-	<td style="width:50%"><input type="radio" name="ch_type" value="acc"> Acceleration<br></td>
- </tr>
 </table> 
 
 <script>
@@ -130,11 +126,15 @@ function swapCanvases(){
   };
 </script>
 
- <table style="width:100%; text-align: center; font-weight:600;">
+ <table style="width:100%; text-align: center; font-weight:600; border-spacing: 0px; margin-top:10px;  background-color:#E6E0F8">
+    <tr>
+		<td colspan="3" style="width:50%;"><input type="radio" name="ch_type" value="env" checked> Environment</td>
+		<td colspan="3" style="width:50%;"><input type="radio" name="ch_type" value="acc"> Acceleration</td>
+	</tr>
   <tr>
-    <td><p id="p1" onselectstart="return false">P:</p></td>
-    <td><p id="p2" onselectstart="return false">T:</p></td>
-    <td><p id="p3" onselectstart="return false">H:</p></td>
+    <td colspan="2"><p id="p1" onselectstart="return false">P:</p></td>
+    <td colspan="2"><p id="p2" onselectstart="return false">T:</p></td>
+    <td colspan="2"><p id="p3" onselectstart="return false">H:</p></td>
   </tr>
 </table> 
 
