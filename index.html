@@ -378,9 +378,9 @@ function handleCharacteristicValueChanged(event) {
 		var z1 = parseFloat(handleAccData(8, value)).toFixed(2);
 		log('x: ' + x1 + ' y: ' + y1 + ' z: ' + z1);
 		
-		document.getElementById("p1").style.borderBottom = "thick solid #E6E0F8";
-		document.getElementById("p2").style.borderBottom = "thick solid #E6E0F8";
-		document.getElementById("p3").style.borderBottom = "thick solid #E6E0F8";
+		document.getElementById("p1").style.borderBottom = "normal solid #ff0000";
+		document.getElementById("p2").style.borderBottom = "normal solid #00ff00";
+		document.getElementById("p3").style.borderBottom = "normal solid #ffff00";
 		
 		  document.getElementById("p1").innerHTML = "X: " + x1;
 		  document.getElementById("p2").innerHTML = "Y: " + y1;
