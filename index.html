@@ -15,7 +15,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
        <script type="text/javascript" src="../smoothie.js"></script>
 	   <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet"> 
 	   
-    <title>Web BT / Device Information Characteristics</title>
+    <title>Web BT/TinyNode Demo</title>
     <script>
       // Add a global error event listener early on in the page load, to help ensure that browsers
       // which don't support specific functionality still end up displaying a meaningful message.
@@ -34,8 +34,8 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
   <body style="font-family: 'Titillium Web', monospace; font-size:16px; margin:5px; padding:2px;">
 
-    <h2 style="margin-bottom:-14px; margin-top:4px;">WebBT/VTT TinyNode Demo</h2>
-	<hr style="border: none; border-bottom: 1px solid black;">
+    <h2 style="margin-bottom:-5px;">WebBT/VTT TinyNode Demo.</h2>
+	
 
 <script>
   window.addEventListener('DOMContentLoaded', function() {
@@ -61,7 +61,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 </script>
 
 
-<p style="font-weight: 100;">Connect to VTT TinyNode<a id="p7" style="font-weight: 600; color:#33ff33;"><a>.</p>
+<p style="font-weight: 100;">Connect to read data from VTT TinyNode<a id="p7" style="font-weight: 600; color:#33ff33;"><a>.</p>
  <table style="width:100%">
   <tr>
     <td style="width:50%"><button style="height:50px;width:100%" id="connect">CONNECT</button></td>
@@ -163,8 +163,8 @@ var bluetoothDevice;
 var setter;
 var getter;
 var msgcounter;
-var env_chart = new SmoothieChart({responsive: true};{millisPerPixel:20,maxValueScale:1.16,grid:{millisPerLine:1000},yRangeFunction:envYRangeFunction});
-var acc_chart = new SmoothieChart({responsive: true};{millisPerPixel:5,maxValueScale:1.16,grid:{millisPerLine:1000},yRangeFunction:accYRangeFunction});
+var env_chart = new SmoothieChart({millisPerPixel:20,maxValueScale:1.16,grid:{millisPerLine:1000},yRangeFunction:envYRangeFunction});
+var acc_chart = new SmoothieChart({millisPerPixel:5,maxValueScale:1.16,grid:{millisPerLine:1000},yRangeFunction:accYRangeFunction});
 var ts1 = new TimeSeries();
 var ts_acc1 = new TimeSeries();
 var ts_acc2 = new TimeSeries();
