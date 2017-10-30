@@ -32,7 +32,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 	  
   </head>
 
-  <body style="font-family: 'Titillium Web', monospace; font-size:14px; margin:5px; padding:2px;">
+  <body style="font-family: 'Titillium Web', monospace; font-size:14px; margin:5px; padding:2px; max-width: 800px;">
 
     <h2 style="margin-top: 2px; margin-bottom: -14px;">WebBT/VTT TinyNode Demo</h2>
 	
@@ -63,7 +63,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 
 
 <p style="font-weight: 100;">Connect to read data from VTT TinyNode<a id="p7" style="font-weight: 600; color:#33ff33;"><a>.</p>
- <table style="width:100%">
+ <table align="center" style="width:100%; max-width: 800px;">
   <tr>
     <td style="width:50%"><button style="height:50px;width:100%;font-weight:600;" id="connect">CONNECT</button></td>
     <td style="width:50%"><input style="height:50px;width:100%;font-weight:600;" id="disconnect" onclick="disconnect()" type="button" value="DISCONNECT" disabled="true" /></td>
@@ -99,22 +99,22 @@ Copyright 2017 Google Inc. All Rights Reserved.
   };
 </script>
 
- <table style="width:100%; text-align: center; font-weight:600; border-spacing: 5px; margin-top:5px; margin-bottom: 8px; background-color:#E6E0F8; padding-top:3px; padding-bottom:0px;">
+ <table align="center" style="width:100%; text-align: center; font-weight:600; border-spacing: 5px; margin-top:5px; margin-bottom: 8px; background-color:#E6E0F8; padding-top:3px; padding-bottom:0px; max-width: 800px;">
     <tr>
 		<td colspan="3" style="width:50%; margin-bottom: 2px;"><input type="radio" onclick="handleClick(this);" name="ch_type" value="1" checked> Environment</td>
 		<td colspan="3" style="width:50%; margin-bottom: 2px;"><input type="radio" onclick="handleClick(this);" name="ch_type" value="2"> Acceleration</td>
 	</tr>
   <tr>
     <td colspan="2"><p id="p1" onselectstart="return false" style="visibility:hidden;padding-left:8px; padding-top:0px;">P:</p></td>
-    <td colspan="2"><p id="p2" onselectstart="return false" style="visibility:hidden;padding-left:4px;padding-right:4px;">T:</p></td>
+    <td colspan="2"><p id="p2" onselectstart="return false" style="visibility:hidden;padding-left:6px;padding-right:6px;">T:</p></td>
     <td colspan="2"><p id="p3" onselectstart="return false" style="visibility:hidden;padding-right:8px; padding-top:0px;">H:</p></td>
   </tr>
   
   <tr>
-  <td style="line-height: 200px;">
+  <td align="center" style="line-height: 200px;">
   <div id="wrapper" style="position:relative; margin: 0px auto;">
-	<canvas id="env_chart_canvas" height="200" width="335" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
-	<canvas id="acc_chart_canvas" height="200" width="335" style="position:absolute; display: block; margin: 0 auto; border:1px solid #0099cc; background: #e5e7e9; visibility: hidden;"></canvas>
+	<canvas id="env_chart_canvas" height="200" width="332" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9;"></canvas>
+	<canvas id="acc_chart_canvas" height="200" width="332" style="position:absolute; display: block; margin: 0 auto; border:1px solid #000000; background: #e5e7e9; visibility: hidden;"></canvas>
 </div>
 &nbsp;
   </td>
