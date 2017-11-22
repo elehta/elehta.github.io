@@ -117,7 +117,7 @@
 	
 	</p>
 	<form align="center">
-	  <textarea id="displaymsg" cols="30" rows="3" style="font-size: 14pt;background-color: #f0f8ff;" wrap="virtual" placeholder="Type your message here and press 'SEND'..."></textarea></p>
+	  <textarea id="displaymsg" cols="30" rows="3" style="font-size: 14pt;background-color: #f0f8ff;" wrap="virtual" placeholder="Type your message here..."></textarea></p>
 	  <button style="font-size:20px;font-weight:600;height:80px;width:200px;margin-bottom:8px;margin-right:15px;">SEND</button>
   	  <input type='text' name='togglePaletteOnly' id='togglePaletteOnly' />
 	</form>
@@ -202,56 +202,79 @@ var bluetoothDevice;
 var myDescriptor;
 var msg_data = new Uint8Array(20);
 var displaymessage;
+var original_message;
 var clr_values;
 
 // ===================================== //
 // ============= CONSTANTS ============= //
 // ===================================== //
-const cmd_update_buffer = 2;
-const cmd_update_display = 3;
-const cmd_save_to_flash = 4;
-const cmd_change_color = 18;
+const cmd_update_buffer = 2;	// Update character buffer; messages 1 - (N-1).
+const cmd_update_display = 3;	// Update led display with character buffer content after this message; final message N.
+const cmd_save_to_flash = 4;	// Save current character buffer content to flash. Rest of the message ignored.
+const cmd_change_color = 18;	
 
 const number_payload_bytes = 16;
 const serviceUuid = '00001523-1212-efde-1523-785feabcd123';
 const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
+
 // ===================================== //
+// ============== MESSAGES ============= //
+// ===================================== //
+
+	// msg_data[20] containing uint8_t is used to send messages to TinyNode that controls the Led Foil Display.
+	//
+	// Character string given by user, to be sent to foil display, is split into N messages.
+	// Content for each msg_data[] message:
+	// [0] CMD {2, 3 or 4}.
+	// [1] Message payload length. Value is between 1 and 16.
+	// [2] Message index 1: Currently only this is used, indicating maximum string to be displayed is (255 * 16) - 1 = 4079 characters.
+	// [3] Message index 2: 0 (Currently not used.)
+	//
+	// msg_data[4-19] contain the string to be displayed (encoded to utf-8) + end of string character (0).
+	//
+	// EXCEPTION: In the first message bytes [4-7] may contain color coding for the display:
+	// [4] CMD to change color
+	// [5] RGB value for RED
+	// [6] RGB value for GREEN
+	// [7] RGB value for BLUE
+	// If color coding is used, it must be included when calculating payload length (+4).
+	//
+	// EXAMPLE: String 'My 1st message' is given as user input, selected color is blue, RGB(0, 128, 255).
+	// Data is encoded to two msg_data[20] messages as follows:
+	// (1) 2 16 0 0 18 0 128 255 77 121 32 49 115 116 32 109 101 115 115 97
+	// (2) 3 3 1 0 103 101 0	(Rest of the message is ignored)
+
+// ===================================== //	
 
 async function onButtonClick() {
 
-	var color = $("#togglePaletteOnly").spectrum("get");
+	var color = $("#togglePaletteOnly").spectrum("get");	
 	var clr_str = color.toString();	
 	var tmp_clr = clr_str.slice(clr_str.indexOf("(")+1, clr_str.length-1);
 	clr_values =  tmp_clr.split(", ");
 	
-	
-  // TODO: Validate message text.
-
-  var rawdisplaymessage = document.getElementById('displaymsg').value;
-  var replace_scandic_char_1 = rawdisplaymessage.replace(/ä/g, "a");
-  var replace_scandic_char_2 = replace_scandic_char_1.replace(/Ä/g, "A");
-  var replace_scandic_char_3 = replace_scandic_char_2.replace(/ö/g, "o");
-  var replace_scandic_char_4 = replace_scandic_char_3.replace(/Ö/g, "O");
+	var rawdisplaymessage = document.getElementById('displaymsg').value;
+	var replace_scandic_char_1 = rawdisplaymessage.replace(/ä/g, "a");
+	var replace_scandic_char_2 = replace_scandic_char_1.replace(/Ä/g, "A");
+	var replace_scandic_char_3 = replace_scandic_char_2.replace(/ö/g, "o");
+	var replace_scandic_char_4 = replace_scandic_char_3.replace(/Ö/g, "O");
   
-  displaymessage = replace_scandic_char_4.replace(/[^a-z0-9!#%&?@_\-\/ ']/gi,'');
-
-  //var displaymessage = String(userinput.value);
+	original_message = replace_scandic_char_4.replace(/[^a-z0-9!#%&?@_\-\/ ']/gi,'');
   
 	var space = "0000";
-	displaymessage = space.concat(displaymessage);	// make space for the color coding command
+	displaymessage = space.concat(original_message);	// make space for the color coding command
 	
 	log('>>> ' + displaymessage);
   
-  if (displaymessage.length < 1) {
-	document.getElementById("p5").innerHTML = "&nbsp;> Message could not be parsed...";
-	
-	return;
+	if (displaymessage.length < 1) {
+		document.getElementById("p5").innerHTML = "&nbsp;> Message could not be parsed...";
+		return;
 	}
   
-  if (bluetoothDevice != null) {
-      connect();
-	  }
-  else{
+	if (bluetoothDevice != null) {
+		connect();
+	}
+	else{
 	  try {
 		log('Requesting any Bluetooth Device...');
 		document.getElementById("p5").innerHTML = "&nbsp;> Searching for Bluetooth device...";
@@ -308,13 +331,6 @@ async function connect() {
 			msg_data[2] = m; 										// data start index 2(uint16_t)
 			msg_data[3] = 0; 										// data start index 1(uint16_t)
 			
-			// msg_data[4-19] contain the data to be displayed
-			// except the first message, where bytes [4-7] contain color coding:
-			// [4] CMD to change color (initial value 0x12)
-			// [5] RGB value for RED
-			// [6] RGB value for GREEN
-			// [7] RGB value for BLUE			
-			
 			let encoder = new TextEncoder('utf-8');
 			var msg_fraction = displaymessage.substring(m*number_payload_bytes, m*number_payload_bytes+number_payload_bytes);
 			
@@ -325,8 +341,8 @@ async function connect() {
 					}
 			}			
 			
-			if (msg_fraction.length < number_payload_bytes){
-				msg_data[msg_fraction.length + 4] = 0;
+			if (msg_fraction.length < number_payload_bytes){	
+				msg_data[msg_fraction.length + 4] = 0;			// Add end-of-string character to end of final message
 			}
 						
 			if (m == 0){	// First message, add color coding to the reserved space
@@ -365,7 +381,7 @@ async function connect() {
 		//	let encoder = new TextEncoder('utf-8');
 		//	await characteristic.writeValue(encoder.encode(displaymsg));
 
-			document.getElementById("p5").innerHTML = "&nbsp;> Sent message '" + displaymessage + "' to led display...";
+			document.getElementById("p5").innerHTML = "&nbsp;> Sent message '" + original_message + "' to led display...";
 			} catch(error)
 			{
 				log('Argh! ' + error);
