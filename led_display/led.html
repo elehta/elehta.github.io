@@ -331,8 +331,8 @@ async function connect() {
 			if (m == 0){	// First message, add color coding to the reserved space
 				msg_data[4] = cmd_change_color;
 				msg_data[5] = parseInt(clr_values[0]) & 0xff;
-//				msg_data[6] = clr_values[1];
-//				msg_data[7] = clr_values[2];
+				msg_data[6] = parseInt(clr_values[1]) & 0xff;
+				msg_data[7] = parseInt(clr_values[2]) & 0xff;
 			}
 			
 			log('> msg ' + m + ': ' + msg_fraction);
