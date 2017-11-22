@@ -261,7 +261,7 @@ async function onButtonClick() {
   
 	original_message = replace_scandic_char_4.replace(/[^a-z0-9!#%&?@_\-\/ ']/gi,'');
   
-	var space = "0000";
+	var space = "0rgb";
 	displaymessage = space.concat(original_message);	// make space for the color coding command
 	
 	log('>>> ' + displaymessage);
@@ -362,8 +362,8 @@ async function connect() {
 		var save_to_flash_msg = new Uint8Array(1);
 		save_to_flash_msg[0] = cmd_save_to_flash;		
 
-		log('> Saving message...');
 		setTimeout(function(){
+			log('> Saving message...');
 			saveToFlash();
 		}, 200);	
 		
@@ -394,6 +394,7 @@ async function connect() {
 }
 
 async function saveToFlash() {
+	log('Calling save to flash...');
 	await characteristic.writeValue(save_to_flash_msg);
 	log('Message saved to flash...');
 }
