@@ -302,14 +302,16 @@ async function connect() {
 			
 			// msg_data[4-19] contain the data to be displayed
 			// except the first message, where bytes [4-7] contain color coding:
-			// [4] CMD change color: 0x12
-			// [5] RGB value for red
-			// [6] RGB value for green
-			// [7] RGB value for blue
+			// [4] CMD to change color (initial value 0x12)
+			// [5] RGB value for RED
+			// [6] RGB value for GREEN
+			// [7] RGB value for BLUE
 
 			var space = "0000";
-//			displaymessage = space.concat(displaymessage);	// make space for the color coding command
-		
+			displaymessage = space.concat(displaymessage);	// make space for the color coding command
+
+			log(" dmsg: " + displaymessage);
+			
 			let encoder = new TextEncoder('utf-8');
 			var msg_fraction = displaymessage.substring(m*number_payload_bytes, m*number_payload_bytes+number_payload_bytes)
 			
@@ -327,7 +329,7 @@ async function connect() {
 			alert(clr_values[0] + " sekä " + clr_values[1] + " ynnä " + clr_values[2]);
 	
 			if (m == 0){	// First message, add color coding to the reserved space
-				msg_data[4] = 0x12;
+				msg_data[4] = cmd_change_color;
 				msg_data[5] = clr_values[0];
 				msg_data[6] = clr_values[1];
 				msg_data[7] = clr_values[2];
