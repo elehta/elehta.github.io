@@ -232,7 +232,11 @@ async function onButtonClick() {
   displaymessage = replace_scandic_char_4.replace(/[^a-z0-9!#%&?@_\-\/ ']/gi,'');
 
   //var displaymessage = String(userinput.value);
-  log('>>> ' + displaymessage);
+  
+	var space = "0000";
+	displaymessage = space.concat(displaymessage);	// make space for the color coding command
+	
+	log('>>> ' + displaymessage);
   
   if (displaymessage.length < 1) {
 	document.getElementById("p5").innerHTML = "&nbsp;> Message could not be parsed...";
@@ -307,10 +311,7 @@ async function connect() {
 			// [6] RGB value for GREEN
 			// [7] RGB value for BLUE
 
-			var space = "0000";
-			displaymessage = space.concat(displaymessage);	// make space for the color coding command
-
-			log(" dmsg: " + displaymessage);
+			log("d-msg: " + displaymessage);
 			
 			let encoder = new TextEncoder('utf-8');
 			var msg_fraction = displaymessage.substring(m*number_payload_bytes, m*number_payload_bytes+number_payload_bytes)
@@ -325,9 +326,7 @@ async function connect() {
 			if (msg_fraction.length < number_payload_bytes){
 				msg_data[msg_fraction.length + 4] = 0;
 			}
-			
-			alert(clr_values[0] + " sekä " + clr_values[1] + " ynnä " + clr_values[2]);
-	
+				
 			if (m == 0){	// First message, add color coding to the reserved space
 				msg_data[4] = cmd_change_color;
 				msg_data[5] = clr_values[0];
