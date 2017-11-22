@@ -358,9 +358,6 @@ async function connect() {
 			log('> msg sent: ' + msg_data[0] + ' ' + msg_data[1] + ' ' + msg_data[2] + ' ' + msg_data[3] + ' ' + msg_data[4] + ' ' + msg_data[5] + ' ' + msg_data[6] + ' ' + msg_data[7] + ' ' + msg_data[8] + ' ' + msg_data[9] + ' ' + msg_data[10] + ' ' + msg_data[11] + ' ' + msg_data[12] + ' ' + msg_data[13] + ' ' + msg_data[14] + ' ' + msg_data[15] + ' ' + msg_data[16] + ' ' + msg_data[17] + ' ' + msg_data[18] + ' ' + msg_data[19]);
 						
 		}
-		
-		var save_to_flash_msg = new Uint8Array(1);
-		save_to_flash_msg[0] = cmd_save_to_flash;		
 
 		setTimeout(function(){
 			log('Saving message...');
@@ -395,6 +392,10 @@ async function connect() {
 
 async function saveToFlash() {
 	log('Calling save to flash...');
+	
+	var save_to_flash_msg = new Uint8Array(1);
+	save_to_flash_msg[0] = cmd_save_to_flash;
+	
 	await characteristic.writeValue(save_to_flash_msg);
 	log('Message saved to flash...');
 }
