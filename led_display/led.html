@@ -396,7 +396,7 @@ async function saveToFlash() {
 	var save_to_flash_msg = new Uint8Array(1);
 	save_to_flash_msg[0] = cmd_save_to_flash;
 	
-	await characteristic.writeValue(save_to_flash_msg);
+	await characteristic.writeValue(save_to_flash_msg);		// TODO: DOESN*T WORK SINCE const characteristic is not defined here.
 	log('Message saved to flash...');
 }
 
