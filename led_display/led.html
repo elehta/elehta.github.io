@@ -242,7 +242,7 @@ const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
 	// EXAMPLE: String 'My 1st message' is given as user input, selected color is blue, RGB(0, 128, 255).
 	// Data is encoded to two msg_data[20] messages as follows:
 	// (1) 2 16 0 0 18 0 128 255 77 121 32 49 115 116 32 109 101 115 115 97
-	// (2) 3 3 1 0 103 101 0	(Rest of the message is ignored)
+	// (2) 3 3 1 0 103 101 0 (Rest of the message is ignored) 0 0 0 0 0 0 0 0 0 0 0 0 0
 
 // ===================================== //	
 
@@ -362,10 +362,11 @@ async function connect() {
 			
 			log('> Saving message...');
 			
-			setTimeout(function(){
-				saveToFlash();
-				}, 200);	
 		}
+		
+		setTimeout(function(){
+			saveToFlash();
+		}, 200);	
 		
     },
     function success() {
