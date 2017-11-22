@@ -311,7 +311,7 @@ async function connect() {
 			// [6] RGB value for GREEN
 			// [7] RGB value for BLUE
 
-			log("d-msg: " + displaymessage);
+			log("> disp_msg: " + displaymessage);
 			
 			let encoder = new TextEncoder('utf-8');
 			var msg_fraction = displaymessage.substring(m*number_payload_bytes, m*number_payload_bytes+number_payload_bytes)
@@ -328,10 +328,10 @@ async function connect() {
 			}
 				
 			if (m == 0){	// First message, add color coding to the reserved space
-				msg_data[4] = cmd_change_color;
-				msg_data[5] = clr_values[0];
-				msg_data[6] = clr_values[1];
-				msg_data[7] = clr_values[2];
+//				msg_data[4] = cmd_change_color;
+//				msg_data[5] = clr_values[0];
+//				msg_data[6] = clr_values[1];
+//				msg_data[7] = clr_values[2];
 			}
 			
 			log('> msg ' + m + ': ' + msg_fraction);
