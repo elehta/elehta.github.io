@@ -133,6 +133,7 @@
 			["#0080ff","#0000ff","#8000ff","#ff00ff"]
 		]
 	});
+		
 	</script>
 	
 	</p>
@@ -180,8 +181,8 @@
 <p style="font-family: 'Open Sans'; font-size:8px; font-weight:600; text-align: center;">Disclaimer: This feature is non-standard and is not on a standards track. It will not work for every user. There may also be large incompatibilities between implementations and the behavior may change in the future.</p>
 
 
-<h3 style="display:none;">Live output.</h3>
-<div id="output" class="output" style="display:none;"> 
+<h3 >Live output.</h3>
+<div id="output" class="output"> 
  <!-- style="display:none;" -->
   <div id="content"></div>
   <div id="status"></div>
@@ -206,14 +207,20 @@ var displaymessage;
 const cmd_update_buffer = 2;
 const cmd_update_display = 3;
 const cmd_save_to_flash = 4;
+const cmd_change_color = 18;
+
 const number_payload_bytes = 16;
 const serviceUuid = '00001523-1212-efde-1523-785feabcd123';
 const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
 
 async function onButtonClick() {
 
- // var color = document.getElementById('togglePaletteOnly').spectrum(get);
-	document.getElementById("p5").innerHTML = color;
+	var color = $("#togglePaletteOnly").spectrum("get");
+	var clr_str = color.toString();	
+	var tmp_clr = clr_str.slice(clr_str.indexOf("(")+1, clr_str.length-1);
+	var clr_values =  tmp_clr.split(", ");
+	
+	
   // TODO: Validate message text.
 
   var rawdisplaymessage = document.getElementById('displaymsg').value;
@@ -229,6 +236,7 @@ async function onButtonClick() {
   
   if (displaymessage.length < 1) {
 	document.getElementById("p5").innerHTML = "&nbsp;> Message could not be parsed...";
+	
 	return;
 	}
   
@@ -252,6 +260,7 @@ async function onButtonClick() {
   }
 }
 
+
 async function connect() {
   exponentialBackoff(5 /* max retries */, 2 /* seconds delay */,
     async function toTry() {
@@ -266,7 +275,7 @@ async function connect() {
 		const characteristic = await service.getCharacteristic(characteristicUuid);		
 		document.getElementById("p5").innerHTML = "&nbsp;> Connection to device established...";
 		
-		var num_msgs = Math.floor((displaymessage.length+1)/number_payload_bytes);
+		var num_msgs = Math.floor((displaymessage.length + 1)/number_payload_bytes);
 		if ((displaymessage.length+1) % number_payload_bytes != 0){
 			num_msgs = num_msgs + 1;
 		} 
@@ -291,22 +300,38 @@ async function connect() {
 			msg_data[2] = m; 										// data start index 2(uint16_t)
 			msg_data[3] = 0; 										// data start index 1(uint16_t)
 			
-			//msg_data[4-19] contain the data to be displayed
+			// msg_data[4-19] contain the data to be displayed
+			// except the first message, where bytes [4-7] contain color coding:
+			// [4] CMD change color: 0x12
+			// [5] RGB value for red
+			// [6] RGB value for green
+			// [7] RGB value for blue
+
+			var space = "0000";
+//			displaymessage = space.concat(displaymessage);	// make space for the color coding command
 		
 			let encoder = new TextEncoder('utf-8');
-
 			var msg_fraction = displaymessage.substring(m*number_payload_bytes, m*number_payload_bytes+number_payload_bytes)
 			
 			if (msg_fraction.length > 0) {
 				for(var i = 0; i < msg_fraction.length; i++)
-				{
-					msg_data[i+4] = encoder.encode(msg_fraction.substring(i, i+1));
-				}	
+					{
+						msg_data[i+4] = encoder.encode(msg_fraction.substring(i, i+1));				
+					}
+			}			
+			
+			if (msg_fraction.length < number_payload_bytes){
+				msg_data[msg_fraction.length + 4] = 0;
 			}
 			
-				if (msg_fraction.length < number_payload_bytes){
-					msg_data[msg_fraction.length + 4] = 0;
-				}
+			alert(clr_values[0] + " sekä " + clr_values[1] + " ynnä " + clr_values[2]);
+	
+			if (m == 0){	// First message, add color coding to the reserved space
+				msg_data[4] = 0x12;
+				msg_data[5] = clr_values[0];
+				msg_data[6] = clr_values[1];
+				msg_data[7] = clr_values[2];
+			}
 			
 			log('> msg ' + m + ': ' + msg_fraction);
 			await characteristic.writeValue(msg_data);
@@ -342,6 +367,13 @@ async function connect() {
     }); 
 
 }
+
+function byteToHex(num) {
+    // Turns a number (0-255) into a 2-character hex number (00-ff)
+    return ('0' + num.toString(16)).slice(-2);
+}
+
+
 
 function onDisconnected() {
   log(' > Bluetooth device disconnected');
