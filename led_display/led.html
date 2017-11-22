@@ -207,7 +207,7 @@ var displaymessage;
 const cmd_update_buffer = 2;
 const cmd_update_display = 3;
 const cmd_save_to_flash = 4;
-const cmd_change_color = 18;
+const cmd_change_color = 0x12;
 
 const number_payload_bytes = 16;
 const serviceUuid = '00001523-1212-efde-1523-785feabcd123';
@@ -329,7 +329,7 @@ async function connect() {
 				
 			if (m == 0){	// First message, add color coding to the reserved space
 				msg_data[4] = cmd_change_color;
-//				msg_data[5] = clr_values[0];
+				msg_data[5] = clr_values[0];
 //				msg_data[6] = clr_values[1];
 //				msg_data[7] = clr_values[2];
 			}
