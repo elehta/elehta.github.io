@@ -114,9 +114,16 @@
 </p>
 
 <div style="text-align:center"> 
-	<input type='text' name='togglePaletteOnly' id='togglePaletteOnly'  />
 	
-	<script>
+	</p>
+	<form align="center">
+	  <textarea id="displaymsg" cols="30" rows="3" style="font-size: 14pt;background-color: #f0f8ff;" wrap="virtual" placeholder="Type your message here and press 'SEND'..."></textarea></p>
+	  <button style="font-size:20px;font-weight:600;height:80px;width:200px;margin-bottom:8px;margin-right:15px;">SEND</button>
+  	  <input type='text' name='togglePaletteOnly' id='togglePaletteOnly' />
+	</form>
+</div>
+
+<script>
 	$("#togglePaletteOnly").spectrum({
 		showPaletteOnly: true,
 		togglePaletteOnly: true,
@@ -132,16 +139,8 @@
 			["#80ff00","#00ff00","#00ff80","#00ffff"],
 			["#0080ff","#0000ff","#8000ff","#ff00ff"]
 		]
-	});
-		
-	</script>
-	
-	</p>
-	<form align="center">
-	  <textarea id="displaymsg" cols="30" rows="3" style="font-size: 14pt;background-color: #f0f8ff;" wrap="virtual" placeholder="Type your message here and press 'SEND'..."></textarea></p>
-	  <button style="font-size:20px;font-weight:600;height:80px;width:200px;margin-bottom:8px;">SEND</button>
-	</form>
-</div>
+	});		
+</script>
 
 <table width="100%" align="center" style=" margin-top: 5px">
   <tr>
