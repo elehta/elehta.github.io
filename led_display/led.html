@@ -9,7 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="theme-color" content="#bcdbf5" />
    
-   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet"> 
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet"> 
+	 <script type="text/javascript" src="jquery-1.9.1.js"></script>
+	<script src="spectrum.js"></script>
+	<link rel="stylesheet" href="spectrum.css">
 		   
     <title>VTT LED FOIL DEMO</title>
     <script>
@@ -23,8 +26,27 @@
         }
       });
     </script>
+
         
     <link rel="icon" href="vttlogo.png">
+	
+	<style>
+	.color {
+    display: inline-block;
+    zoom:1; 
+	*display: inline;
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.3);
+    margin: 10px 2px -18px 2px;
+    vertical-align: middle;
+}
+	
+	</style>
+	
     
   </head>
 
@@ -91,13 +113,36 @@
 <p style="font-family: 'Open Sans'; font-size:18px;";>Send data to VTT Led Display using Web Bluetooth API and VTT TinyNode. Latest <b>Google Chrome browser</b> required.</p>
 </p>
 
-<div style="text-align:center">  
+<div style="text-align:center"> 
+	<input type='text' name='togglePaletteOnly' id='togglePaletteOnly'  />
+	
+	<script>
+	$("#togglePaletteOnly").spectrum({
+		showPaletteOnly: true,
+		togglePaletteOnly: true,
+		togglePaletteMoreText: 'more',
+		togglePaletteLessText: 'less',
+		clickoutFiresChange: true,
+		preferredFormat: "rgb",
+		color: "#ffff00",
+		hideAfterPaletteSelect:true,
+		showSelectionPalette: false, 
+		palette: [
+			["#ffffff","#ff0000","#ff8000","#ffff00"],
+			["#80ff00","#00ff00","#00ff80","#00ffff"],
+			["#0080ff","#0000ff","#8000ff","#ff00ff"]
+		]
+	});
+	</script>
+	
+	</p>
 	<form align="center">
 	  <textarea id="displaymsg" cols="30" rows="3" style="font-size: 14pt;background-color: #f0f8ff;" wrap="virtual" placeholder="Type your message here and press 'SEND'..."></textarea></p>
 	  <button style="font-size:20px;font-weight:600;height:80px;width:200px;margin-bottom:8px;">SEND</button>
 	</form>
 </div>
-<table width="100%" align="center">
+
+<table width="100%" align="center" style=" margin-top: 5px">
   <tr>
     <td style="text-align: left;background-color: #f8f9f9;"><p id="p5" style="font-family: 'Open Sans'; font-size:11px;">&nbsp;> Ready for connection...</p></td>
   </tr>
@@ -166,6 +211,9 @@ const serviceUuid = '00001523-1212-efde-1523-785feabcd123';
 const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
 
 async function onButtonClick() {
+
+ // var color = document.getElementById('togglePaletteOnly').spectrum(get);
+	document.getElementById("p5").innerHTML = color;
   // TODO: Validate message text.
 
   var rawdisplaymessage = document.getElementById('displaymsg').value;
