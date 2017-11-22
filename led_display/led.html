@@ -326,10 +326,12 @@ async function connect() {
 			if (msg_fraction.length < number_payload_bytes){
 				msg_data[msg_fraction.length + 4] = 0;
 			}
-				
+			
+			log("nih: " + parseInt(clr_values[0]);
+			
 			if (m == 0){	// First message, add color coding to the reserved space
 				msg_data[4] = cmd_change_color;
-				msg_data[5] = parseInt(clr_values[0]);
+//				msg_data[5] = parseInt(clr_values[0]);
 //				msg_data[6] = clr_values[1];
 //				msg_data[7] = clr_values[2];
 			}
