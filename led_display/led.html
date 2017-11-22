@@ -181,7 +181,7 @@
 <p style="font-family: 'Open Sans'; font-size:8px; font-weight:600; text-align: center;">Disclaimer: This feature is non-standard and is not on a standards track. It will not work for every user. There may also be large incompatibilities between implementations and the behavior may change in the future.</p>
 
 
-<h3>Live output:...</h3>
+<h3>Live output:</h3>
 <div id="output" class="output"> 
  <!-- style="display:none;" -->
   <div id="content"></div>
@@ -205,6 +205,9 @@ var msg_data = new Uint8Array(20);
 var displaymessage;
 var clr_values;
 
+// ===================================== //
+// ============= CONSTANTS ============= //
+// ===================================== //
 const cmd_update_buffer = 2;
 const cmd_update_display = 3;
 const cmd_save_to_flash = 4;
@@ -213,6 +216,7 @@ const cmd_change_color = 18;
 const number_payload_bytes = 16;
 const serviceUuid = '00001523-1212-efde-1523-785feabcd123';
 const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
+// ===================================== //
 
 async function onButtonClick() {
 
@@ -325,9 +329,7 @@ async function connect() {
 			if (msg_fraction.length < number_payload_bytes){
 				msg_data[msg_fraction.length + 4] = 0;
 			}
-			
-			log('col 1: ' + clr_values[0]);
-			
+						
 			if (m == 0){	// First message, add color coding to the reserved space
 				msg_data[4] = cmd_change_color;
 				msg_data[5] = parseInt(clr_values[0]) & 0xff;
@@ -337,11 +339,18 @@ async function connect() {
 			
 			log('> msg ' + m + ': ' + msg_fraction);
 			await characteristic.writeValue(msg_data);
-		log('> msg sent: ' + msg_data[0] + ' ' + msg_data[1] + ' ' + msg_data[2] + ' ' + msg_data[3] + ' ' + msg_data[4] + ' ' + msg_data[5] + ' ' + msg_data[6] + ' ' + msg_data[7] + ' ' + msg_data[8] + ' ' + msg_data[9] + ' ' + msg_data[10] + ' ' + msg_data[11] + ' ' + msg_data[12] + ' ' + msg_data[13] + ' ' + msg_data[14] + ' ' + msg_data[15] + ' ' + msg_data[16] + ' ' + msg_data[17] + ' ' + msg_data[18] + ' ' + msg_data[19]);
+			
+			log('> msg sent: ' + msg_data[0] + ' ' + msg_data[1] + ' ' + msg_data[2] + ' ' + msg_data[3] + ' ' + msg_data[4] + ' ' + msg_data[5] + ' ' + msg_data[6] + ' ' + msg_data[7] + ' ' + msg_data[8] + ' ' + msg_data[9] + ' ' + msg_data[10] + ' ' + msg_data[11] + ' ' + msg_data[12] + ' ' + msg_data[13] + ' ' + msg_data[14] + ' ' + msg_data[15] + ' ' + msg_data[16] + ' ' + msg_data[17] + ' ' + msg_data[18] + ' ' + msg_data[19]);
+			
+			var save_to_flash_msg = new Uint8Array(1);
+			save_to_flash_msg[0] = cmd_save_to_flash;
+			
+			log('> Saving message...');
+			
+			setTimeout(function(){
+				saveToFlash();
+				}, 200);	
 		}
-		
-		
-	
 		
     },
     function success() {
@@ -367,8 +376,13 @@ async function connect() {
     function fail() {
       time('Failed to send message...');
     }); 
-
 }
+
+async function saveToFlash() {
+	await characteristic.writeValue(save_to_flash_msg);
+	log('Message saved to flash...');
+}
+
 
 function byteToHex(num) {
     // Turns a number (0-255) into a 2-character hex number (00-ff)
