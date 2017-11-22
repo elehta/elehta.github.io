@@ -181,7 +181,7 @@
 <p style="font-family: 'Open Sans'; font-size:8px; font-weight:600; text-align: center;">Disclaimer: This feature is non-standard and is not on a standards track. It will not work for every user. There may also be large incompatibilities between implementations and the behavior may change in the future.</p>
 
 
-<h3 >Live output:</h3>
+<h3 >Live output:...</h3>
 <div id="output" class="output"> 
  <!-- style="display:none;" -->
   <div id="content"></div>
@@ -329,7 +329,7 @@ async function connect() {
 				
 			if (m == 0){	// First message, add color coding to the reserved space
 				msg_data[4] = cmd_change_color;
-				msg_data[5] = clr_values[0];
+				msg_data[5] = parseInt(clr_values[0]);
 //				msg_data[6] = clr_values[1];
 //				msg_data[7] = clr_values[2];
 			}
