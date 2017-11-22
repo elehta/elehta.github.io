@@ -203,11 +203,12 @@ var bluetoothDevice;
 var myDescriptor;
 var msg_data = new Uint8Array(20);
 var displaymessage;
+var clr_values;
 
 const cmd_update_buffer = 2;
 const cmd_update_display = 3;
 const cmd_save_to_flash = 4;
-const cmd_change_color = '0x12';
+const cmd_change_color = 18;
 
 const number_payload_bytes = 16;
 const serviceUuid = '00001523-1212-efde-1523-785feabcd123';
@@ -218,7 +219,7 @@ async function onButtonClick() {
 	var color = $("#togglePaletteOnly").spectrum("get");
 	var clr_str = color.toString();	
 	var tmp_clr = clr_str.slice(clr_str.indexOf("(")+1, clr_str.length-1);
-	var clr_values =  tmp_clr.split(", ");
+	clr_values =  tmp_clr.split(", ");
 	
 	
   // TODO: Validate message text.
