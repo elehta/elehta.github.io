@@ -312,7 +312,7 @@ async function connect() {
 			// [7] RGB value for BLUE			
 			
 			let encoder = new TextEncoder('utf-8');
-			var msg_fraction = displaymessage.substring(m*number_payload_bytes, m*number_payload_bytes+number_payload_bytes)
+			var msg_fraction = displaymessage.substring(m*number_payload_bytes, m*number_payload_bytes+number_payload_bytes);
 			
 			if (msg_fraction.length > 0) {
 				for(var i = 0; i < msg_fraction.length; i++)
