@@ -180,8 +180,8 @@
 <p style="font-family: 'Open Sans'; font-size:8px; font-weight:600; text-align: center;">Disclaimer: This feature is non-standard and is not on a standards track. It will not work for every user. There may also be large incompatibilities between implementations and the behavior may change in the future.</p>
 
 
-<h3>Live output:</h3>
-<div id="output" class="output"> 
+<h3 style="display:none;">Live output:</h3>
+<div id="output" class="output" style="display:none;"> 
  <!-- style="display:none;" -->
   <div id="content"></div>
   <div id="status"></div>
@@ -223,14 +223,14 @@ const characteristicUuid = '00001525-1212-efde-1523-785feabcd123';
 
 	// msg_data[20] containing uint8_t is used to send messages to TinyNode that controls the Led Foil Display.
 	//
-	// Character string given by user, to be sent to foil display, is split into N messages.
+	// Character string given by user, to be sent to foil display, is split into N messages along with control commands and parameters
 	// Content for each msg_data[] message:
-	// [0] CMD {2, 3 or 4}.
-	// [1] Message payload length. Value is between 1 and 16.
-	// [2] Message index 1: Currently only this is used, indicating maximum string to be displayed is (255 * 16) - 1 = 4079 characters.
+	// [0] Control command {2, 3 or 4}.
+	// [1] Message payload length in this message. Value is between 1 and 16.
+	// [2] Message index 1: Currently only this is used, indicating maximum string to be displayed is (255 * 16 char) - 1 = 4079 characters.
 	// [3] Message index 2: 0 (Currently not used.)
 	//
-	// msg_data[4-19] contain the string to be displayed (encoded to utf-8) + end of string character (0).
+	// msg_data[4-19] contain the string to be displayed (encoded to utf-8) + end of string character (=0).
 	//
 	// EXCEPTION: In the first message bytes [4-7] may contain color coding for the display:
 	// [4] CMD to change color
@@ -262,7 +262,7 @@ async function onButtonClick() {
 	original_message = replace_scandic_char_4.replace(/[^a-z0-9!#%&?@_\-\/ ']/gi,'');
   
 	var space = "0rgb";
-	displaymessage = space.concat(original_message);	// make space for the color coding command
+	displaymessage = space.concat(original_message);	// before splitting the string to message, make space for the color coding command
 	
 	log('>>> ' + displaymessage);
   
