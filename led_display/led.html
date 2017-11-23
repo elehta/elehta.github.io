@@ -359,8 +359,10 @@ async function connect() {
 						
 		}
 
+		time(' - entering timeout');
 		setTimeout(function(){
 			log('Saving message...');
+			time(' - inside timeout');
 			saveToFlash(characteristic);
 		}, 200);	
 		
@@ -391,11 +393,11 @@ async function connect() {
 }
 
 async function saveToFlash(characteristic) {
-	log('Calling save to flash...');
 	
+	log('Calling save to flash...');
 	var save_to_flash_msg = new Uint8Array(1);
 	save_to_flash_msg[0] = cmd_save_to_flash;
-	log(characteristic.toString);
+	time('char: ' + characteristic.toString);
 	await characteristic.writeValue(save_to_flash_msg);		// TODO: DOESN*T WORK SINCE const characteristic is not defined here.
 	log('Message saved to flash...');
 }
