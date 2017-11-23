@@ -361,7 +361,7 @@ async function connect() {
 
 		setTimeout(function(){
 			log('Saving message...');
-			saveToFlash();
+			saveToFlash(characteristic);
 		}, 200);	
 		
     },
@@ -390,7 +390,7 @@ async function connect() {
     }); 
 }
 
-async function saveToFlash() {
+async function saveToFlash(characteristic) {
 	log('Calling save to flash...');
 	
 	var save_to_flash_msg = new Uint8Array(1);
