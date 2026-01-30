@@ -34,18 +34,7 @@
         <h2>{{credentialSubject.name}}</h2>
         <p>{{credentialSubject.description}}</p>
 
-    <div class="product-image-container">
-        {{#if credentialSubject.productImage.linkURL}}
-            <img src="{{credentialSubject.productImage.linkURL}}" 
-                 onerror="this.onerror=null;this.src='https://via.placeholder.com/150?text=No+Image+Available';" 
-                 alt="Product Image" 
-                 class="product-main-img">
-        {{else}}
-            <img src="https://via.placeholder.com/150?text=Placeholder" 
-             alt="Placeholder" 
-             class="product-main-img">
-        {{/if}}
-    </div>
+
     
         <div class="data-box">
             <p><strong>Manufacturer:</strong> {{credentialSubject.producedByParty.name}}</p>
@@ -108,6 +97,19 @@
       <h1>{{credentialSubject.name}}</h1>
       <p>{{credentialSubject.description}}</p>
     </header>
+
+    <div class="product-image-container">
+        {{#if credentialSubject.productImage.linkURL}}
+            <img src="{{credentialSubject.productImage.linkURL}}" 
+                 onerror="this.onerror=null;this.src='https://via.placeholder.com/150?text=No+Image+Available';" 
+                 alt="Product Image" 
+                 class="product-main-img">
+        {{else}}
+            <img src="https://via.placeholder.com/150?text=Placeholder" 
+             alt="Placeholder" 
+             class="product-main-img">
+        {{/if}}
+    </div>
 
     <details open>
       <summary>Product Specifications</summary>
