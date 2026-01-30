@@ -53,17 +53,6 @@
                 <p><strong>recyclableContent:</strong> {{credentialSubject.circularityScorecard.recyclableContent}}</p>
             {{/if}}
         {{/if}}
-
-        {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
-          <div class="event-box">
-            <h4>Event Item {{@index}}</h4>
-            <ul>
-              {{#each this}}
-                <li><strong>{{@key}}:</strong> {{this}}</li>
-              {{/each}}
-            </ul>
-          </div>
-        {{/each}}
         
         {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
             <table class="dpp-table nested-table">
