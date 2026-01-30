@@ -1,80 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 20px auto; padding: 0 20px; }
-        .card { border: 1px solid #e1e4e8; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .header { background: #f6f8fa; padding: 20px; border-bottom: 1px solid #e1e4e8; }
-        .header h1 { margin: 0; color: #0366d6; font-size: 1.5rem; }
-        .section { padding: 20px; border-bottom: 1px solid #f0f2f4; }
-        .section:last-child { border-bottom: none; }
-        .label { font-weight: bold; color: #586069; font-size: 0.85rem; text-transform: uppercase; display: block; margin-bottom: 4px; }
-        .value { font-size: 1rem; margin-bottom: 15px; word-break: break-all; }
-        .badge { display: inline-block; background: #e1f5fe; color: #01579b; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; margin-right: 5px; }
-        .link-button { display: inline-block; background: #28a745; color: white; padding: 10px 15px; text-decoration: none; border-radius: 6px; font-size: 0.9rem; }
-        .footer { font-size: 0.75rem; color: #6a737d; text-align: center; padding: 20px; }
+        .dpp-container { font-family: sans-serif; border: 2px solid #000; padding: 20px; border-radius: 10px; }
+        .highlight { color: #007bff; font-weight: bold; }
+        .data-box { background: #f4f4f4; padding: 10px; margin: 10px 0; border-left: 5px solid #007bff; }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <header class="header">
-        <span class="label">Product Name</span>
-        <h1>{{credentialSubject.name}}</h1>
-        <div>
-            {{#each type}}
-                <span class="badge">{{this}}</span>
-            {{/each}}
-        </div>
-    </header>
-
-    <section class="section">
-        <span class="label">Description</span>
-        <div class="value">{{credentialSubject.description}}</div>
-
-        <span class="label">Manufacturer</span>
-        <div class="value"><strong>{{credentialSubject.producedByParty.name}}</strong></div>
+<div class="dpp-container">
+    {{#if credentialSubject}}
+        <h2>Product: <span class="highlight">{{credentialSubject.name}}</span></h2>
+        <p><strong>Description:</strong> {{credentialSubject.description}}</p>
         
-        <span class="label">Production Date</span>
-        <div class="value">{{credentialSubject.productionDate}}</div>
-    </section>
-
-    <section class="section" style="background-color: #fcfcfc;">
-        <span class="label">Value Chain Process</span>
-        <div class="value">{{credentialSubject.traceabilityInformation.valueChainProcess}}</div>
+        <div class="data-box">
+            <p><strong>Manufacturer:</strong> {{credentialSubject.producedByParty.name}}</p>
+            <p><strong>Production Date:</strong> {{credentialSubject.productionDate}}</p>
+            <p><strong>Process:</strong> {{credentialSubject.traceabilityInformation.valueChainProcess}}</p>
+        </div>
 
         {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
-            <span class="label">External Traceability</span>
-            <div class="value">
-                <a href="{{this.linkURL}}" class="link-button" target="_blank">
-                    View {{this.linkName}}
-                </a>
-            </div>
+            <a href="{{this.linkURL}}" style="display:inline-block; padding:10px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
+                Link: {{this.linkName}}
+            </a>
         {{/each}}
-    </section>
+    {{else}}
+        <p style="color:red;">Error: credentialSubject data not found in the provided context.</p>
+    {{/if}}
 
-    <section class="section">
-        <span class="label">Issuer</span>
-        <div class="value">{{issuer.name}}</div>
-        
-        <div style="display: flex; justify-content: space-between;">
-            <div>
-                <span class="label">Valid From</span>
-                <div class="value">{{validFrom}}</div>
-            </div>
-            <div>
-                <span class="label">Valid Until</span>
-                <div class="value">{{validUntil}}</div>
-            </div>
-        </div>
-    </section>
-</div>
-
-<div class="footer">
-    Credential ID: {{id}}<br>
-    Subject DID: {{credentialSubject.id}}
+    <hr>
+    <div style="font-size: 10px; color: #666;">
+        <p><strong>Credential ID:</strong> {{id}}</p>
+        <p><strong>Subject ID:</strong> {{credentialSubject.id}}</p>
+        <p><strong>Issuer:</strong> {{issuer.name}} ({{issuer.id}})</p>
+    </div>
 </div>
 
 </body>
