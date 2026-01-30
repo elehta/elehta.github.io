@@ -116,7 +116,19 @@
       <div class="details-content">
         <table class="dpp-table">
           <tr>
-            <th>Production Date</th>
+            <th>Manufacturer</th>
+            <td>{{credentialSubject.producedByParty.name}}</td>
+          </tr>
+          <tr>
+            <th>Location</th>
+            <td>{{credentialSubject.producedAtFacility.name}}</td>
+          </tr>            
+          <tr>
+            <th>Batch Number</th>
+            <td>{{credentialSubject.batchNumber}}</td>
+          </tr>  
+          <tr>          
+              <th>Production Date</th>
             <td>{{credentialSubject.productionDate}}</td>
           </tr>
           <tr>
@@ -124,7 +136,7 @@
             <td>
               {{credentialSubject.countryOfProduction}}
             </td>
-          </tr>
+          </tr>           
         </table>
       </div>
     </details>
