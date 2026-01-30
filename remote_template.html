@@ -14,8 +14,8 @@
 
 <div class="dpp-container">
     {{#if credentialSubject}}
-        <h2>Product: {{credentialSubject.name}}</h2>
-        <p><strong>Description:</strong> {{credentialSubject.description}}</p>
+        <h2>{{credentialSubject.name}}</h2>
+        <p>{{credentialSubject.description}}</p>
         
         <div class="data-box">
             <p><strong>Manufacturer:</strong> {{credentialSubject.producedByParty.name}}</p>
