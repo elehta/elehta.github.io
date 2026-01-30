@@ -40,8 +40,8 @@
 <div class="passport-card">
     <div class="passport-header">
         <div>
-            <h2 style="margin:0;">{{credentialSubject.description}}</h2>
-            <small style="color:#888;">SN: {{serial_number}}</small>
+            <h2 style="margin:0;">{{credentialSubject.name}}</h2>
+            <small style="color:#888;">{{credentialSubject.description}}</small>
         </div>
         {{#if status}}
             <span class="status-badge">{{status}}</span>
