@@ -2,7 +2,7 @@
 <html>
 <head>
     <style>
-        .dpp-container { font-family: sans-serif; border: 2px solid #000; padding: 20px; border-radius: 10px; background:#f6f6f6; max-width: 480px; font-size: 12px }
+        .dpp-container { font-family: sans-serif; border: 2px solid #000; padding: 20px; border-radius: 10px; background:#f6f6f6; max-width: 640px; font-size: 12px }
         .highlight { color: #007bff; font-weight: bold; }
         .sub-section-header { font-size: 1.2em; text-decoration: underline; }
         .data-box { background: #f4f4f4; padding: 10px; margin: 10px 0; border-left: 5px solid #007bff; }
@@ -12,11 +12,11 @@
         .nested-table { width: 100%; background-color: #fafafa; margin: 5px 0; }
     </style>
 </head>
+
+<body>
 <script type="text/javascript">
     document.title = "DPP | {{ credentialSubject.producedByParty.name }}"
 </script>
-<body>
-
 <div class="dpp-container">
     {{#if credentialSubject}}
         <h2>{{credentialSubject.name}}</h2>
@@ -29,7 +29,7 @@
             <p><strong>batch:</strong> {{credentialSubject.batchNumber}}</p>
             <p><strong>Production platz:</strong> {{credentialSubject.producedAtFacility.name}}</p>
             <p><strong>Facility id:</strong> {{credentialSubject.producedAtFacility.id}}</p>    
-            <p><strong>countryOfProduction:</strong> {{credentialSubject.countryOfProduction}}</p>
+            <p><strong>countryOfProduction:</strong> {{credentialSubject.countryOfProduction}} <span class="flag-icon">{{credentialSubject.countryOfProduction}}</span></p>
         </div>
 
         {{#each credentialSubject.productCategory}}
@@ -41,7 +41,7 @@
             <a href="{{this.materialType.id}}" style="display:inline-block; padding:10px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
                 Link: {{this.materialType.name}}
             </a>
-             <p><strong>Name:</strong> {{this.name}}</p>
+            <p><strong>Name:</strong> {{this.materialType.name}}</p>
         {{/each}}
 
         {{#if credentialSubject.circularityScorecard}}
