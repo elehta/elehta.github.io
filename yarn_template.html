@@ -1,17 +1,78 @@
+<style>
+    .passport-card {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        max-width: 500px;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        background: #fff;
+        color: #333;
+    }
+    .passport-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+    }
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        background: #e1f5fe;
+        color: #0288d1;
+    }
+    .specs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+    }
+    .spec-item { font-size: 0.9rem; }
+    .spec-label { color: #666; display: block; font-size: 0.75rem; text-transform: uppercase; }
+</style>
+
 <div class="passport-card">
-    <h1>Digital Passport: {{product_name}}</h1>
-    <p><strong>Serial Number:</strong> {{serial_number}}</p>
-    
-    <div class="details">
-        <h3>Specifications</h3>
-        <ul>
-            <li>Material: {{specs.material}}</li>
-        </ul>
+    <div class="passport-header">
+        <div>
+            <h2 style="margin:0;">{{product_name}}</h2>
+            <small style="color:#888;">SN: {{serial_number}}</small>
+        </div>
+        {{#if status}}
+            <span class="status-badge">{{status}}</span>
+        {{/if}}
     </div>
 
-    {{#if manufacturing_date}}
-        <p>Manufactured on: {{manufacturing_date}}</p>
-    {{else}}
-        <p>Date: Not specified</p>
-    {{/if}}
+    <div class="details">
+        <h4><i class="fas fa-info-circle"></i> Specifications</h4>
+        <div class="specs-grid">
+            <div class="spec-item">
+                <span class="spec-label">Material</span>
+                <strong>{{specs.material}}</strong>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Weight</span>
+                <strong>{{specs.weight}}</strong>
+            </div>
+            {{#if specs.origin}}
+            <div class="spec-item">
+                <span class="spec-label">Origin</span>
+                <strong>{{specs.origin}}</strong>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+
+    <div style="margin-top: 20px; font-size: 0.85rem;">
+        {{#if manufacturing_date}}
+            <p>📅 <strong>Manufactured:</strong> {{manufacturing_date}}</p>
+        {{else}}
+            <p style="color: #999;">📅 Date: Not specified</p>
+        {{/if}}
+    </div>
 </div>
