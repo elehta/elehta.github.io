@@ -52,6 +52,17 @@
         {{/if}}
 
         {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
+          <div class="event-box">
+            <h4>Event Item {{@index}}</h4>
+            <ul>
+              {{#each this}}
+                <li><strong>{{@key}}:</strong> {{this}}</li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/each}}
+        
+        {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
             <a href="{{this.linkURL}}" style="display:inline-block; padding:10px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
                 Link: {{this.linkName}}
             </a>
