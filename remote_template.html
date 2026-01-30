@@ -6,6 +6,10 @@
         .highlight { color: #007bff; font-weight: bold; }
         .sub-section-header { font-size: 1.2em; text-decoration: underline; }
         .data-box { background: #f4f4f4; padding: 10px; margin: 10px 0; border-left: 5px solid #007bff; }
+        .dpp-table { width: 100%; border-collapse: collapse;  margin-top: 20px; font-family: sans-serif; }
+        .dpp-table th, .dpp-table td { border: 1px solid #ddd;  padding: 12px; text-align: left; }
+        .dpp-table th { background-color: #f8f9fa; width: 30%; color: #333; }
+        .nested-table { width: 100%; background-color: #fafafa; margin: 5px 0; }
     </style>
 </head>
 <script type="text/javascript">
@@ -62,10 +66,24 @@
         {{/each}}
         
         {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
-            <a href="{{this.linkURL}}" style="display:inline-block; padding:10px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
-                Link: {{this.linkName}}
-            </a>
+            <table class="dpp-table nested-table">
+                <tbody>
+                    {{#each this}}
+                    <tr>
+                        <th>{{@key}}</th>
+                        <td>
+                            {{#if (isLink this)}} 
+                                <a href="{{this}}">{{this}}</a>
+                            {{else}}
+                                {{this}}
+                            {{/if}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
         {{/each}}
+    
     {{else}}
         <p style="color:red;">Error: credentialSubject data not found in the provided context.</p>
     {{/if}}
