@@ -37,7 +37,6 @@
     <header>
       <h3>DIGITAL PRODUCT PASSPORT</h3>  
       <h1>{{credentialSubject.name}}</h1>
-      <p>{{credentialSubject.description}}</p>
     </header>
 
     <div class="product-image-container">
@@ -58,12 +57,16 @@
       <div class="details-content">
         <table class="dpp-table">
           <tr>
+            <th>Description</th>
+            <td>{{credentialSubject.description}}</td>
+          </tr>          
+          <tr>
             <th>Manufacturer</th>
             <td>{{credentialSubject.producedByParty.name}}</td>
           </tr>
           <tr>
             <th>Location</th>
-            <td>{{credentialSubject.producedAtFacility.name}} ( {{credentialSubject.countryOfProduction}})</td>
+            <td>{{credentialSubject.producedAtFacility.name}} ({{credentialSubject.countryOfProduction}})</td>
           </tr>            
           <tr>
             <th>Batch Number</th>
@@ -72,14 +75,7 @@
           <tr>          
               <th>Production Date</th>
             <td>{{credentialSubject.productionDate}}</td>
-          </tr>
-          <tr>
-            <th>Dimensions</th>
-            <td>
-              {{credentialSubject.countryOfProduction}}
-            </td>
-          </tr>           
-
+          </tr>       
           <tr>
             <th style="vertical-align: top; width: 30%;">Dimensions</th>
             <td>
