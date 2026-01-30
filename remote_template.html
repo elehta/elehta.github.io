@@ -4,7 +4,7 @@
     <style>
         .dpp-container { font-family: sans-serif; border: 2px solid #000; padding: 20px; border-radius: 10px; background:#f6f6f6; max-width: 480px; font-size: 12px }
         .highlight { color: #007bff; font-weight: bold; }
-        .sub-section-header { font-size: 1.2em; text-decoration: underline; }
+        #sub-section-header { font-size: 1.2em; text-decoration: underline; }
         .data-box { background: #f4f4f4; padding: 10px; margin: 10px 0; border-left: 5px solid #007bff; }
     </style>
 </head>
@@ -42,7 +42,7 @@
         {{/each}}
 
         {{#if credentialSubject.circularityScorecard}}
-        <h3>Circularity Scorecard: </h3>
+        <p class="sub-section-header">Circularity Scorecard: </p>
             {{#if credentialSubject.circularityScorecard.recycledContent}}
                 <p><strong>recyclableContent:</strong> {{credentialSubject.circularityScorecard.recycledContent}}</p>
             {{/if}}
