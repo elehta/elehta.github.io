@@ -19,8 +19,25 @@
         <div class="data-box">
             <p><strong>Manufacturer:</strong> {{credentialSubject.producedByParty.name}}</p>
             <p><strong>Production Date:</strong> {{credentialSubject.productionDate}}</p>
-            <p><strong>Process:</strong> {{credentialSubject.traceabilityInformation.valueChainProcess}}</p>
+            <p><strong>serialNumber:</strong> {{credentialSubject.serialNumber}}</p>
+            <p><strong>batch:</strong> {{credentialSubject.batchNumber}}</p>
+            <p><strong>Production platz:</strong> {{credentialSubject.producedAtFacility.name}}</p>
+            <p><strong>Facility id:</strong> {{credentialSubject.producedAtFacility.id}}</p>    
+            <p><strong>countryOfProduction:</strong> {{credentialSubject.countryOfProduction}}</p>
         </div>
+
+        {{#each credentialSubject.productCategory}}
+            <p><strong>Code:</strong> {{this.code}}</p>
+            <p><strong>Category:</strong> {{this.name}}</p>
+            <p><strong>Scheme:</strong> {{this.schemeName}}</p>                
+        {{/each}}
+    
+        {{#each credentialSubject.materialsProvenance}}
+            <a href="{{this.materialType.name}}" style="display:inline-block; padding:10px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
+                Link: {{this.materialType.id}}
+            </a>
+             <p><strong>Name:</strong> {{this.name}}</p>
+        {{/each}}
 
         {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
             <a href="{{this.linkURL}}" style="display:inline-block; padding:10px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
@@ -33,8 +50,6 @@
 
     <hr>
     <div style="font-size: 10px; color: #666;">
-        <p><strong>Credential ID:</strong> {{id}}</p>
-        <p><strong>Subject ID:</strong> {{credentialSubject.id}}</p>
         <p><strong>Issuer:</strong> {{issuer.name}} ({{issuer.id}})</p>
     </div>
 </div>
