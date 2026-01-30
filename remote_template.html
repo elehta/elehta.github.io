@@ -94,14 +94,32 @@
     </details>
 
         <details open>
-            <summary>Circularity Scorecard</summary>
+            <summary>Material Provenance</summary>
             <div class="details-content">
                 <table class="dpp-table">
                     {{#each credentialSubject.materialsProvenance}}
-                        <a href="{{this.materialType.id}}" style="display:inline-block; padding:10px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
-                            Link: {{this.materialType.name}}
-                        </a>
-                        <p><strong>Name:</strong> {{this.materialType.name}}</p>
+                      <tr>          
+                        <th>Material</th>
+                        <td>{{this.name}}</td>
+                      </tr> 
+                      <tr>          
+                        <th>Material</th>
+                        <td>{{this.name}}</td>
+                      </tr>
+                      <tr>          
+                        <th>Mass fraction</th>
+                            <td>{{this.massFraction}}</td>
+                      </tr>                     
+                      <tr>          
+                        <th>Recycled amount</th>
+                        <td>{{this.recycledAmount}}</td>
+                      </tr>                     
+                      <tr>          
+                        <th>Material type</th>
+                        <td>{{this.materialType.name}}</td>
+                      </tr> 
+
+                        
                     {{/each}}
                 </table>
             </div>
