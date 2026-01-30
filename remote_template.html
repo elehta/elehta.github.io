@@ -93,6 +93,19 @@
       </div>
     </details>
 
+        <details open>
+            <summary>Circularity Scorecard</summary>
+            <div class="details-content">
+                <table class="dpp-table">
+                    {{#each credentialSubject.materialsProvenance}}
+                        <a href="{{this.materialType.id}}" style="display:inline-block; padding:10px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
+                            Link: {{this.materialType.name}}
+                        </a>
+                        <p><strong>Name:</strong> {{this.materialType.name}}</p>
+                    {{/each}}
+                </table>
+            </div>
+        </details>
 
     {{#if credentialSubject.circularityScorecard}}
         <details open>
