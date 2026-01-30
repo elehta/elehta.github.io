@@ -42,7 +42,7 @@
             <p><strong>batch:</strong> {{credentialSubject.batchNumber}}</p>
             <p><strong>Production platz:</strong> {{credentialSubject.producedAtFacility.name}}</p>
             <p><strong>Facility id:</strong> {{credentialSubject.producedAtFacility.id}}</p>    
-            <p><strong>countryOfProduction:</strong> {{credentialSubject.countryOfProduction}} <span class="flag-icon">{{credentialSubject.countryOfProduction}}</span></p>
+            <p><strong>countryOfProduction:</strong> {{credentialSubject.countryOfProduction}} <span class="flag-container">{{credentialSubject.countryOfProduction}}</span></p>
         </div>
 
         {{#each credentialSubject.productCategory}}
