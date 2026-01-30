@@ -22,6 +22,7 @@
         .dpp-table tr th:first-child, .dpp-table tr td:first-child { width: 30%; min-width: 120px; /* Prevents the label from getting too squashed on mobile */ word-wrap: break-word; }
         /* Ensure the second column takes up the rest */
         .dpp-table tr td:last-child { width: 70%; }
+        .product-main-img { width: 100%; max-width: 200px; height: auto; border-radius: 8px; border: 1px solid #ddd; display: block; margin: 10px 0; object-fit: cover; /* Keeps the image from stretching */ }
     </style>
     
     <title>DPP | {{credentialSubject.name}}</title>
@@ -32,7 +33,20 @@
     {{#if credentialSubject}}
         <h2>{{credentialSubject.name}}</h2>
         <p>{{credentialSubject.description}}</p>
-        
+
+    <div class="product-image-container">
+        {{#if credentialSubject.productImage.linkURL}}
+            <img src="{{credentialSubject.productImage.linkURL}}" 
+                 onerror="this.onerror=null;this.src='https://via.placeholder.com/150?text=No+Image+Available';" 
+                 alt="Product Image" 
+                 class="product-main-img">
+        {{else}}
+            <img src="https://via.placeholder.com/150?text=Placeholder" 
+             alt="Placeholder" 
+             class="product-main-img">
+        {{/if}}
+    </div>
+    
         <div class="data-box">
             <p><strong>Manufacturer:</strong> {{credentialSubject.producedByParty.name}}</p>
             <p><strong>Production Date:</strong> {{credentialSubject.productionDate}}</p>
