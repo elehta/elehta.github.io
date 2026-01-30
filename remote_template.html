@@ -33,7 +33,7 @@
     {{#if credentialSubject}}
     <div class="dpp-wrapper">
     <header>
-      <h1>DIGITAL PRODUCT PASSPORT</h1>  
+      <h3>DIGITAL PRODUCT PASSPORT</h3>  
       <h1>{{credentialSubject.name}}</h1>
       <p>{{credentialSubject.description}}</p>
     </header>
@@ -41,7 +41,7 @@
     <div class="product-image-container">
         {{#if credentialSubject.productImage.linkURL}}
             <img src="{{credentialSubject.productImage.linkURL}}" 
-                 onerror="this.onerror=null;this.src='https://via.placeholder.com/150?text=No+Image+Available';" 
+                 onerror="this.onerror=null;this.src='https://placehold.co/200x150';" 
                  alt="Product Image" 
                  class="product-main-img">
         {{else}}
