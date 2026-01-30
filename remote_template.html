@@ -23,6 +23,8 @@
         /* Ensure the second column takes up the rest */
         .dpp-table tr td:last-child { width: 70%; }
         .product-main-img { width: 100%; max-width: 200px; height: auto; border-radius: 8px; border: 1px solid #ddd; display: block; margin: 10px 0; object-fit: cover; /* Keeps the image from stretching */ }
+        .dimension-row { display: flex; gap: 10px; /* Space between label, value, and unit */ }
+        .dimension-row span:first-child { min-width: 80px; /* Aligns all the labels (weight, volume) to the same width */  color: #555; }
     </style>
     
     <title>DPP | {{credentialSubject.name}}</title>
@@ -61,7 +63,7 @@
           </tr>
           <tr>
             <th>Location</th>
-            <td>{{credentialSubject.producedAtFacility.name}}</td>
+            <td>{{credentialSubject.producedAtFacility.name}} ( {{credentialSubject.countryOfProduction}})</td>
           </tr>            
           <tr>
             <th>Batch Number</th>
@@ -72,11 +74,25 @@
             <td>{{credentialSubject.productionDate}}</td>
           </tr>
           <tr>
-            <th>Country</th>
+            <th>Dimensions</th>
             <td>
               {{credentialSubject.countryOfProduction}}
             </td>
           </tr>           
+
+          <tr>
+            <th style="vertical-align: top; width: 30%;">Dimensions</th>
+            <td>
+              {{#each credentialSubject.dimensions}}
+                <div class="dimension-row" style="margin-bottom: 5px;">
+                  <span style="text-transform: capitalize;">{{@key}}:</span> 
+                  <strong>{{this.value}}</strong> 
+                  <span>{{this.unit}}</span>
+                </div>
+              {{/each}}
+            </td>
+          </tr>
+        
         </table>
       </div>
     </details>
