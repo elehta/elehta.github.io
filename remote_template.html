@@ -8,9 +8,7 @@
     </style>
 </head>
 <body>
-<pre>
-    {{credentialSubject}}
-</pre>
+
 <div class="dpp-container">
     {{#if credentialSubject}}
         <h2>Product: {{credentialSubject.name}}</h2>
@@ -33,8 +31,8 @@
         {{/each}}
     
         {{#each credentialSubject.materialsProvenance}}
-            <a href="{{this.materialType.name}}" style="display:inline-block; padding:10px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
-                Link: {{this.materialType.id}}
+            <a href="{{this.materialType.id}}" style="display:inline-block; padding:10px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
+                Link: {{this.materialType.name}}
             </a>
              <p><strong>Name:</strong> {{this.name}}</p>
         {{/each}}
