@@ -18,8 +18,12 @@
         .dpp-table { width: 100%; border-collapse: collapse; }
         .dpp-table th, .dpp-table td { border-bottom: 1px solid #eee; padding: 8px; text-align: left; }
         .event-card { background: #f9f9f9; padding: 10px; border-left: 4px solid #007bff; margin-top: 10px; }
-        
+        /* Target the first column of the DPP table */
+        .dpp-table tr th:first-child, .dpp-table tr td:first-child { width: 30%; min-width: 120px; /* Prevents the label from getting too squashed on mobile */ word-wrap: break-word; }
+        /* Ensure the second column takes up the rest */
+        .dpp-table tr td:last-child { width: 70%; }
     </style>
+    
     <title>DPP | {{credentialSubject.name}}</title>
 </head>
     
