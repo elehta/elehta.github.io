@@ -31,66 +31,6 @@
 <body>
 <div class="dpp-container">
     {{#if credentialSubject}}
-        <h2>{{credentialSubject.name}}</h2>
-        <p>{{credentialSubject.description}}</p>
-
-
-    
-        <div class="data-box">
-            <p><strong>Manufacturer:</strong> {{credentialSubject.producedByParty.name}}</p>
-            <p><strong>Production Date:</strong> {{credentialSubject.productionDate}}</p>
-            <p><strong>serialNumber:</strong> {{credentialSubject.serialNumber}}</p>
-            <p><strong>batch:</strong> {{credentialSubject.batchNumber}}</p>
-            <p><strong>Production platz:</strong> {{credentialSubject.producedAtFacility.name}}</p>
-            <p><strong>Facility id:</strong> {{credentialSubject.producedAtFacility.id}}</p>    
-            <p><strong>countryOfProduction:</strong> {{credentialSubject.countryOfProduction}}</p>
-        </div>
-
-        {{#each credentialSubject.productCategory}}
-            <p><strong>Code:</strong> {{this.code}} {{this.name}}</p>
-            <p><strong>Scheme:</strong> {{this.schemeName}}</p>                
-        {{/each}}
-        <p></p>
-        {{#each credentialSubject.materialsProvenance}}
-            <a href="{{this.materialType.id}}" style="display:inline-block; padding:10px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
-                Link: {{this.materialType.name}}
-            </a>
-            <p><strong>Name:</strong> {{this.materialType.name}}</p>
-        {{/each}}
-
-        {{#if credentialSubject.circularityScorecard}}
-        <p class="sub-section-header">Circularity Scorecard: </p>
-            {{#if credentialSubject.circularityScorecard.recycledContent}}
-                <p><strong>recyclableContent:</strong> {{credentialSubject.circularityScorecard.recycledContent}}</p>
-            {{/if}}
-            {{#if credentialSubject.circularityScorecard.recyclableContent}}
-                <p><strong>recyclableContent:</strong> {{credentialSubject.circularityScorecard.recyclableContent}}</p>
-            {{/if}}
-        {{/if}}
-        
-        {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
-            <table class="dpp-table nested-table">
-                <tbody>
-                    {{#each this}}
-                    <tr>
-                        <th>{{@key}}</th>
-                        <td>
-                            {{this}}
-                        </td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        {{/each}}
-    
-    {{else}}
-        <p style="color:red;">Error: credentialSubject data not found in the provided context.</p>
-    {{/if}}
-
-    <hr>
-    <div style="font-size: 10px; color: #666;">
-        <p><strong>Issuer:</strong> {{issuer.name}} ()</p>
-    </div>
 
     <div class="dpp-wrapper">
     <header>
@@ -175,6 +115,67 @@
       </div>
     </details>
 </div>
+
+            <h2>{{credentialSubject.name}}</h2>
+        <p>{{credentialSubject.description}}</p>
+
+
+    
+        <div class="data-box">
+            <p><strong>Manufacturer:</strong> {{credentialSubject.producedByParty.name}}</p>
+            <p><strong>Production Date:</strong> {{credentialSubject.productionDate}}</p>
+            <p><strong>serialNumber:</strong> {{credentialSubject.serialNumber}}</p>
+            <p><strong>batch:</strong> {{credentialSubject.batchNumber}}</p>
+            <p><strong>Production platz:</strong> {{credentialSubject.producedAtFacility.name}}</p>
+            <p><strong>Facility id:</strong> {{credentialSubject.producedAtFacility.id}}</p>    
+            <p><strong>countryOfProduction:</strong> {{credentialSubject.countryOfProduction}}</p>
+        </div>
+
+        {{#each credentialSubject.productCategory}}
+            <p><strong>Code:</strong> {{this.code}} {{this.name}}</p>
+            <p><strong>Scheme:</strong> {{this.schemeName}}</p>                
+        {{/each}}
+        <p></p>
+        {{#each credentialSubject.materialsProvenance}}
+            <a href="{{this.materialType.id}}" style="display:inline-block; padding:10px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
+                Link: {{this.materialType.name}}
+            </a>
+            <p><strong>Name:</strong> {{this.materialType.name}}</p>
+        {{/each}}
+
+        {{#if credentialSubject.circularityScorecard}}
+        <p class="sub-section-header">Circularity Scorecard: </p>
+            {{#if credentialSubject.circularityScorecard.recycledContent}}
+                <p><strong>recyclableContent:</strong> {{credentialSubject.circularityScorecard.recycledContent}}</p>
+            {{/if}}
+            {{#if credentialSubject.circularityScorecard.recyclableContent}}
+                <p><strong>recyclableContent:</strong> {{credentialSubject.circularityScorecard.recyclableContent}}</p>
+            {{/if}}
+        {{/if}}
+        
+        {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
+            <table class="dpp-table nested-table">
+                <tbody>
+                    {{#each this}}
+                    <tr>
+                        <th>{{@key}}</th>
+                        <td>
+                            {{this}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        {{/each}}
+    
+    {{else}}
+        <p style="color:red;">Error: credentialSubject data not found in the provided context.</p>
+    {{/if}}
+
+    <hr>
+    <div style="font-size: 10px; color: #666;">
+        <p><strong>Issuer:</strong> {{issuer.name}} ()</p>
+    </div>
 
 </body>
 </html>
