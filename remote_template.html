@@ -6,47 +6,24 @@
         .highlight { color: #007bff; font-weight: bold; }
         .sub-section-header { font-size: 1.2em; text-decoration: underline; }
         .data-box { background: #f3f3f3; padding: 10px; margin: 10px 0; border-left: 5px solid #007bff; }
-        .dpp-table { width: 100%; border-collapse: collapse;  margin-top: 20px; font-family: sans-serif; }
-        .dpp-table th, .dpp-table td { border: 1px solid #ddd;  padding: 12px; text-align: left; }
-        .dpp-table th { background-color: #f8f9fa; width: 30%; color: #333; }
-        .nested-table { width: 100%; background-color: #fafafa; margin: 5px 0; }
+
+        body { font-family: sans-serif; background: #f4f7f6; padding: 20px; }
+        .dpp-wrapper { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; margin-top: 0; }
+        details { border: 1px solid #ddd; margin-bottom: 10px; border-radius: 4px; transition: all 0.3s; }
+        summary { padding: 12px; font-weight: bold; cursor: pointer; background: #eee; outline: none; }
+        details[open] summary { background: #bbb69f; color: white; }
+        .details-content { padding: 15px; line-height: 1.6; }
+        
+        .dpp-table { width: 100%; border-collapse: collapse; }
+        .dpp-table th, .dpp-table td { border-bottom: 1px solid #eee; padding: 8px; text-align: left; }
+        .event-card { background: #f9f9f9; padding: 10px; border-left: 4px solid #007bff; margin-top: 10px; }
+        
     </style>
     <title>DPP | {{credentialSubject.name}}</title>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-              (function() {
-    const container = document.getElementById('flag-container');
-    const code = container.innerText.trim().toUpperCase();
-    
-    if (code.length === 2) {
-      // Magic formula to turn ISO codes into Emojis
-      const emoji = code.replace(/./g, char => 
-        String.fromCodePoint(char.charCodeAt(0) + 127397)
-      );
-      container.innerHTML = emoji + " (" + code + ")";
-    }
-  })();
-        });
-    </script>
 </head>
     
 <body>
-    
-<script>
-  (function() {
-    const container = document.getElementById('flag-container');
-    const code = container.innerText.trim().toUpperCase();
-    
-    if (code.length === 2) {
-      // Magic formula to turn ISO codes into Emojis
-      const emoji = code.replace(/./g, char => 
-        String.fromCodePoint(char.charCodeAt(0) + 127397)
-      );
-      container.innerHTML = emoji + " (" + code + ")";
-    }
-  })();
-</script>
-    
 <div class="dpp-container">
     {{#if credentialSubject}}
         <h2>{{credentialSubject.name}}</h2>
@@ -59,7 +36,7 @@
             <p><strong>batch:</strong> {{credentialSubject.batchNumber}}</p>
             <p><strong>Production platz:</strong> {{credentialSubject.producedAtFacility.name}}</p>
             <p><strong>Facility id:</strong> {{credentialSubject.producedAtFacility.id}}</p>    
-            <p><strong>countryOfProduction:</strong> {{credentialSubject.countryOfProduction}} <span class="flag-container">{{credentialSubject.countryOfProduction}}</span></p>
+            <p><strong>countryOfProduction:</strong> {{credentialSubject.countryOfProduction}}</p>
         </div>
 
         {{#each credentialSubject.productCategory}}
@@ -107,6 +84,44 @@
     <div style="font-size: 10px; color: #666;">
         <p><strong>Issuer:</strong> {{issuer.name}} ()</p>
     </div>
+
+    <div class="dpp-wrapper">
+    <header>
+      <h1>{{credentialSubject.name}}</h1>
+      <p>{{credentialSubject.description}}</p>
+    </header>
+
+    <details open>
+      <summary>Product Specifications</summary>
+      <div class="details-content">
+        <table class="dpp-table">
+          <tr>
+            <th>Production Date</th>
+            <td>{{credentialSubject.productionDate}}</td>
+          </tr>
+          <tr>
+            <th>Country</th>
+            <td>
+              {{credentialSubject.countryOfProduction}}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </details>
+
+    <details>
+      <summary>Traceability Events</summary>
+      <div class="details-content">
+        <p><strong>Process:</strong> {{credentialSubject.traceabilityInformation.valueChainProcess}}</p>
+        
+        {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
+        <div class="event-card">
+          <strong>{{linkName}}</strong><br>
+          <a href="{{linkURL}}" target="_blank">View External Resource</a>
+        </div>
+        {{/each}}
+      </div>
+    </details>
 </div>
 
 </body>
