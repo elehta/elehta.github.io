@@ -11,12 +11,25 @@
         .dpp-table th { background-color: #f8f9fa; width: 30%; color: #333; }
         .nested-table { width: 100%; background-color: #fafafa; margin: 5px 0; }
     </style>
+    <title>DPP |{{credentialSubject.producedByParty.name}}</title>
 </head>
 
 <body>
-<script type="text/javascript">
-    document.title = "DPP | {{ credentialSubject.producedByParty.name }}"
+<script>
+  (function() {
+    const container = document.getElementById('flag-container');
+    const code = container.innerText.trim().toUpperCase();
+    
+    if (code.length === 2) {
+      // Magic formula to turn ISO codes into Emojis
+      const emoji = code.replace(/./g, char => 
+        String.fromCodePoint(char.charCodeAt(0) + 127397)
+      );
+      container.innerHTML = emoji + " (" + code + ")";
+    }
+  })();
 </script>
+    
 <div class="dpp-container">
     {{#if credentialSubject}}
         <h2>{{credentialSubject.name}}</h2>
