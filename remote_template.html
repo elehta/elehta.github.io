@@ -7,6 +7,9 @@
         .data-box { background: #f4f4f4; padding: 10px; margin: 10px 0; border-left: 5px solid #007bff; }
     </style>
 </head>
+<script type="text/javascript">
+    document.title = "DPP | {{ credentialSubject.producedByParty.name }}"
+</script>
 <body>
 
 <div class="dpp-container">
@@ -25,7 +28,7 @@
         </div>
 
         {{#each credentialSubject.productCategory}}
-            <p><strong>Code:</strong> {{this.code}}</p>
+            <p><strong>Code:</strong> {{this.code}} {{this.name}}</p>
             <p><strong>Category:</strong> {{this.name}}</p>
             <p><strong>Scheme:</strong> {{this.schemeName}}</p>                
         {{/each}}
@@ -36,6 +39,16 @@
             </a>
              <p><strong>Name:</strong> {{this.name}}</p>
         {{/each}}
+
+        {{#if credentialSubject.circularityScorecard}}
+        <h3>Circularity Scorecard: </h3>
+            {{#if credentialSubject.circularityScorecard.recycledContent}}
+                <p><strong>recyclableContent:</strong> {{credentialSubject.circularityScorecard.recycledContent}}</p>
+            {{/if}}
+            {{#if credentialSubject.circularityScorecard.recyclableContent}}
+                <p><strong>recyclableContent:</strong> {{credentialSubject.circularityScorecard.recyclableContent}}</p>
+            {{/if}}
+        {{/if}}
 
         {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
             <a href="{{this.linkURL}}" style="display:inline-block; padding:10px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
