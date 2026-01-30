@@ -12,6 +12,22 @@
         .nested-table { width: 100%; background-color: #fafafa; margin: 5px 0; }
     </style>
     <title>DPP | {{credentialSubject.name}}</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+              (function() {
+    const container = document.getElementById('flag-container');
+    const code = container.innerText.trim().toUpperCase();
+    
+    if (code.length === 2) {
+      // Magic formula to turn ISO codes into Emojis
+      const emoji = code.replace(/./g, char => 
+        String.fromCodePoint(char.charCodeAt(0) + 127397)
+      );
+      container.innerHTML = emoji + " (" + code + ")";
+    }
+  })();
+        });
+    </script>
 </head>
     
 <body>
