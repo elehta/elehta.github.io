@@ -30,10 +30,9 @@
 
         {{#each credentialSubject.productCategory}}
             <p><strong>Code:</strong> {{this.code}} {{this.name}}</p>
-            <p><strong>Category:</strong> {{this.name}}</p>
             <p><strong>Scheme:</strong> {{this.schemeName}}</p>                
         {{/each}}
-    
+        <p></p>
         {{#each credentialSubject.materialsProvenance}}
             <a href="{{this.materialType.id}}" style="display:inline-block; padding:10px; background:#28a745; color:white; text-decoration:none; border-radius:5px;">
                 Link: {{this.materialType.name}}
