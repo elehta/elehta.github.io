@@ -29,9 +29,8 @@
 </head>
     
 <body>
-<div class="dpp-container">
-    {{#if credentialSubject}}
 
+    {{#if credentialSubject}}
     <div class="dpp-wrapper">
     <header>
       <h1>DIGITAL PRODUCT PASSPORT</h1>  
@@ -169,14 +168,15 @@
             </table>
         {{/each}}
     
-    {{else}}
-        <p style="color:red;">Error: credentialSubject data not found in the provided context.</p>
-    {{/if}}
-
     <hr>
     <div style="font-size: 10px; color: #666;">
         <p><strong>Issuer:</strong> {{issuer.name}} ()</p>
     </div>
+    
+    {{else}}
+        <p style="color:red;">Error: credentialSubject data not found in the provided context.</p>
+    {{/if}}
 
+</div>
 </body>
 </html>
