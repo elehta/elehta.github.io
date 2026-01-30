@@ -129,6 +129,26 @@
       </div>
     </details>
 
+
+    {{#if credentialSubject.circularityScorecard}}
+        <details>
+            <summary>Circularity Scorecard</summary>
+            <div class="details-content">
+                <table class="dpp-table">
+                    {{#each credentialSubject.circularityScorecard}}
+                        <tr>
+                            <th>{{@key}}</th>
+                            <td>
+                                {{this}}
+                            </td>
+                        </tr>
+                    {{/each}}                   
+                </table>
+            </div>
+        </details>
+       {{/if}}
+            
+
     <details>
       <summary>Traceability Events</summary>
       <div class="details-content">
