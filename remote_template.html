@@ -188,8 +188,8 @@
               {{#each credentialSubject.materialsProvenance}}
                 <tr>
                   <td>{{name}}</td>
-                  <td>{{massFraction}} ({{massAmount.value}} {{massAmount.unit}})</td>
-                  <td>{{recycledAmount}}</td>
+                  <td>{{multiply massFraction 100}}% ({{massAmount.value}} {{massAmount.unit}})</td>
+                  <td>{{multiply recycledAmount}}%</td>
                   <td>
                     {{#if (lookup . 'hazardous')}}
                       {{#if hazardous}}
