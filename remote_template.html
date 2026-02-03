@@ -94,19 +94,19 @@
             <span class="label">DPP ID</span>
             <span class="value">{{credentialSubject.id}}</span>
           </div>
-          {{#if (lookup . 'credentialSubject.batchNumber')}}
+          {{#if credentialSubject.batchNumber}}
             <div class="data-row">
               <span class="label">Batch number</span>
               <span class="value">{{credentialSubject.batchNumber}}</span>
             </div>
           {{/if}}
-          {{#if (lookup . 'credentialSubject.serialNumber')}}
+          {{#if credentialSubject.serialNumber}}
             <div class="data-row">
               <span class="label">Serial number</span>
               <span class="value">{{credentialSubject.serialNumber}}</span>
             </div>
           {{/if}}
-          {{#if (lookup . 'credentialSubject.productionDate')}}
+          {{#if credentialSubject.productionDate}}
             <div class="data-row">
               <span class="label">Production date</span>
               <span class="value">{{credentialSubject.productionDate}}</span>
