@@ -94,19 +94,25 @@
             <span class="label">DPP ID</span>
             <span class="value">{{credentialSubject.id}}</span>
           </div>
-          <div class="data-row">
-            <span class="label">Batch number</span>
-            <span class="value">{{credentialSubject.batchNumber}}</span>
-          </div>
-          <div class="data-row">
-            <span class="label">Serial number</span>
-            <span class="value">{{credentialSubject.serialNumber}}</span>
-          </div>
-          <div class="data-row">
-            <span class="label">Production date</span>
-            <span class="value">{{credentialSubject.productionDate}}</span>
-          </div>
-
+          {{#if (lookup . 'credentialSubject.batchNumber')}}
+            <div class="data-row">
+              <span class="label">Batch number</span>
+              <span class="value">{{credentialSubject.batchNumber}}</span>
+            </div>
+          {{/if}}
+          {{#if (lookup . 'credentialSubject.serialNumber')}}
+            <div class="data-row">
+              <span class="label">Serial number</span>
+              <span class="value">{{credentialSubject.serialNumber}}</span>
+            </div>
+          {{/if}}
+          {{#if (lookup . 'credentialSubject.productionDate')}}
+            <div class="data-row">
+              <span class="label">Production date</span>
+              <span class="value">{{credentialSubject.productionDate}}</span>
+            </div>
+          {{/if}}
+          
           <div class="data-row">
             <span class="label">Dimensions</span>
           </div>
