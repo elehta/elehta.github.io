@@ -137,7 +137,7 @@
                 <tr>
                   <td>{{name}}</td>
                   <td>{{multiply massFraction 100}}% ({{massAmount.value}} {{massAmount.unit}})</td>
-                  <td>{{multiply recycledAmount}}%</td>
+                  <td>{{multiply recycledAmount 100}}%</td>
                   <td>
                     {{#if (lookup . 'hazardous')}}
                       {{#if hazardous}}
