@@ -57,7 +57,7 @@
 
     <article class="credential-card item-dpp">
       <div class="credential-header">
-        <strong>DIGITAL PRODUCT PASSPORT he</strong>
+        <strong>DIGITAL PRODUCT PASSPORT</strong>
       </div>
 
       <div class="credential-body">
@@ -167,17 +167,17 @@
         <div class="topic-group">
           <div class="topic-header">Circularity scorecard</div>
 
-          {{#if credentialSubject.circularityScorecard.recyclableContent}}
-            <div class="data-row">
-              <span class="label">Recyclable content</span>
-              <span class="value">{{multiply credentialSubject.circularityScorecard.recyclableContent 100}}%</span>           
-            </div>
-          {{/if}}
-
           {{#if credentialSubject.circularityScorecard.recycledContent}}
             <div class="data-row">
               <span class="label">Recycled content</span>
               <span class="value">{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span>           
+            </div>
+          {{/if}}
+          
+          {{#if credentialSubject.circularityScorecard.recyclableContent}}
+            <div class="data-row">
+              <span class="label">Recyclable content</span>
+              <span class="value">{{multiply credentialSubject.circularityScorecard.recyclableContent 100}}%</span>           
             </div>
           {{/if}}
           
@@ -190,7 +190,7 @@
 
           {{#if credentialSubject.circularityScorecard.materialCircularityIndicator}}
             <div class="data-row">
-              <span class="label">Recyclable content</span>
+              <span class="label">Circularity indicator</span>
               <span class="value">{{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%</span>           
             </div>
           {{/if}}
