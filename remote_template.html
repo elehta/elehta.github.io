@@ -190,20 +190,20 @@
                   <td>{{name}}</td>
                   <td>{{massFraction}} ({{massAmount.value}} {{massAmount.unit}})</td>
                   <td>{{recycledAmount}}</td>
-                  <td>{{originCountry}}</td>
                   <td>
                     {{#if (lookup . 'hazardous')}}
                       {{#if hazardous}}
-                        <span class="badge badge-hazard">HAZARDOUS</span>
+                        <span class="badge hazardous-badge">HAZARDOUS</span>
                       {{else}}
-                        <span class="badge badge-safe">SAFE</span>
+                        <span class="badge safe-badge">SAFE</span>
                       {{/if}}
                     {{else}}
-                      <span class="badge badge-unknown">UNKNOWN</span>
+                      <span class="badge unknown-badge">UNKNOWN</span>
                     {{/if}}
                   </td>
                 </tr>
               {{/each}}
+              <td>{{originCountry}}</td>
             </tbody>
           </table>
         </div>
