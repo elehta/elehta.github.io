@@ -9,7 +9,7 @@
        body { margin: 0; padding: 0; min-height: 100vh; display: flex; justify-content: center;  align-items: center; background-color: #f3f4f6; }
        .card-viewer { display: flex; flex-direction: row; gap: 24px; flex-wrap: wrap; justify-content: center; padding: 40px; }
        .credential-card { font-family: var(--font-main); max-width: 640px; /* Adjust this to preferred width */ width: 100%; min-width: 400px; background: #ffffff; border-radius: var(--radius); border: 1px solid #e5e7eb; box-shadow: var(--shadow); overflow: hidden; position: relative; transition: transform 0.2s ease; flex-shrink: 0; margin: 10px; }
-       .credential-header { padding: 16px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #f3f4f6; }
+       .credential-header { padding: 16px 20px 10px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #f3f4f6; }
        .credential-body { padding: 20px; }
        .data-row { display: flex; align-items: flex-start; margin-bottom: 12px; font-size: 0.9rem; width: 100%; }
        .label { flex: 0 0 30%; color: #6b7280; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; text-align: left; }
@@ -176,7 +176,7 @@
 
           {{#if credentialSubject.circularityScorecard.recycledContent}}
             <div class="data-row">
-              <span class="label">Recyclable content</span>
+              <span class="label">Recycled content</span>
               <span class="value">{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span>           
             </div>
           {{/if}}
