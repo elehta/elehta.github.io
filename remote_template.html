@@ -41,7 +41,10 @@
        .external-link { color: #2563eb; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; border-bottom: 1px solid transparent; transition: all 0.2s ease; }
        .external-link:hover { border-bottom: 1px solid #2563eb; color: #1d4ed8; }
        .external-link::after { content: '↗'; font-size: 0.85rem; font-weight: bold; }
-       .item-anchor .external-link { font-family: var(--font-mono); font-size: 0.75rem; }     
+       .item-anchor .external-link { font-family: var(--font-mono); font-size: 0.75rem; }
+       .data-row.nested { margin-left: 15px; margin-top: -4px; border-left: 1px dashed #e5e7eb; padding-left: 10px; }
+       .data-row.nested .label { flex: 0 0 calc(30% - 25px); font-size: 0.7rem; color: #9ca3af; }
+       .data-row.nested .value { flex: 0 0 70%; font-size: 0.85rem; font-weight: 500; }
     </style>    
     <title>Digital Product Passport</title>
   </head>
@@ -49,7 +52,7 @@
   <body>
 
     <div style="display: flex; gap: 20px; padding: 20px; flex-wrap: wrap">
-  <div class="card-viewer">
+    <div class="card-viewer">
 
     <article class="credential-card item-dpp">
       <div class="credential-header">
@@ -58,35 +61,55 @@
 
       <div class="credential-body">
         <div class="topic-group">
-          <div class="topic-header larger">Textendifier 3000 XL</div>
+          <div class="topic-header larger">{{credentialSubject.name}}</div>
           <div class="topic-media">
-            <img src="https://placehold.co/200x150" alt="pic" />
+            {{#if credentialSubject.productImage.linkURL}}
+              <img src="{{credentialSubject.productImage.linkURL}}" 
+                onerror="this.onerror=null;this.src='https://placehold.co/200x150';" 
+                alt="Product Image" 
+                class="product-main-img">
+            {{else}}
+              <img src="https://placehold.co/200x150" 
+               alt="Placeholder" 
+               class="product-main-img">
+            {{/if}}
           </div>
           <div class="data-row">
             <span class="label">Product model</span>
-            <span class="value">Textendifier 3000 XL</span>
+            <span class="value">{{credentialSubject.name}}</span>
           </div>
           <div class="data-row">
             <span class="label">Description</span>
-            <span class="value"
-              >Sorted post-consumer textile waste. Denim garments. Fiber
-              content: CO min. 90% / PES max. 7% / EL max. 3%</span
-            >
+            <span class="value">{{credentialSubject.description}}</span>
           </div>
           <div class="data-row">
             <span class="label">DPP ID</span>
-            <span class="value"
-              >did:web:inx.collab-cloud.eu:lsjh:sorted:batch:889900</span
-            >
+            <span class="value">{{credentialSubject.id}}</span>
           </div>
           <div class="data-row">
             <span class="label">Batch number</span>
-            <span class="value">889900</span>
+            <span class="value">{{credentialSubject.batchNumber}}</span>
           </div>
           <div class="data-row">
             <span class="label">Serial number</span>
-            <span class="value">N/A</span>
+            <span class="value">{{credentialSubject.serialNumber}}</span>
           </div>
+          <div class="data-row">
+            <span class="label">Production date</span>
+            <span class="value">{{credentialSubject.productionDate}}</span>
+          </div>
+
+          <div class="data-row">
+            <span class="label">Dimensions</span>
+          </div>
+          
+          {{#each credentialSubject.dimensions}}
+            <div class="data-row nested">
+              <span class="label">{{@key}}</span>
+              <span class="value"><strong>{{this.value}}</strong><span>{{this.unit}}</span></span>
+            </div>
+          {{/each}}
+
         </div>
 
         <div class="topic-group">
@@ -192,7 +215,9 @@
         
       </div>
     </article>
-  
+          </div>
+        
+      </div>
   
   </body>
 </html>
