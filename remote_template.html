@@ -45,6 +45,7 @@
        .data-row.nested { margin-left: 15px; }
        .data-row.nested .label { flex: 0 0 calc(30% - 25px); font-size: 0.8rem; }
        .data-row.nested .value { flex: 0 0 70%; font-size: 0.9rem; font-weight: 500; }
+      .truncate-row { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; width: 100%; }
     </style>    
     <title>Digital Product Passport</title>
   </head>
@@ -92,7 +93,7 @@
           </div>
           <div class="data-row">
             <span class="label">DPP ID</span>
-            <span class="value">{{credentialSubject.id}}</span>
+            <span class="value truncate-row">{{credentialSubject.id}}</span>
           </div>
           {{#if credentialSubject.batchNumber}}
             <div class="data-row">
