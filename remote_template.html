@@ -178,17 +178,29 @@
             <thead>
               <tr>
                 <th>Material</th>
+                <th>Mass fraction</th>
+                <th>Recycled</th>
+                <th>Hazardousity</th>
                 <th>Origin</th>
-                <th>Mass</th>
               </tr>
             </thead>
             <tbody>
               {{#each credentialSubject.materialsProvenance}}
                 <tr>
-                  <td>{{name}}</td>                 
-                  <td>{{originCountry}}</td>                  
-                  <td style="text-align: right; padding-right: 15px;">
-                    {{massAmount.value}} {{massAmount.unit}}
+                  <td>{{name}}</td>
+                  <td>{{massFraction}} ({{massAmount.value}} {{massAmount.unit}})</td>
+                  <td>{{recycledAmount}}</td>
+                  <td>{{originCountry}}</td>
+                  <td>
+                    {{#if (lookup . 'hazardous')}}
+                      {{#if hazardous}}
+                        <span class="badge badge-hazard">HAZARDOUS</span>
+                      {{else}}
+                        <span class="badge badge-safe">SAFE</span>
+                      {{/if}}
+                    {{else}}
+                      <span class="badge badge-unknown">UNKNOWN</span>
+                    {{/if}}
                   </td>
                 </tr>
               {{/each}}
