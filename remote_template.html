@@ -163,30 +163,40 @@
           </table>
         </div>
 
+        {{#if credentialSubject.circularityScorecard}}
         <div class="topic-group">
-          <div class="topic-header">Sustainability scores</div>
-          <div class="data-row">
-            <span class="label">Repair Score</span>
-            <div class="value score-container">
-              <span>8.5 / 10</span>
-              <div class="score-track">
-                <div class="score-fill score-high" style="width: 85%">                  
-                </div>
-              </div>
-            </div>
-          </div>
+          <div class="topic-header">Circularity scorecard</div>
 
-          <div class="data-row">
-            <span class="label">Carbon Footprint</span>
-            <div class="value score-container">
-              <span>3.2 / 10</span>
-              <div class="score-track">
-                <div class="score-fill score-low" style="width: 32%"></div>
-              </div>
+          {{#if credentialSubject.circularityScorecard.recyclableContent}}
+            <div class="data-row">
+              <span class="label">Recyclable content</span>
+              <span class="value">{{multiply credentialSubject.circularityScorecard.recyclableContent 100}}%</span>           
             </div>
-          </div>
+          {{/if}}
 
+          {{#if credentialSubject.circularityScorecard.recycledContent}}
+            <div class="data-row">
+              <span class="label">Recyclable content</span>
+              <span class="value">{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span>           
+            </div>
+          {{/if}}
+          
+          {{#if credentialSubject.circularityScorecard.utilityFactor}}
+            <div class="data-row">
+              <span class="label">Utility factor</span>
+              <span class="value">{{credentialSubject.circularityScorecard.utilityFactor}}</span>           
+            </div>
+          {{/if}}
+
+          {{#if credentialSubject.circularityScorecard.materialCircularityIndicator}}
+            <div class="data-row">
+              <span class="label">Recyclable content</span>
+              <span class="value">{{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%</span>           
+            </div>
+          {{/if}}
+          
         </div>        
+        {{/if}}
         
         <div class="topic-group">
           <div class="topic-header">Material thingies</div>
