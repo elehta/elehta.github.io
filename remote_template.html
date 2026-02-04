@@ -170,16 +170,15 @@
           {{#if credentialSubject.circularityScorecard.recycledContent}}
             <div class="data-row">
               <span class="label">Recycled content</span>
-              <span class="value">{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span>
+
               <div class="value score-container">
                 <span>{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span>
                 <div class="score-track">
                   <div class="score-fill score-mid" style="width: {{multiply credentialSubject.circularityScorecard.recycledContent 100}}%"></div>
                   </div>
-                </div>
+              </div>
             </div>
               
-            </div>
           {{/if}}
           
           {{#if credentialSubject.circularityScorecard.recyclableContent}}
