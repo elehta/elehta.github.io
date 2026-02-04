@@ -174,8 +174,8 @@
               <div class="value score-container">
                 <span>{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span>
                 <div class="score-track">
-                  <div class="score-fill score-mid" style="width: {{multiply credentialSubject.circularityScorecard.recycledContent 100}}%"></div>
-                  </div>
+                  <div class="score-fill {{getScoreMeterClass credentialSubject.circularityScorecard.recycledContent}}" style="width: {{multiply credentialSubject.circularityScorecard.recycledContent 100}}%"></div>
+                </div>
               </div>
             </div>
               
