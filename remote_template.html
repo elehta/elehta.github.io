@@ -170,21 +170,24 @@
           {{#if credentialSubject.circularityScorecard.recycledContent}}
             <div class="data-row">
               <span class="label">Recycled content</span>
-
               <div class="value score-container">
                 <span>{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span>
                 <div class="score-track">
                   <div class="score-fill {{getScoreMeterClass credentialSubject.circularityScorecard.recycledContent}}" style="width: {{multiply credentialSubject.circularityScorecard.recycledContent 100}}%"></div>
                 </div>
               </div>
-            </div>
-              
+            </div>              
           {{/if}}
           
           {{#if credentialSubject.circularityScorecard.recyclableContent}}
             <div class="data-row">
               <span class="label">Recyclable content</span>
-              <span class="value">{{multiply credentialSubject.circularityScorecard.recyclableContent 100}}%</span>           
+              <div class="value score-container">
+                <span>{{multiply credentialSubject.circularityScorecard.recyclableContent 100}}%</span>
+                <div class="score-track">
+                  <div class="score-fill {{getScoreMeterClass credentialSubject.circularityScorecard.recyclableContent}}" style="width: {{multiply credentialSubject.circularityScorecard.recyclableContent 100}}%"></div>
+                </div>
+              </div>         
             </div>
           {{/if}}
           
@@ -198,7 +201,12 @@
           {{#if credentialSubject.circularityScorecard.materialCircularityIndicator}}
             <div class="data-row">
               <span class="label">Circularity indicator</span>
-              <span class="value">{{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%</span>           
+              <div class="value score-container">
+                <span>{{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%</span>
+                <div class="score-track">
+                  <div class="score-fill {{getScoreMeterClass credentialSubject.circularityScorecard.materialCircularityIndicator}}" style="width: {{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%"></div>
+                </div>
+              </div>         
             </div>
           {{/if}}
           
