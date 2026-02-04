@@ -67,7 +67,7 @@
       <div class="credential-body">
         <div class="topic-group">
           <div class="topic-header">
-            <span class="larger">{{credentialSubject.name}}</span><button id="download-btn">Download JSON</button><button id="view-btn">View JSON</button>
+            <span class="larger">{{credentialSubject.name}}</span><button id="download-btn">Download JSON</button>
           </div>
           <div class="topic-media">
             {{#if credentialSubject.productImage.linkURL}}
@@ -81,6 +81,7 @@
                class="product-main-img">
             {{/if}}
           </div>
+          <button id="view-btn">View JSON</button>
           <div class="data-row">
             <span class="label">Product</span>
             <span class="value">{{credentialSubject.name}}</span>
