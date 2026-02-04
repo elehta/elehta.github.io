@@ -46,6 +46,24 @@
       .data-row.nested .label { flex: 0 0 calc(40% - 25px); font-size: 0.9rem; }
       .data-row.nested .value { flex: 0 0 60%; font-size: 1.125rem; font-weight: 500; }
       .truncate-row { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; width: 100%; }
+      #download-btn {
+    background: transparent;
+    color:  var(--dpp-primary); 
+    border: 1px solid #00ff88;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-family: monospace;
+    text-transform: uppercase;
+    border-radius: 3; 
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#download-btn:hover {
+    background: #00ff88;
+    color: #000;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
     </style>    
     <title>Digital Product Passport</title>
   </head>
