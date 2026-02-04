@@ -46,9 +46,9 @@
       .data-row.nested .label { flex: 0 0 calc(40% - 25px); font-size: 0.9rem; }
       .data-row.nested .value { flex: 0 0 60%; font-size: 1.125rem; font-weight: 500; }
       .truncate-row { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; width: 100%; }
-      #download-btn { margin-left: auto; background: transparent; color: ##688276; border: 1px solid ##688276; padding: 2px 8px; font-size: 0.6rem; text-transform: uppercase; border-radius: 0; transition: 0.2s; align-self: flex-end; margin-bottom: 2px; }
+      #download-btn { margin-left: auto; background: transparent; color: ##688276; border: 1px solid ##688276; padding: 2px 8px; font-size: 0.6rem; text-transform: uppercase; border-radius: 0; transition: 0.2s; align-self: flex-end; margin-bottom: 12px; }
       #download-btn:hover { background: var(--dpp-primary); color: #fff; }
-      #view-btn { margin-left: auto; background: transparent; color: ##688276; border: 1px solid ##688276; padding: 2px 8px; font-size: 0.6rem; text-transform: uppercase; border-radius: 0; transition: 0.2s; align-self: flex-end; margin-bottom: 2px; }
+      #view-btn { margin-left: auto; background: transparent; color: ##688276; border: 1px solid ##688276; padding: 2px 8px; font-size: 0.6rem; text-transform: uppercase; border-radius: 0; transition: 0.2s; align-self: flex-end; margin-bottom: 12px; }
       #view-btn:hover { background: var(--dpp-primary); color: #fff; }
     </style>    
     <title>Digital Product Passport</title>
@@ -67,7 +67,7 @@
       <div class="credential-body">
         <div class="topic-group">
           <div class="topic-header">
-            <span class="larger">{{credentialSubject.name}}</span><button id="download-btn">Download JSON</button>
+            <span class="larger">{{credentialSubject.name}}</span>
           </div>
           <div class="topic-media">
             {{#if credentialSubject.productImage.linkURL}}
@@ -82,6 +82,7 @@
             {{/if}}
           </div>
           <button id="view-btn">View JSON</button>
+          <button id="download-btn">Download JSON</button>
           <div class="data-row">
             <span class="label">Product</span>
             <span class="value">{{credentialSubject.name}}</span>
