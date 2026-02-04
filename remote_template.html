@@ -46,15 +46,16 @@
       .data-row.nested .label { flex: 0 0 calc(40% - 25px); font-size: 0.9rem; }
       .data-row.nested .value { flex: 0 0 60%; font-size: 1.125rem; font-weight: 500; }
       .truncate-row { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; width: 100%; }
-      #download-btn {
+#download-btn {
+    margin-left: auto;
     background: transparent;
-    color:  var(--dpp-primary); 
+    color: #00ff88;
     border: 1px solid #00ff88;
     padding: 2px 8px;
     font-size: 10px;
     font-family: monospace;
     text-transform: uppercase;
-    border-radius: 3; 
+    border-radius: 0;
     cursor: pointer;
     transition: 0.2s;
 }
@@ -80,7 +81,9 @@
 
       <div class="credential-body">
         <div class="topic-group">
-          <div class="topic-header larger">{{credentialSubject.name}}</div>
+          <div class="topic-header">
+            <span class="larger">{{credentialSubject.name}}</span><button id="download-btn">Download JSON</button>
+          </div>
           <div class="topic-media">
             {{#if credentialSubject.productImage.linkURL}}
               <img src="{{credentialSubject.productImage.linkURL}}" 
@@ -144,10 +147,7 @@
           {{/each}}
 
         </div>
-        
-      <button id="download-btn">Download This Data</button>
-
-        
+                   
         <div class="topic-group">
           <div class="topic-header">Material Provenance</div>
           <table>
