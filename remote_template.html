@@ -48,6 +48,8 @@
       .truncate-row { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; width: 100%; }
       #download-btn { margin-left: auto; background: transparent; color: ##688276; border: 1px solid ##688276; padding: 2px 8px; font-size: 0.6rem; text-transform: uppercase; border-radius: 0; transition: 0.2s; align-self: flex-end; margin-bottom: 2px; }
       #download-btn:hover { background: var(--dpp-primary); color: #fff; }
+      #view-btn { margin-left: auto; background: transparent; color: ##688276; border: 1px solid ##688276; padding: 2px 8px; font-size: 0.6rem; text-transform: uppercase; border-radius: 0; transition: 0.2s; align-self: flex-end; margin-bottom: 2px; }
+      #view-btn:hover { background: var(--dpp-primary); color: #fff; }
     </style>    
     <title>Digital Product Passport</title>
   </head>
@@ -65,7 +67,7 @@
       <div class="credential-body">
         <div class="topic-group">
           <div class="topic-header">
-            <span class="larger">{{credentialSubject.name}}</span><button id="download-btn">Download JSON</button>
+            <span class="larger">{{credentialSubject.name}}</span><button id="download-btn">Download JSON</button><button id="view-btn">View JSON</button>
           </div>
           <div class="topic-media">
             {{#if credentialSubject.productImage.linkURL}}
