@@ -170,7 +170,15 @@
           {{#if credentialSubject.circularityScorecard.recycledContent}}
             <div class="data-row">
               <span class="label">Recycled content</span>
-              <span class="value">{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span>           
+              <span class="value">{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span>
+              <div class="value score-container">
+                <span>{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span>
+                <div class="score-track">
+                  <div class="score-fill score-mid" style="width: {{multiply credentialSubject.circularityScorecard.recycledContent 100}}%"></div>
+                  </div>
+                </div>
+            </div>
+              
             </div>
           {{/if}}
           
@@ -236,13 +244,17 @@
       </div>
        
         <div class="topic-group">
-          <div class="topic-header">Sustainability Metrics</div>
+          <div class="topic-header">Sustainability metrics</div>
           <div class="data-row">
-            <span class="label">GWP (Total)</span>
+            <span class="label">Global Warming Potential (Total)</span>
             <span class="value">4.2 tCO2e</span>
           </div>
           <div class="data-row">
-            <span class="label">Energy Mix</span>
+            <span class="label">Water intensity</span>
+            <span class="value">4 800 l/kg</span>
+          </div>
+          <div class="data-row">
+            <span class="label">Energy mix</span>
             <span class="value">Renewable</span>
           </div>
         </div>
