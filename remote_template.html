@@ -190,13 +190,6 @@
               </div>         
             </div>
           {{/if}}
-          
-          {{#if credentialSubject.circularityScorecard.utilityFactor}}
-            <div class="data-row">
-              <span class="label">Utility factor</span>
-              <span class="value">{{credentialSubject.circularityScorecard.utilityFactor}}</span>           
-            </div>
-          {{/if}}
 
           {{#if credentialSubject.circularityScorecard.materialCircularityIndicator}}
             <div class="data-row">
@@ -207,6 +200,14 @@
                   <div class="score-fill {{getScoreMeterClass credentialSubject.circularityScorecard.materialCircularityIndicator}}" style="width: {{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%"></div>
                 </div>
               </div>         
+            </div>
+          {{/if}}
+
+                    
+          {{#if credentialSubject.circularityScorecard.utilityFactor}}
+            <div class="data-row">
+              <span class="label">Utility factor</span>
+              <span class="value">{{credentialSubject.circularityScorecard.utilityFactor}}</span>           
             </div>
           {{/if}}
           
