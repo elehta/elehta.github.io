@@ -1,4 +1,3 @@
-
     <style>
       :root { --font-main: 'Inter', -apple-system, sans-serif; --font-mono: 'JetBrains Mono', 'Fira Code', monospace; --radius: 12px; --shadow: 0 4px 20px rgba(0, 0, 0, 0.08); --dpp-primary: #10b981; --dcc-primary: #3b82f6; --dia-primary: #64748b; }
       .verified-badge, .safe-badge, .score-high { background: var(--dpp-primary); }
@@ -44,28 +43,19 @@
       .data-row.nested .label { flex: 0 0 calc(40% - 25px); font-size: 0.9rem; }
       .data-row.nested .value { flex: 0 0 60%; font-size: 1.12rem; font-weight: 500; }
       .truncate-row { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; width: 100%; }
-      #view-btn { margin-left: auto; background: transparent; color: #688276; border: 1px solid #688276; padding: 2px 8px; font-size: 0.6rem; text-transform: uppercase; border-radius: 0; transition: 0.2s; cursor: pointer; }
-      #view-btn:hover { background: var(--dpp-primary); color: #fff; }
-      #download-btn { background: transparent; color: #688276; border: 1px solid #688276; padding: 2px 8px; font-size: 0.6rem; text-transform: uppercase; border-radius: 0; transition: 0.2s; margin-left: 8px; cursor: pointer; }
-      #download-btn:hover { background: var(--dpp-primary); color: #fff; }
     </style>    
  
-
-
-
     <div class="card-viewer">
-
+        
     <article class="credential-card item-dpp">
       <div class="credential-header">
-        <strong>DIGITAL PRODUCT PASSPORT z</strong>
+        <strong>DIGITAL PRODUCT PASSPORT</strong>
       </div>
 
       <div class="credential-body">
         <div class="topic-group">
           <div class="topic-header">
             <span class="larger">{{credentialSubject.name}}</span>
-            <button id="view-btn">View JSON</button>
-            <button id="download-btn">Download JSON</button>
           </div>
           <div class="topic-media">
             {{#if credentialSubject.productImage.linkURL}}
