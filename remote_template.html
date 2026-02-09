@@ -35,7 +35,7 @@
       .score-container { display: flex; flex-direction: column; align-items: flex-end; width: 100%; margin-top: 2px; margin-bottom: 2px;}
       .score-track { width: 30%; height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; position: relative; }
       .score-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease-in-out; }
-.external-link { color: var(--dpp-primary); text-decoration: none; font-weight: 500; font-size: 0.85rem; background: #f0fdf4; padding: 2px 6px; border-radius: 4px; display: inline; line-height: 1.8; transition: all 0.2s ease; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.external-link { color: var(--dpp-primary); text-decoration: none; font-weight: 500; font-size: 0.85rem; padding: 2px 6px; border-radius: 4px; display: inline; line-height: 1.8; transition: all 0.2s ease; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .external-link:hover { background: #dcfce7; color: #065f46; }
 .external-link::after { content: '\00a0↗'; font-weight: bold; white-space: nowrap; }
       .item-anchor .external-link { font-family: var(--font-mono); font-size: 0.95rem; }
@@ -302,10 +302,10 @@
           <table>
             <thead>
               <tr>
-                <th>Standard / Reference</th>
-                <th>Topic</th>
-                <th>Status</th>
-                <th>Evidence</th>
+                <th style="width: 45%;">Standard</th>
+                <th style="width: 25%;">Topic</th>
+                <th style="width: 15%;">Status</th>
+                <th style="width: 15%;">Evidence</th>
               </tr>
             </thead>
             <tbody>
