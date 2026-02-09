@@ -271,6 +271,47 @@
             <span class="value">Renewable</span>
           </div>
         </div>
+
+          {{#if credentialSubject.conformityClaim}}
+            <div class="topic-group">
+              <div class="topic-header">Conformity Declarations</div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Standard / Reference</th>
+                    <th>Topic</th>
+                    <th>Status</th>
+                    <th>Evidence</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each credentialSubject.conformityClaim}}
+                    <tr>
+                      <td>
+                        <strong>{{referenceStandard.name}}</strong><br>
+                        <small style="color: #6b7280;">Issued: {{referenceStandard.issueDate}}</small>
+                      </td>
+                      <td>{{conformityTopic}}</td>
+                      <td>
+                        {{#if conformance}}
+                          <span class="badge safe-badge">CONFORMANT</span>
+                        {{else}}
+                          <span class="badge hazardous-badge">NON-CONFORMANT</span>
+                        {{/if}}
+                      </td>
+                      <td>
+                        {{#if conformityEvidence.linkURL}}
+                          <a href="{{conformityEvidence.linkURL}}" target="_blank" class="external-link">
+                            {{#if conformityEvidence.linkName}}{{conformityEvidence.linkName}}{{else}}View DCC{{/if}}
+                          </a>
+                        {{/if}}
+                      </td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+            {{/if}}
         
       </div>
     </article>
