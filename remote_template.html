@@ -49,8 +49,9 @@
 .claim-card { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
 .claim-meta { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; border-bottom: 1px dashed #d1d5db; padding-bottom: 8px; }
 .nested-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
-.metric-pill { background: #ffffff; border: 1px solid #e5e7eb; padding: 6px 10px; border-radius: 6px; font-size: 0.8rem; display: flex; flex-direction: column; }
-.metric-label { font-weight: 700; text-transform: uppercase; font-size: 0.7rem; margin-bottom: 2px; }
+.metric-pill { background: #ffffff; border: 1px solid #e5e7eb; padding: 10px; border-radius: 6px; font-size: 0.8rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 80px; }
+.metric-label { font-weight: 700; text-transform: uppercase; font-size: 0.7rem; margin-bottom: 4px; }
+.pill-link { margin-top: 8px; padding: 4px 0; border-top: 1px solid #f3f4f6; color: var(--dpp-primary); text-decoration: none; font-size: 0.75rem; font-weight: 600; display: block; }
     </style>    
  
     <div class="card-viewer">
@@ -325,27 +326,37 @@
     <div class="nested-metrics">
       {{#each declaredValue}}
       <div class="metric-pill">
-        <span class="metric-label" style="color: var(--dpp-primary);">Declared Metric</span>
-        <span style="font-weight: 600;">{{metricName}}</span>
-        <span><strong>{{metricValue.value}}</strong> {{metricValue.unit}}</span>
+        <div>
+          <span class="metric-label" style="color: var(--dpp-primary);">Declared Metric</span>
+          <div style="font-weight: 600; font-size: 0.85rem;">{{metricName}}</div>
+          <div style="font-size: 1rem;"><strong>{{metricValue.value}}</strong> {{metricValue.unit}}</div>
+        </div>
+        
+        {{#if ../conformityEvidence.linkURL}}
+        <a href="{{../conformityEvidence.linkURL}}" target="_blank" class="pill-link">
+          {{#if ../conformityEvidence.linkName}}{{../conformityEvidence.linkName}}{{else}}View Evidence{{/if}} ↗
+        </a>
+        {{/if}}
       </div>
       {{/each}}
 
       {{#each assessmentCriteria}}
         {{#each thresholdValue}}
         <div class="metric-pill" style="border-left: 3px solid var(--dcc-primary);">
-          <span class="metric-label" style="color: var(--dcc-primary);">Assessment Limit</span>
-          <span style="font-weight: 600;">{{metricName}}</span>
-          <span><strong>{{metricValue.value}}</strong> {{metricValue.unit}}</span>
+          <div>
+            <span class="metric-label" style="color: var(--dcc-primary);">Assessment Limit</span>
+            <div style="font-weight: 600; font-size: 0.85rem;">{{metricName}}</div>
+            <div style="font-size: 1rem;"><strong>{{metricValue.value}}</strong> {{metricValue.unit}}</div>
+          </div>
+
+          {{#if ../id}}
+          <a href="{{../id}}" target="_blank" class="pill-link" style="color: var(--dcc-primary);">
+             View Criterion Reference ↗
+          </a>
+          {{/if}}
         </div>
         {{/each}}
       {{/each}}
-    </div>
-
-    <div style="margin-top: 10px; text-align: right;">
-      <a href="{{conformityEvidence.linkURL}}" target="_blank" class="external-link">
-        {{#if conformityEvidence.linkName}}{{conformityEvidence.linkName}}{{else}}View Evidence{{/if}}
-      </a>
     </div>
   </div>
   {{/each}}
