@@ -45,6 +45,11 @@ t Data    <style>
       .truncate-row { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; width: 100%; }
       .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
       .status-text { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+      
+      .claim-card { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+      .claim-meta { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; border-bottom: 1px dashed #d1d5db; padding-bottom: 8px; }
+      .nested-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+      .metric-pill { background: #ffffff; border: 1px solid #e5e7eb; padding: 6px 10px; border-radius: 6px; font-size: 0.8rem; display: flex; flex-direction: column; }
     </style>    
  
     <div class="card-viewer">
@@ -296,50 +301,55 @@ t Data    <style>
         </div>
         {{/if}}        
 
-    {{#if credentialSubject.conformityClaim}}
-        <div class="topic-group">
-          <div class="topic-header">Conformity Declarations</div>
-          <table>
-            <thead>
-              <tr>
-                <th style="width: 45%;">Standard</th>
-                <th style="width: 25%;">Topic</th>
-                <th style="width: 10%;">Status</th>
-                <th style="width: 20%;">Evidence</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each credentialSubject.conformityClaim}}
-                <tr>
-                  <td>
-                    <strong>{{referenceStandard.name}}</strong><br>
-                    <small style="color: #6b7280;">Issued: {{referenceStandard.issueDate}}</small>
-                  </td>
-                  <td>{{conformityTopic}}</td>
-                    <td>
-                      <div style="display: flex; align-items: center; white-space: nowrap;">
-                        {{#if conformance}}
-                          <span class="dot safe-badge"></span>
-                          <span class="status-text" style="color: var(--dpp-primary);">YES</span>
-                        {{else}}
-                          <span class="dot revoked-badge"></span>
-                          <span class="status-text" style="color: #ef4444;">NO</span>
-                        {{/if}}
-                      </div>
-                    </td>
-                  <td>
-                    {{#if conformityEvidence.linkURL}}
-                      <a href="{{conformityEvidence.linkURL}}" target="_blank" class="external-link">
-                        {{#if conformityEvidence.linkName}}{{conformityEvidence.linkName}}{{else}}View DCC{{/if}}
-                      </a>
-                    {{/if}}
-                  </td>
-                </tr>
-              {{/each}}
-            </tbody>
-          </table>
-        </div>
+{{#if credentialSubject.conformityClaim}}
+<div class="topic-group">
+  <div class="topic-header">Conformity Declarations</div>
+
+  {{#each credentialSubject.conformityClaim}}
+  <div class="claim-card">
+    <div class="claim-meta">
+      <div style="flex: 1;">
+        <div style="font-size: 0.75rem; color: #6b7280; text-transform: uppercase;">{{formatTopic conformityTopic}}</div>
+        <div style="font-weight: 700; color: #111827; font-size: 1rem; line-height: 1.2;">{{referenceStandard.name}}</div>
+      </div>
+      <div style="text-align: right; flex-shrink: 0;">
+        {{#if conformance}}
+          <span class="badge safe-badge">CONFORMANT</span>
+        {{else}}
+          <span class="badge revoked-badge">NON-CONFORMANT</span>
         {{/if}}
+      </div>
+    </div>
+
+    <div class="nested-metrics">
+      {{#each declaredValue}}
+      <div class="metric-pill">
+        <span class="metric-label" style="color: var(--dpp-primary);">Declared Metric</span>
+        <span style="font-weight: 600;">{{metricName}}</span>
+        <span><strong>{{metricValue.value}}</strong> {{#if (ne metricValue.unit "NIL")}}{{metricValue.unit}}{{/if}}</span>
+      </div>
+      {{/each}}
+
+      {{#each assessmentCriteria}}
+        {{#each thresholdValue}}
+        <div class="metric-pill" style="border-left: 3px solid var(--dcc-primary);">
+          <span class="metric-label" style="color: var(--dcc-primary);">Assessment Limit</span>
+          <span style="font-weight: 600;">{{metricName}}</span>
+          <span><strong>{{metricValue.value}}</strong></span>
+        </div>
+        {{/each}}
+      {{/each}}
+    </div>
+
+    <div style="margin-top: 10px; text-align: right;">
+      <a href="{{conformityEvidence.linkURL}}" target="_blank" class="external-link">
+        {{#if conformityEvidence.linkName}}{{conformityEvidence.linkName}}{{else}}View Evidence{{/if}}
+      </a>
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{/if}}
 
 
         {{#if credentialSubject.traceabilityInformation}}
