@@ -255,7 +255,45 @@
           </div>
 
         </div>
-       
+
+      {{#if credentialSubject.emissionsScorecard}}
+        <div class="topic-group">
+          <div class="topic-header">Emissions scorecard</div>
+          
+          <div class="data-row">
+            <span class="label">Carbon Footprint</span>
+            <span class="value larger" style="color: #374151;">
+              {{credentialSubject.emissionsScorecard.carbonFootprint}} 
+              <span style="font-size: 0.85rem; font-weight: 500;">kg CO2e / {{credentialSubject.emissionsScorecard.declaredUnit}}</span>
+            </span>
+          </div>
+
+          <div class="data-row">
+            <span class="label">Boundary</span>
+            <span class="value">{{credentialSubject.emissionsScorecard.operationalScope}}</span>
+          </div>
+
+          <div class="data-row">
+            <span class="label">Primary Data Ratio</span>
+            <div class="value score-container">
+              <span>{{multiply credentialSubject.emissionsScorecard.primarySourcedRatio 100}}%</span>
+              <div class="score-track">
+                <div class="score-fill score-mid" style="width: {{multiply credentialSubject.emissionsScorecard.primarySourcedRatio 100}}%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="data-row" style="margin-top: 10px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
+            <span class="label">Methodology</span>
+            <span class="value">
+              <a href="{{credentialSubject.emissionsScorecard.reportingStandard.id}}" target="_blank" class="external-link">
+                {{credentialSubject.emissionsScorecard.reportingStandard.name}} ({{credentialSubject.emissionsScorecard.reportingStandard.issueDate}})
+              </a>
+            </span>
+          </div>
+        </div>
+        {{/if}}
+          
         <div class="topic-group">
           <div class="topic-header">Sustainability metrics</div>
           <div class="data-row">
@@ -291,7 +329,9 @@
                         <strong>{{referenceStandard.name}}</strong><br>
                         <small style="color: #6b7280;">Issued: {{referenceStandard.issueDate}}</small>
                       </td>
-                      <td>{{conformityTopic}}</td>
+                      
+                      <td style="font-weight: 500;">{{formatTopic conformityTopic}}</td>
+                      
                       <td>
                         {{#if conformance}}
                           <span class="badge safe-badge">CONFORMANT</span>
@@ -312,7 +352,49 @@
               </table>
             </div>
             {{/if}}
-        
+
+
+          {{#if credentialSubject.traceabilityInformation}}
+        <div class="topic-group">
+          <div class="topic-header">Traceability & Value Chain</div>
+          
+          <div class="data-row">
+            <span class="label">Current Process</span>
+            <span class="value">{{credentialSubject.traceabilityInformation.valueChainProcess}}</span>
+          </div>
+
+          <div class="data-row">
+            <span class="label">Verified Ratio</span>
+            <div class="value score-container">
+              <span>{{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%</span>
+              <div class="score-track">
+                <div class="score-fill verified-badge" style="width: {{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%"></div>
+              </div>
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Traceability Event</th>
+                <th style="text-align: right;">Record</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
+                <tr>
+                  <td style="font-weight: 500;">{{linkName}}</td>
+                  <td style="text-align: right;">
+                    <a href="{{linkURL}}" target="_blank" class="external-link">View Event</a>
+                  </td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+        {{/if}}
+
+          
       </div>
     </article>
           </div>
