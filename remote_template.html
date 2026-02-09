@@ -342,44 +342,46 @@
         {{/if}}
 
 
-          {{#if credentialSubject.traceabilityInformation}}
-        <div class="topic-group">
-          <div class="topic-header">Traceability & Value Chain</div>
-          
-          <div class="data-row">
-            <span class="label">Current Process</span>
-            <span class="value">{{credentialSubject.traceabilityInformation.valueChainProcess}}</span>
-          </div>
-
-          <div class="data-row">
-            <span class="label">Verified Ratio</span>
-            <div class="value score-container">
-              <span>{{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%</span>
-              <div class="score-track">
-                <div class="score-fill verified-badge" style="width: {{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%"></div>
+        {{#if credentialSubject.traceabilityInformation}}
+            <div class="topic-group">
+              <div class="topic-header">Traceability Events </div>
+              
+              <div class="data-row">
+                <span class="label">Process Step</span>
+                <span class="value">{{credentialSubject.traceabilityInformation.valueChainProcess}}</span>
               </div>
-            </div>
-          </div>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Traceability Event</th>
-                <th style="text-align: right;">Record</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
-                <tr>
-                  <td style="font-weight: 500;">{{linkName}}</td>
-                  <td style="text-align: right;">
-                    <a href="{{linkURL}}" target="_blank" class="external-link">View Event</a>
-                  </td>
-                </tr>
-              {{/each}}
-            </tbody>
-          </table>
-        </div>
+            {{#if credentialSubject.traceabilityInformation.verifiedRatio}}
+              <div class="data-row">
+                <span class="label">Verified Ratio</span>
+                <div class="value score-container">
+                  <span>{{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%</span>
+                  <div class="score-track">
+                    <div class="score-fill verified-badge" style="width: {{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%"></div>
+                  </div>
+                </div>
+              </div>
+            {{/if}}
+    
+              <table>
+                <thead>
+                  <tr>
+                    <th>Traceable Events</th>
+                    <th style="text-align: right;">Record</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
+                    <tr>
+                      <td style="font-weight: 500;">{{linkName}}</td>
+                      <td style="text-align: right;">
+                        <a href="{{linkURL}}" target="_blank" class="external-link">View Event</a>
+                      </td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
         {{/if}}
 
           
