@@ -43,6 +43,8 @@
       .data-row.nested .label { flex: 0 0 calc(40% - 25px); font-size: 0.9rem; }
       .data-row.nested .value { flex: 0 0 60%; font-size: 1.12rem; font-weight: 500; }
       .truncate-row { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; width: 100%; }
+      .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+      .status-text { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
     </style>    
  
     <div class="card-viewer">
@@ -314,13 +316,17 @@
                     <small style="color: #6b7280;">Issued: {{referenceStandard.issueDate}}</small>
                   </td>
                   <td>{{conformityTopic}}</td>
-                  <td>
-                    {{#if conformance}}
-                      <span class="badge safe-badge">CONFORMANT</span>
-                    {{else}}
-                      <span class="badge hazardous-badge">NON-CONFORMANT</span>
-                    {{/if}}
-                  </td>
+                    <td>
+                      <div style="display: flex; align-items: center; white-space: nowrap;">
+                        {{#if conformance}}
+                          <span class="dot safe-badge"></span>
+                          <span class="status-text" style="color: var(--dpp-primary);">YES</span>
+                        {{else}}
+                          <span class="dot revoked-badge"></span>
+                          <span class="status-text" style="color: #ef4444;">NO</span>
+                        {{/if}}
+                      </div>
+                    </td>
                   <td>
                     {{#if conformityEvidence.linkURL}}
                       <a href="{{conformityEvidence.linkURL}}" target="_blank" class="external-link">
