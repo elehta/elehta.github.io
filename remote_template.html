@@ -268,7 +268,8 @@
       {{#if credentialSubject.emissionsScorecard}}
         <div class="topic-group">
           <div class="topic-header">Emissions scorecard</div>
-          
+
+         {{#if credentialSubject.emissionsScorecard.carbonFootprint}}
           <div class="data-row">
             <span class="label">Carbon Footprint</span>
             <span class="value larger" style="color: #374151;">
@@ -276,12 +277,16 @@
               <span style="font-size: 0.85rem; font-weight: 500;">kg CO2e / {{credentialSubject.emissionsScorecard.declaredUnit}}</span>
             </span>
           </div>
+        {{/if}}
 
+        {{#if credentialSubject.emissionsScorecard.operationalScope}}
           <div class="data-row">
-            <span class="label">Boundary</span>
+            <span class="label">Scope</span>
             <span class="value">{{credentialSubject.emissionsScorecard.operationalScope}}</span>
           </div>
+        {{/if}}
 
+      {{#if credentialSubject.emissionsScorecard.primarySourcedRatio}}
           <div class="data-row">
             <span class="label">Primary Data Ratio</span>
             <div class="value score-container">
@@ -291,17 +296,21 @@
               </div>
             </div>
           </div>
+        {{/if}}
 
+        {{#if credentialSubject.emissionsScorecard.reportingStandard}}
           <div class="data-row" style="margin-top: 10px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
-            <span class="label">Methodology</span>
+            <span class="label">Reporting Standard</span>
             <span class="value">
               <a href="{{credentialSubject.emissionsScorecard.reportingStandard.id}}" target="_blank" class="external-link">
                 {{credentialSubject.emissionsScorecard.reportingStandard.name}} ({{credentialSubject.emissionsScorecard.reportingStandard.issueDate}})
               </a>
             </span>
           </div>
-        </div>
-        {{/if}}        
+        {{/if}}
+
+     </div>
+  {{/if}}        
 
 {{#if credentialSubject.conformityClaim}}
 <div class="topic-group">
