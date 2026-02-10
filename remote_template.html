@@ -1,51 +1,59 @@
 <style>
     :root { --panel-bg: #0f172a; --sidebar-bg: #1e293b; --accent: #38bdf8; --success: #22c55e; --danger: #ef4444; --text-dim: #94a3b8; --border: #334155; }
-
     .dpp-dashboard { font-family: 'Inter', system-ui, sans-serif; display: grid; grid-template-columns: 250px 1fr; min-height: 600px; max-width: 900px; margin: 0 auto; background: #020617; color: #f1f5f9; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
-
-    /* Left Side Navigation/Identity */
     .dpp-sidebar { background: var(--sidebar-bg); padding: 30px 20px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 20px; }
     .sidebar-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; border: 2px solid var(--border); }
     .id-block { background: #0f172a; padding: 12px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; word-break: break-all; color: var(--accent); }
-
-    /* Main Content Area */
     .dpp-content { padding: 30px; overflow-y: auto; }
     .dashboard-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; border-bottom: 2px solid var(--border); padding-bottom: 15px; }
-
-    /* Modern Grid Layout */
     .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
     .stat-tile { background: var(--sidebar-bg); padding: 15px; border-radius: 10px; border: 1px solid var(--border); }
     .tile-label { color: var(--text-dim); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; }
     .tile-value { font-size: 1.1rem; font-weight: 700; margin-top: 5px; display: block; }
-
-    /* Tables & Lists */
     .panel-section { background: var(--sidebar-bg); border-radius: 12px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border); }
     .section-title { color: var(--accent); font-size: 0.9rem; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; }
     .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     .data-table th { text-align: left; padding: 10px; border-bottom: 2px solid var(--border); color: var(--text-dim); }
     .data-table td { padding: 12px 10px; border-bottom: 1px solid var(--border); }
-
-    /* Circularity Progress */
     .progress-box { margin-bottom: 15px; }
     .progress-meta { display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 5px; }
     .progress-track { height: 6px; background: #0f172a; border-radius: 3px; }
     .progress-fill { height: 100%; border-radius: 3px; background: var(--accent); }
-
-    /* Badges */
     .status-pill { padding: 2px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 900; }
     .pill-safe { background: rgba(34, 197, 94, 0.2); color: var(--success); border: 1px solid var(--success); }
     .pill-danger { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger); }
-
-    /* Conformity Cards */
     .conformity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
     .compliance-card { background: #0f172a; padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent); }
     .btn-action { display: inline-block; margin-top: 10px; color: var(--accent); text-decoration: none; font-size: 0.75rem; font-weight: 600; }
     .btn-action:hover { text-decoration: underline; }
 
+    /* New Classes replacing inline styles */
+    .dim-container { font-size: 0.85rem; margin-top: 5px; }
+    .dim-row { display: flex; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid var(--border); }
+    .dim-label { color: var(--text-dim); }
+    .header-main-title { margin: 0; font-size: 1.8rem; }
+    .header-sub-title { color: var(--accent); }
+    .header-status-area { text-align: right; }
+    .origin-facility { font-size: 0.7rem; color: var(--text-dim); }
+    .product-brief-text { margin: 10px 0 0 0; line-height: 1.6; font-size: 0.9rem; color: #cbd5e1; }
+    .scorecard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .utility-factor { font-size: 0.8rem; color: var(--text-dim); }
+    .utility-factor b { color: #fff; }
+    .emissions-value { font-size: 2rem; font-weight: 800; color: #fff; }
+    .emissions-unit { font-size: 0.8rem; color: var(--text-dim); }
+    .compliance-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .standard-name { font-size: 0.85rem; font-weight: 700; }
+    .declared-values-grid { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 5px; }
+    .declared-box { background: #1e293b; padding: 5px; border-radius: 4px; font-size: 0.7rem; flex: 1; }
+    .trace-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .trace-events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+    .trace-link { background: var(--sidebar-bg); padding: 10px; border-radius: 6px; border: 1px solid var(--border); }
+    .footer-actions { display: flex; gap: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
+
     @media (max-width: 900px) {
         .dpp-dashboard { grid-template-columns: 1fr; }
         .dpp-sidebar { border-right: none; border-bottom: 1px solid var(--border); }
-        .conformity-grid { grid-template-columns: 1fr; }
+        .conformity-grid, .scorecard-grid { grid-template-columns: 1fr; }
     }
 </style>
 
@@ -64,10 +72,10 @@
 
         <div>
             <span class="tile-label">Dimensions</span>
-            <div style="font-size: 0.85rem; margin-top:5px;">
+            <div class="dim-container">
                 {{#each credentialSubject.dimensions}}
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px; border-bottom:1px solid #334155;">
-                        <span style="color:var(--text-dim)">{{@key}}</span>
+                    <div class="dim-row">
+                        <span class="dim-label">{{@key}}</span>
                         <span>{{this.value}} {{this.unit}}</span>
                     </div>
                 {{/each}}
@@ -78,10 +86,10 @@
     <main class="dpp-content">
         <header class="dashboard-header">
             <div>
-                <h1 style="margin:0; font-size: 1.8rem;">{{credentialSubject.name}}</h1>
-                <span style="color: var(--accent);">{{credentialSubject.producedByParty.name}}</span>
+                <h1 class="header-main-title">{{credentialSubject.name}}</h1>
+                <span class="header-sub-title">{{credentialSubject.producedByParty.name}}</span>
             </div>
-            <div style="text-align:right">
+            <div class="header-status-area">
                 <span class="tile-label">Status</span><br>
                 <span class="status-pill pill-safe">CERTIFIED ACTIVE</span>
             </div>
@@ -91,7 +99,7 @@
             <div class="stat-tile">
                 <span class="tile-label">Manufacturing Origin</span>
                 <span class="tile-value">{{credentialSubject.countryOfProduction}}</span>
-                <span style="font-size: 0.7rem; color: var(--text-dim)">{{credentialSubject.producedAtFacility.name}}</span>
+                <span class="origin-facility">{{credentialSubject.producedAtFacility.name}}</span>
             </div>
             {{#if credentialSubject.productionDate}}
             <div class="stat-tile">
@@ -109,7 +117,7 @@
 
         <div class="panel-section">
             <span class="tile-label">Product Brief</span>
-            <p style="margin: 10px 0 0 0; line-height: 1.6; font-size: 0.9rem; color: #cbd5e1;">{{credentialSubject.description}}</p>
+            <p class="product-brief-text">{{credentialSubject.description}}</p>
         </div>
 
         <div class="panel-section">
@@ -143,7 +151,7 @@
             </table>
         </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+        <div class="scorecard-grid">
             {{#if credentialSubject.circularityScorecard}}
             <div class="panel-section">
                 <div class="section-title">Circularity Metrics</div>
@@ -160,7 +168,7 @@
                 </div>
                 {{/if}}
                 {{#if credentialSubject.circularityScorecard.utilityFactor}}
-                <div style="font-size:0.8rem; color:var(--text-dim)">Utility Factor: <b style="color:#fff">{{credentialSubject.circularityScorecard.utilityFactor}}</b></div>
+                <div class="utility-factor">Utility Factor: <b>{{credentialSubject.circularityScorecard.utilityFactor}}</b></div>
                 {{/if}}
             </div>
             {{/if}}
@@ -169,7 +177,7 @@
             <div class="panel-section">
                 <div class="section-title">Carbon Footprint</div>
                 {{#if credentialSubject.emissionsScorecard.carbonFootprint}}
-                <div style="font-size: 2rem; font-weight: 800; color: #fff;">{{credentialSubject.emissionsScorecard.carbonFootprint}} <small style="font-size:0.8rem; color:var(--text-dim)">kg CO2e</small></div>
+                <div class="emissions-value">{{credentialSubject.emissionsScorecard.carbonFootprint}} <small class="emissions-unit">kg CO2e</small></div>
                 {{/if}}
                 {{#if credentialSubject.emissionsScorecard.reportingStandard}}
                 <a href="{{credentialSubject.emissionsScorecard.reportingStandard.id}}" class="btn-action">Standard: {{credentialSubject.emissionsScorecard.reportingStandard.name}}</a>
@@ -183,48 +191,11 @@
         <div class="conformity-grid">
             {{#each credentialSubject.conformityClaim}}
             <div class="compliance-card">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <div class="compliance-header">
                     <span class="tile-label">{{conformityTopic}}</span>
                     {{#if conformance}}<span class="status-pill pill-safe">PASS</span>{{else}}<span class="status-pill pill-danger">FAIL</span>{{/if}}
                 </div>
-                <div style="font-size:0.85rem; font-weight:700;">{{referenceStandard.name}}</div>
+                <div class="standard-name">{{referenceStandard.name}}</div>
                 
-                <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:5px;">
+                <div class="declared-values-grid">
                     {{#each declaredValue}}
-                        <div style="background:#1e293b; padding:5px; border-radius:4px; font-size:0.7rem; flex:1">
-                            <div style="color:var(--accent)">Value</div>
-                            {{metricName}}: {{metricValue.value}}{{metricValue.unit}}
-                        </div>
-                    {{/each}}
-                </div>
-                {{#if conformityEvidence.linkURL}}
-                <a href="{{conformityEvidence.linkURL}}" class="btn-action">View Evidence ↗</a>
-                {{/if}}
-            </div>
-            {{/each}}
-        </div>
-        {{/if}}
-
-        {{#if credentialSubject.traceabilityInformation}}
-        <div class="panel-section" style="margin-top:30px;">
-            <div class="section-title">Value Chain Traceability</div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <span style="font-size:0.9rem">Current Step: <b>{{credentialSubject.traceabilityInformation.valueChainProcess}}</b></span>
-                {{#if credentialSubject.traceabilityInformation.verifiedRatio}}
-                <span class="status-pill pill-safe">Verified: {{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%</span>
-                {{/if}}
-            </div>
-            <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap:10px;">
-                {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
-                <a href="{{linkURL}}" class="btn-action" style="background:var(--sidebar-bg); padding:10px; border-radius:6px; border:1px solid var(--border)">{{linkName}} ↗</a>
-                {{/each}}
-            </div>
-        </div>
-        {{/if}}
-
-        <div style="display:flex; gap:20px; border-top:1px solid var(--border); padding-top:20px;">
-            <a href="https://example.com/Repair_information.pdf" class="btn-action">Repair Guide</a>
-            <a href="https://example.com/Recycling_information.pdf" class="btn-action">Recycling Data</a>
-        </div>
-    </main>
-</div>
