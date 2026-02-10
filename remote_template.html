@@ -32,7 +32,7 @@
     .dim-row { display: flex; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid var(--border); }
     .dim-label { color: var(--text-dim); }
     .header-main-title { margin: 0; font-size: 1.8rem; }
-    .header-sub-title { color: var(--accent); font-size: 1.4rem; }
+    .header-sub-title { color: var(--accent); }
     .header-status-area { text-align: right; }
     .origin-facility { font-size: 0.7rem; color: var(--text-dim); }
     .product-brief-text { margin: 10px 0 0 0; line-height: 1.6; font-size: 0.9rem; color: #cbd5e1; }
@@ -199,3 +199,40 @@
                 
                 <div class="declared-values-grid">
                     {{#each declaredValue}}
+                        <div class="declared-box">
+                            <div class="header-sub-title">Value</div>
+                            {{metricName}}: {{metricValue.value}}{{metricValue.unit}}
+                        </div>
+                    {{/each}}
+                </div>
+                {{#if conformityEvidence.linkURL}}
+                <a href="{{conformityEvidence.linkURL}}" class="btn-action">View Evidence ↗</a>
+                {{/if}}
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
+
+        {{#if credentialSubject.traceabilityInformation}}
+        <div class="panel-section" style="margin-top:30px;">
+            <div class="section-title">Value Chain Traceability</div>
+            <div class="trace-header">
+                <span style="font-size:0.9rem">Current Step: <b>{{credentialSubject.traceabilityInformation.valueChainProcess}}</b></span>
+                {{#if credentialSubject.traceabilityInformation.verifiedRatio}}
+                <span class="status-pill pill-safe">Verified: {{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%</span>
+                {{/if}}
+            </div>
+            <div class="trace-events-grid">
+                {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
+                <a href="{{linkURL}}" class="btn-action trace-link">{{linkName}} ↗</a>
+                {{/each}}
+            </div>
+        </div>
+        {{/if}}
+
+        <div class="footer-actions">
+            <a href="https://example.com/Repair_information.pdf" class="btn-action">Repair Guide</a>
+            <a href="https://example.com/Recycling_information.pdf" class="btn-action">Recycling Data</a>
+        </div>
+    </main>
+</div>
