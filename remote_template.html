@@ -171,4 +171,24 @@
                 <div style="font-size: 0.65rem; color: var(--text-dim);">Declared: {{metricName}} ({{metricValue.value}} {{metricValue.unit}})</div>
                 {{/each}}
                 {{#each assessmentCriteria}}{{#each thresholdValue}}
-                <div style="font-size: 0.65rem; color: #fbbf24;">Limit: {{metricValue.value}} {{
+                <div style="font-size: 0.65rem; color: #fbbf24;">Limit: {{metricValue.value}} {{metricValue.unit}}</div>
+                {{/each}}{{/each}}
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="cell span-4" style="background: var(--slate-800);">
+        <span class="label">Chain of Custody</span>
+        <div class="value" style="font-size: 0.8rem; margin-bottom: 10px;">{{credentialSubject.traceabilityInformation.valueChainProcess}}</div>
+        <ul class="mini-list">
+            {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
+            <li><a href="{{linkURL}}" style="color:var(--accent); text-decoration:none;">{{linkName}} ↗</a></li>
+            {{/each}}
+        </ul>
+        <div style="margin-top: auto; padding-top: 10px;">
+            <span class="label">Verification Ratio</span>
+            <div class="value" style="font-size: 0.9rem;">{{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%</div>
+        </div>
+    </div>
+</div>
