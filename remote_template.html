@@ -1,248 +1,174 @@
 <style>
     :root {
-        --terminal-bg: #0a0c10;
-        --panel-bg: #141820;
-        --accent: #00f2ff;
-        --accent-dim: rgba(0, 242, 255, 0.15);
-        --text: #c9d1d9;
-        --dim: #6e7681;
-        --border: #30363d;
-        --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+        --slate-900: #0f172a;
+        --slate-800: #1e293b;
+        --slate-700: #334155;
+        --accent: #38bdf8;
+        --text-main: #f8fafc;
+        --text-dim: #94a3b8;
+        --border: #475569;
     }
 
-    .dpp-app-shell {
-        max-width: 1200px;
-        height: 750px; /* Fixed height to break the "document" feel */
-        margin: 20px auto;
-        background: var(--terminal-bg);
-        color: var(--text);
-        font-family: var(--font-mono);
+    .dpp-spec-sheet {
+        max-width: 900px;
+        margin: 40px auto;
+        background: var(--slate-900);
+        color: var(--text-main);
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
         display: grid;
-        grid-template-areas: 
-            "head head head"
-            "nav main stats"
-            "foot foot foot";
-        grid-template-columns: 280px 1fr 300px;
-        grid-template-rows: 60px 1fr 50px;
-        border: 1px solid var(--border);
-        gap: 1px;
-        background-color: var(--border); /* Creates grid lines */
+        grid-template-columns: repeat(12, 1fr);
+        border: 2px solid var(--border);
+        gap: 0; /* Pure grid lines created by borders */
     }
 
-    /* HEADER: System Bar */
-    .app-header {
-        grid-area: head;
-        background: var(--terminal-bg);
-        display: flex;
-        align-items: center;
-        padding: 0 20px;
-        justify-content: space-between;
-        font-size: 0.8rem;
-    }
-    .system-status { color: #238636; }
-    .system-status::before { content: "●"; margin-right: 8px; animation: pulse 2s infinite; }
-
-    /* NAV: Identity & Media */
-    .app-nav {
-        grid-area: nav;
-        background: var(--panel-bg);
+    /* Grid Cell Base */
+    .cell {
         padding: 20px;
+        border: 1px solid var(--border);
         display: flex;
         flex-direction: column;
-    }
-    .img-frame {
-        width: 100%;
-        aspect-ratio: 1;
-        border: 1px solid var(--border);
-        margin-bottom: 20px;
-        background-size: cover;
-        background-position: center;
+        justify-content: center;
     }
 
-    /* MAIN: Data Matrix */
-    .app-main {
-        grid-area: main;
-        background: var(--terminal-bg);
-        padding: 0;
-        overflow-y: auto;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1px;
-        background-color: var(--border);
-    }
-
-    .widget { background: var(--panel-bg); padding: 15px; }
-    .widget-h { 
-        font-size: 0.65rem; 
-        color: var(--accent); 
-        text-transform: uppercase; 
-        margin-bottom: 12px;
-        border-bottom: 1px solid var(--accent-dim);
-        padding-bottom: 4px;
-    }
-
-    /* STATS: Compliance & Carbon */
-    .app-stats {
-        grid-area: stats;
-        background: var(--panel-bg);
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    /* UI Components */
-    .data-row { display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 6px; }
-    .label { color: var(--dim); }
-    
-    .carbon-gauge {
-        background: var(--bg-inset);
-        padding: 20px;
-        text-align: center;
-        border: 1px solid var(--border);
-    }
-    .big-num { font-size: 2.5rem; display: block; color: #fff; }
-
-    .status-tag {
-        font-size: 0.6rem;
-        padding: 2px 4px;
-        border: 1px solid currentColor;
-    }
-
-    /* Compliance List */
-    .compliance-item {
-        font-size: 0.7rem;
-        padding: 10px;
-        background: var(--terminal-bg);
-        border-left: 2px solid var(--accent);
+    .label {
+        font-size: 0.65rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--accent);
         margin-bottom: 8px;
     }
 
-    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+    .value { font-size: 1rem; font-weight: 500; }
+    .value-lg { font-size: 1.75rem; font-weight: 800; line-height: 1.1; }
 
-    /* Custom Scrollbar */
-    .app-main::-webkit-scrollbar { width: 4px; }
-    .app-main::-webkit-scrollbar-thumb { background: var(--border); }
+    /* Layout Spans */
+    .span-12 { grid-column: span 12; }
+    .span-8 { grid-column: span 8; }
+    .span-6 { grid-column: span 6; }
+    .span-4 { grid-column: span 4; }
+    .span-3 { grid-column: span 3; }
+
+    /* Specific Sections */
+    .header-cell { background: var(--slate-800); border-bottom: 4px solid var(--accent); }
+    .image-cell { background: white; padding: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .image-cell img { width: 100%; height: 100%; object-fit: contain; }
+
+    .id-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.7rem; color: var(--text-dim); }
+
+    /* Table Logic inside cells */
+    .mini-list { list-style: none; padding: 0; margin: 0; font-size: 0.85rem; }
+    .mini-list li { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+    .status-badge {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-weight: 900;
+        background: var(--slate-700);
+    }
+    .pass { color: #4ade80; border: 1px solid #4ade80; }
+    .fail { color: #f87171; border: 1px solid #f87171; }
+
 </style>
 
-<div class="dpp-app-shell">
-    <header class="app-header">
-        <div><span class="system-status">DPP_CORE_V3.0 // EXPORT_MODE</span></div>
-        <div style="color: var(--accent)">UUID: {{credentialSubject.id}}</div>
-    </header>
+<div class="dpp-spec-sheet">
+    <div class="cell span-8 header-cell">
+        <span class="label">Manufacturer // {{credentialSubject.producedByParty.name}}</span>
+        <div class="value-lg">{{credentialSubject.name}}</div>
+    </div>
+    <div class="cell span-4 header-cell">
+        <span class="label">Passport ID</span>
+        <div class="id-mono" title="{{credentialSubject.id}}">{{credentialSubject.id}}</div>
+    </div>
 
-    <nav class="app-nav">
-        <div class="img-frame" style="background-image: url('{{credentialSubject.productImage.linkURL}}'), url('https://placehold.co/300?text=NO_SIGNAL');"></div>
-        <div class="widget-h">Entity_Profile</div>
-        <h2 style="margin:0; font-size: 1.1rem; color: #fff;">{{credentialSubject.name}}</h2>
-        <div style="color:var(--accent); font-size: 0.8rem; margin-bottom: 15px;">{{credentialSubject.producedByParty.name}}</div>
-        
-        <div class="widget-h">Dimensions</div>
-        {{#each credentialSubject.dimensions}}
-        <div class="data-row">
-            <span class="label">[{{@key}}]</span>
-            <span>{{this.value}} {{this.unit}}</span>
-        </div>
-        {{/each}}
-    </nav>
-
-    <main class="app-main">
-        <div class="widget" style="grid-column: span 2;">
-            <div class="widget-h">Material_Provenance_Matrix</div>
-            <table style="width:100%; font-size: 0.7rem; border-collapse: collapse;">
-                <thead>
-                    <tr style="text-align: left; color: var(--dim);">
-                        <th>SUBSTANCE</th>
-                        <th>MASS</th>
-                        <th>RECYCLED</th>
-                        <th>ORIGIN</th>
-                        <th>HAZMAT</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each credentialSubject.materialsProvenance}}
-                    <tr style="border-top: 1px solid var(--border);">
-                        <td style="padding: 8px 0;">{{name}}</td>
-                        <td>{{multiply massFraction 100}}%</td>
-                        <td>{{multiply recycledAmount 100}}%</td>
-                        <td>{{originCountry}}</td>
-                        <td>
-                            {{#if (lookup . 'hazardous')}}
-                                {{#if hazardous}}<span style="color:var(--danger)">[TRUE]</span>{{else}}<span style="color:var(--success)">[FALSE]</span>{{/if}}
-                            {{else}}<span style="color:var(--dim)">[NULL]</span>{{/if}}
-                        </td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        </div>
-
-        <div class="widget">
-            <div class="widget-h">Logistics_Metadata</div>
-            <div class="data-row"><span class="label">SITE</span><span>{{credentialSubject.producedAtFacility.name}}</span></div>
-            <div class="data-row"><span class="label">BATCH</span><span>{{credentialSubject.batchNumber}}</span></div>
-            <div class="data-row"><span class="label">MFG_DT</span><span>{{credentialSubject.productionDate}}</span></div>
-        </div>
-
-        <div class="widget">
-            <div class="widget-h">Circularity_Indices</div>
-            {{#if credentialSubject.circularityScorecard.recycledContent}}
-                <div class="data-row"><span class="label">RCY_CONTENT</span><span>{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span></div>
-            {{/if}}
-            {{#if credentialSubject.circularityScorecard.materialCircularityIndicator}}
-                <div class="data-row"><span class="label">CIRC_INDEX</span><span>{{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%</span></div>
-            {{/if}}
-            <div class="data-row"><span class="label">UTIL_FACTOR</span><span>{{credentialSubject.circularityScorecard.utilityFactor}}</span></div>
-        </div>
-
-        <div class="widget" style="grid-column: span 2;">
-            <div class="widget-h">Conformity_Certification_Logs</div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                {{#each credentialSubject.conformityClaim}}
-                <div class="compliance-item">
-                    <div style="display:flex; justify-content:space-between; margin-bottom: 5px;">
-                        <span style="color:var(--accent)">{{referenceStandard.name}}</span>
-                        <span>{{#if conformance}}[PASS]{{else}}[FAIL]{{/if}}</span>
-                    </div>
-                    {{#each declaredValue}}
-                    <div style="font-size: 0.6rem; color: var(--dim);">METRIC: {{metricName}} ({{metricValue.value}} {{metricValue.unit}})</div>
-                    {{/each}}
-                    {{#each assessmentCriteria}}
-                        {{#each thresholdValue}}
-                        <div style="font-size: 0.6rem; color: #f87171;">LIMIT: {{metricName}} ({{metricValue.value}} {{metricValue.unit}})</div>
-                        {{/each}}
-                    {{/each}}
-                </div>
-                {{/each}}
-            </div>
-        </div>
-    </main>
-
-    <aside class="app-stats">
-        <div class="widget-h">Carbon_Telemetry</div>
-        <div class="carbon-gauge">
-            <span class="label">EMISSIONS_INDEX</span>
-            <span class="big-num">{{credentialSubject.emissionsScorecard.carbonFootprint}}</span>
-            <span style="font-size: 0.6rem;">KG CO2E / {{credentialSubject.emissionsScorecard.declaredUnit}}</span>
-        </div>
-
-        <div class="widget-h">Traceability_Chain</div>
-        <div style="font-size: 0.75rem;">
-            <div style="color:var(--accent); margin-bottom: 5px;">CURRENT_STEP: {{credentialSubject.traceabilityInformation.valueChainProcess}}</div>
-            <div class="data-row"><span class="label">VERIFIED_RATIO</span><span>{{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%</span></div>
-            {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
-            <div style="margin-top:10px; border: 1px solid var(--border); padding: 5px;">
-                <a href="{{linkURL}}" style="color:var(--text); text-decoration: none; font-size: 0.65rem;">> EXEC_EVENT: {{linkName}}</a>
-            </div>
+    <div class="cell span-4 image-cell">
+        <img src="{{#if credentialSubject.productImage.linkURL}}{{credentialSubject.productImage.linkURL}}{{else}}https://placehold.co/400x400/1e293b/white?text=No+Image{{/if}}">
+    </div>
+    
+    <div class="cell span-4">
+        <span class="label">Physical Dimensions</span>
+        <ul class="mini-list">
+            {{#each credentialSubject.dimensions}}
+            <li><span style="color:var(--text-dim)">{{@key}}</span> <span>{{this.value}} {{this.unit}}</span></li>
             {{/each}}
-        </div>
-    </aside>
+        </ul>
+    </div>
 
-    <footer class="app-header" style="grid-area: foot; border-top: 1px solid var(--border);">
-        <div style="display:flex; gap: 20px;">
-            <a href="https://example.com/Repair_information.pdf" style="color:var(--accent); text-decoration:none;">[REPAIR_MANUAL]</a>
-            <a href="https://example.com/Recycling_information.pdf" style="color:var(--accent); text-decoration:none;">[RECYCLING_INF]</a>
+    <div class="cell span-4">
+        <span class="label">Manufacturing Logistics</span>
+        <div class="value" style="font-size: 0.9rem;">{{credentialSubject.producedAtFacility.name}}</div>
+        <div class="value" style="color:var(--text-dim); font-size: 0.8rem;">{{credentialSubject.countryOfProduction}}</div>
+        <div style="margin-top:10px;">
+            <span class="label">Production Date</span>
+            <div class="value" style="font-size: 0.85rem;">{{#if credentialSubject.productionDate}}{{credentialSubject.productionDate}}{{else}}N/A{{/if}}</div>
         </div>
-        <div style="color: var(--dim);">SESSION_ID: {{multiply credentialSubject.circularityScorecard.utilityFactor 1024}}</div>
-    </footer>
-</div>
+    </div>
+
+    <div class="cell span-12" style="background: rgba(0,0,0,0.2);">
+        <span class="label">Material Composition Matrix</span>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem;">
+            <thead>
+                <tr style="text-align: left; color: var(--text-dim);">
+                    <th style="padding: 8px 0;">Component</th>
+                    <th>Mass Amount</th>
+                    <th>Recycled %</th>
+                    <th>Safety</th>
+                    <th>Origin</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each credentialSubject.materialsProvenance}}
+                <tr style="border-top: 1px solid var(--slate-700);">
+                    <td style="padding: 10px 0; font-weight: 700;">{{name}}</td>
+                    <td>{{multiply massFraction 100}}% <small style="color:var(--text-dim)">({{massAmount.value}}{{massAmount.unit}})</small></td>
+                    <td>{{multiply recycledAmount 100}}%</td>
+                    <td>
+                        {{#if (lookup . 'hazardous')}}
+                            {{#if hazardous}}<span class="status-badge fail">HAZARD</span>
+                            {{else}}<span class="status-badge pass">SAFE</span>{{/if}}
+                        {{else}}<span class="status-badge">UNKNOWN</span>{{/if}}
+                    </td>
+                    <td>{{originCountry}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="cell span-3">
+        <span class="label">Carbon Impact</span>
+        <div class="value-lg" style="color:var(--accent)">{{credentialSubject.emissionsScorecard.carbonFootprint}}</div>
+        <span class="label" style="font-size: 0.5rem;">kg CO2e / unit</span>
+    </div>
+
+    <div class="cell span-3">
+        <span class="label">Circularity Index</span>
+        <div class="value-lg">{{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%</div>
+        <div style="height: 4px; background: var(--slate-700); margin-top: 8px;">
+            <div style="height: 100%; background: var(--accent); width: {{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%"></div>
+        </div>
+    </div>
+
+    <div class="cell span-6">
+        <span class="label">Product Lifecycle Support</span>
+        <div style="display: flex; gap: 10px; margin-top: 5px;">
+            <a href="https://example.com/Repair_information.pdf" style="color:white; font-size: 0.75rem; text-decoration: underline;">Repair_Documentation.pdf</a>
+            <a href="https://example.com/Recycling_information.pdf" style="color:white; font-size: 0.75rem; text-decoration: underline;">Recycling_End_of_Life.pdf</a>
+        </div>
+    </div>
+
+    <div class="cell span-8">
+        <span class="label">Compliance & Conformity Registry</span>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+            {{#each credentialSubject.conformityClaim}}
+            <div style="border-left: 2px solid var(--accent); padding-left: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.75rem; font-weight: 700;">{{referenceStandard.name}}</span>
+                    {{#if conformance}}<span class="status-badge pass">PASS</span>{{else}}<span class="status-badge fail">FAIL</span>{{/if}}
+                </div>
+                {{#each declaredValue}}
+                <div style="font-size: 0.65rem; color: var(--text-dim);">Declared: {{metricName}} ({{metricValue.value}} {{metricValue.unit}})</div>
+                {{/each}}
+                {{#each assessmentCriteria}}{{#each thresholdValue}}
+                <div style="font-size: 0.65rem; color: #fbbf24;">Limit: {{metricValue.value}} {{
