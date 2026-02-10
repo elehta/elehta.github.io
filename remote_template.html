@@ -32,7 +32,7 @@
     .dim-row { display: flex; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid var(--border); }
     .dim-label { color: var(--text-dim); }
     .header-main-title { margin: 0; font-size: 1.8rem; }
-    .header-sub-title { color: var(--accent); }
+    .header-sub-title { color: var(--accent); font-size: 1.4rem;  }
     .header-status-area { text-align: right; }
     .origin-facility { font-size: 0.7rem; color: var(--text-dim); }
     .product-brief-text { margin: 10px 0 0 0; line-height: 1.6; font-size: 0.9rem; color: #cbd5e1; }
@@ -90,16 +90,16 @@
                 <span class="header-sub-title">{{credentialSubject.producedByParty.name}}</span>
             </div>
             <div class="header-status-area">
-                <span class="tile-label">Status</span><br>
-                <span class="status-pill pill-safe">CERTIFIED ACTIVE</span>
+
+                <span class="status-pill pill-safe">VERIFIED</span>
             </div>
         </header>
 
         <div class="stat-grid">
             <div class="stat-tile">
                 <span class="tile-label">Manufacturing Origin</span>
-                <span class="tile-value">{{credentialSubject.countryOfProduction}}</span>
-                <span class="origin-facility">{{credentialSubject.producedAtFacility.name}}</span>
+                <span class="tile-value">{{credentialSubject.producedAtFacility.name}}, {{credentialSubject.countryOfProduction}}</span>
+              
             </div>
             {{#if credentialSubject.productionDate}}
             <div class="stat-tile">
@@ -109,19 +109,19 @@
             {{/if}}
             {{#if credentialSubject.batchNumber}}
             <div class="stat-tile">
-                <span class="tile-label">Batch Group</span>
+                <span class="tile-label">Batch Number</span>
                 <span class="tile-value">{{credentialSubject.batchNumber}}</span>
             </div>
             {{/if}}
         </div>
 
         <div class="panel-section">
-            <span class="tile-label">Product Brief</span>
+            <span class="tile-label">Description</span>
             <p class="product-brief-text">{{credentialSubject.description}}</p>
         </div>
 
         <div class="panel-section">
-            <div class="section-title">Material Matrix</div>
+            <div class="section-title">Material Content</div>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -187,13 +187,13 @@
         </div>
 
         {{#if credentialSubject.conformityClaim}}
-        <div class="section-title">Compliance & Certification</div>
+        <div class="section-title">Compliance & Certifications</div>
         <div class="conformity-grid">
             {{#each credentialSubject.conformityClaim}}
             <div class="compliance-card">
                 <div class="compliance-header">
                     <span class="tile-label">{{conformityTopic}}</span>
-                    {{#if conformance}}<span class="status-pill pill-safe">PASS</span>{{else}}<span class="status-pill pill-danger">FAIL</span>{{/if}}
+                    {{#if conformance}}<span class="status-pill pill-safe">COMPLIANT</span>{{else}}<span class="status-pill pill-danger">NON-COMPLIANT</span>{{/if}}
                 </div>
                 <div class="standard-name">{{referenceStandard.name}}</div>
                 
@@ -217,7 +217,7 @@
         <div class="panel-section" style="margin-top:30px;">
             <div class="section-title">Value Chain Traceability</div>
             <div class="trace-header">
-                <span style="font-size:0.9rem">Current Step: <b>{{credentialSubject.traceabilityInformation.valueChainProcess}}</b></span>
+                <span style="font-size:0.9rem">Process Step: <b>{{credentialSubject.traceabilityInformation.valueChainProcess}}</b></span>
                 {{#if credentialSubject.traceabilityInformation.verifiedRatio}}
                 <span class="status-pill pill-safe">Verified: {{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%</span>
                 {{/if}}
