@@ -1,435 +1,277 @@
 <style>
-      :root { --font-main: 'Inter', -apple-system, sans-serif; --font-mono: 'JetBrains Mono', 'Fira Code', monospace; --radius: 12px; --shadow: 0 4px 20px rgba(0, 0, 0, 0.08); --dpp-primary: #10b981; --dcc-primary: #3b82f6; --dia-primary: #64748b; }
-      .verified-badge, .safe-badge, .score-high { background: var(--dpp-primary); }
-      .revoked-badge, .hazardous-badge, .score-low { background: #ef4444; }
-      .unknown-badge, .score-mid { background: #f59e0b; }
-    
-      .card-viewer { display: flex; flex-direction: column; align-items: center;  gap: 20px; width: 100%; max-width: 900px; padding: 10px; box-sizing: border-box; }
-      .credential-card { font-family: var(--font-main); width: 100%; max-width: 640px; min-width: 280px; margin: 0 auto; background: #ffffff; border-radius: var(--radius); border: 1px solid #e5e7eb; box-shadow: var(--shadow); overflow: hidden; position: relative; transition: transform 0.2s ease; flex-shrink: 1; flex-grow: 0; box-sizing: border-box; }
-      .credential-header { padding: 16px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #f3f4f6; }
-      .item-dpp .credential-header::before { content: '♻️'; font-size: 2.25rem; }
-      .credential-body { padding: 20px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; min-width: 0; }
-      .data-row { display: flex; align-items: flex-start; margin-bottom: 18px; font-size: 1.12rem; width: 100%; align-items: baseline; }
-      .label { flex: 0 0 30%; color: #6b7280; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; text-align: left; line-height: 1.5; }
-      .value { flex: 0 0 70%; font-weight: 600; color: #111827; text-align: right; padding-right: 15px; line-height: 1.5; white-space: normal; overflow-wrap: break-word; }
-      .item-dpp { border-top: 4px solid var(--dpp-primary); }
-      .item-dpp .credential-header { background: linear-gradient(to top, #ffffff, #dfebe1); }
-      .badge { color: #ffffff; font-weight: 900; padding: 2px 8px; border-radius: 99px; font-size: 0.875rem; }
-      .topic-group { margin-top: 15px; background: #f4f4f4; border-radius: 8px; padding: 12px; border: 1px solid #f3f4f6; }
-      .topic-header { display: flex; align-items: baseline; gap: 6px; font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #374151; margin-bottom: 15px; }      
-      .larger { font-size: 1.25rem; font-weight: 700; }
-      .item-dpp .topic-header { border-left: 3px solid var(--dpp-primary); padding-left: 8px; }
-      .topic-group .data-row { margin-bottom: 15px; }
-      .topic-group .data-row:last-child { margin-bottom: 0; }
-      .topic-group table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 1rem; line-height: 1.4; }
-      .topic-group th { text-align: left; padding: 8px 4px; border-bottom: 2px solid #e5e7eb; color: #6b7280; font-weight: 500; text-transform: uppercase; font-size: 0.95rem; letter-spacing: 0.05em; }   
-      .topic-group td { padding: 8px 4px; border-bottom: 1px solid #f3f4f6; color: #111827; }
-      .topic-group tr:last-child td { border-bottom: none; }
-      .topic-group table badge { color: #ffffff; font-weight: 900; padding: 2px 8px; border-radius: 99px; font-size: 0.875rem; }
-      .topic-group td:first-child { font-weight: 500; color: #374151; }
-      .topic-group.media-layout { display: flex; flex-direction: column; gap: 12px; }
-      .topic-media { width: 100%; }
-      .topic-media img { width: 100%; max-height: 300px; object-fit: cover; margin-bottom: 12px; }
-      .topic-content { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-      .topic-content .data-row.full-width { grid-column: span 2; }
-      .score-container { display: flex; flex-direction: column; align-items: flex-end; width: 100%; margin-top: 2px; margin-bottom: 2px;}
-      .score-track { width: 30%; height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; position: relative; }
-      .score-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease-in-out; }
-.external-link { color: var(--dpp-primary); text-decoration: none; font-weight: 500; font-size: 0.85rem; padding: 2px 6px; border-radius: 4px; display: inline; line-height: 1.8; transition: all 0.2s ease; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-.external-link:hover { background: #dcfce7; color: #065f46; }
-.external-link::after { content: '\00a0↗'; font-weight: bold; white-space: nowrap; }
-      .item-anchor .external-link { font-family: var(--font-mono); font-size: 0.95rem; }
-      .data-row.nested { margin-left: 15px; }
-      .data-row.nested .label { flex: 0 0 calc(40% - 25px); font-size: 0.9rem; }
-      .data-row.nested .value { flex: 0 0 60%; font-size: 1.12rem; font-weight: 500; }
-      .truncate-row { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; width: 100%; }
-      .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
-      .status-text { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+    :root {
+        --bg-canvas: #f0f2f5;
+        --bg-card: #ffffff;
+        --accent-dark: #1e293b;
+        --accent-soft: #f8fafc;
+        --text-main: #334155;
+        --text-muted: #64748b;
+        --border-color: #e2e8f0;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --radius-lg: 16px;
+        --radius-md: 8px;
+    }
 
-.claim-info { flex: 1; }
-.status-container { text-align: right; flex-shrink: 0; }
-.topic-label { font-size: 0.75rem; color: #6b7280; text-transform: uppercase; }
-.standard-name { font-weight: 700; color: #111827; font-size: 1rem; line-height: 1.2; }
-.metric-name { font-weight: 600; font-size: 0.85rem; }
-.metric-val { font-size: 1rem; }
-.primary-label { color: var(--dpp-primary); }
-.criterion-pill { border-left: 3px solid var(--dcc-primary); }
-.criterion-label { color: var(--dcc-primary); }
-.criterion-link { color: var(--dcc-primary); }
-      
-.claim-card { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
-.claim-meta { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; border-bottom: 1px dashed #d1d5db; padding-bottom: 8px; }
-.nested-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
-.metric-pill { background: #ffffff; border: 1px solid #e5e7eb; padding: 10px; border-radius: 6px; font-size: 0.8rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 80px; }
-.metric-label { font-weight: 700; text-transform: uppercase; font-size: 0.7rem; margin-bottom: 4px; }
-.pill-link { margin-top: 8px; padding: 4px 0; border-top: 1px solid #f3f4f6; color: var(--dpp-primary); text-decoration: none; font-size: 0.75rem; font-weight: 600; display: block; }
-    </style>    
- 
-    <div class="card-viewer">
-        
-    <article class="credential-card item-dpp">
-      <div class="credential-header">
-        <strong>DIGITAL PRODUCT PASSPORT</strong>
-      </div>
+    .dpp-dashboard {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        background: var(--bg-canvas);
+        color: var(--text-main);
+        max-width: 1000px;
+        margin: 20px auto;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
 
-      <div class="credential-body">
-        <div class="topic-group">
-          <div class="topic-header">
-            <span class="larger">{{credentialSubject.name}}</span>
-          </div>
-          <div class="topic-media">
+    /* Top Navigation Bar */
+    .dpp-navbar {
+        background: var(--accent-dark);
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .dpp-navbar .title { font-weight: 800; letter-spacing: 1px; font-size: 0.9rem; }
+    .dpp-navbar .id-badge { font-family: monospace; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; }
+
+    /* Hero Section */
+    .dpp-hero {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        background: var(--bg-card);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .hero-image-box { padding: 2rem; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; }
+    .hero-image-box img { max-width: 100%; border-radius: var(--radius-md); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+
+    .hero-content { padding: 2rem; }
+    .hero-content h1 { margin: 0 0 0.5rem 0; font-size: 1.75rem; color: var(--accent-dark); }
+    .manufacturer-tag { color: var(--text-muted); font-weight: 500; margin-bottom: 1.5rem; display: block; }
+
+    /* Info Grid */
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .info-item { display: flex; flex-direction: column; }
+    .info-label { font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 4px; }
+    .info-value { font-weight: 600; font-size: 0.95rem; }
+
+    /* Scoring Section (Horizontal Stat Cards) */
+    .stat-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        padding: 2rem;
+    }
+
+    .stat-card {
+        background: var(--bg-card);
+        padding: 1.25rem;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+        text-align: center;
+    }
+
+    .stat-circle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin: 0 auto 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        color: white;
+    }
+
+    /* Table Sections */
+    .section-container { padding: 0 2rem 2rem; }
+    .section-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 8px; }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border-color); }
+
+    .modern-table { width: 100%; border-collapse: collapse; background: var(--bg-card); border-radius: var(--radius-md); overflow: hidden; }
+    .modern-table th { background: var(--accent-soft); text-align: left; padding: 12px; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
+    .modern-table td { padding: 12px; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
+
+    /* Badges */
+    .status-pill { padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; color: white; }
+    .bg-safe { background: var(--success); }
+    .bg-warn { background: var(--warning); }
+    .bg-danger { background: var(--danger); }
+
+    /* Links */
+    .btn-link { 
+        display: inline-flex; 
+        align-items: center; 
+        padding: 6px 12px; 
+        background: var(--accent-soft); 
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        text-decoration: none;
+        color: var(--accent-dark);
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    .btn-link:hover { background: #eef2f6; }
+
+    @media (max-width: 768px) {
+        .dpp-hero { grid-template-columns: 1fr; }
+        .stat-row { grid-template-columns: 1fr; }
+        .hero-image-box { display: none; }
+    }
+</style>
+
+<div class="dpp-dashboard">
+    <nav class="dpp-navbar">
+        <span class="title">DIGITAL PRODUCT PASSPORT</span>
+        <span class="id-badge">ID: {{credentialSubject.id}}</span>
+    </nav>
+
+    <header class="dpp-hero">
+        <div class="hero-image-box">
             {{#if credentialSubject.productImage.linkURL}}
-              <img src="{{credentialSubject.productImage.linkURL}}" 
-                onerror="this.onerror=null;this.src='https://placehold.co/200x150';" 
-                alt="Product Image" 
-                class="product-main-img">
+                <img src="{{credentialSubject.productImage.linkURL}}" onerror="this.onerror=null;this.src='https://placehold.co/250x250';" alt="Product">
             {{else}}
-              <img src="https://placehold.co/200x150" 
-               alt="Placeholder" 
-               class="product-main-img">
+                <img src="https://placehold.co/250x250" alt="Placeholder">
             {{/if}}
-          </div>
-
-          <div class="data-row">
-            <span class="label">Product</span>
-            <span class="value">{{credentialSubject.name}}</span>
-          </div>
-          <div class="data-row">
-            <span class="label">Manufacturer</span>
-            <span class="value">{{credentialSubject.producedByParty.name}}</span>
-          </div>
-          <div class="data-row">
-            <span class="label">Production location</span>
-            <span class="value">{{credentialSubject.producedAtFacility.name}} ({{credentialSubject.countryOfProduction}})</span>
-          </div>
-          <div class="data-row">
-            <span class="label">Description</span>
-            <span class="value">{{credentialSubject.description}}</span>
-          </div>
-          <div class="data-row">
-            <span class="label">DPP ID</span>
-            <span class="value truncate-row">{{credentialSubject.id}}</span>
-          </div>
-          {{#if credentialSubject.batchNumber}}
-            <div class="data-row">
-              <span class="label">Batch number</span>
-              <span class="value">{{credentialSubject.batchNumber}}</span>
-            </div>
-          {{/if}}
-          {{#if credentialSubject.serialNumber}}
-            <div class="data-row">
-              <span class="label">Serial number</span>
-              <span class="value">{{credentialSubject.serialNumber}}</span>
-            </div>
-          {{/if}}
-          {{#if credentialSubject.productionDate}}
-            <div class="data-row">
-              <span class="label">Production date</span>
-              <span class="value">{{credentialSubject.productionDate}}</span>
-            </div>
-          {{/if}}
-          
-          <div class="data-row">
-            <span class="label">Dimensions</span>
-          </div>
-          
-          {{#each credentialSubject.dimensions}}
-            <div class="data-row nested">
-              <span class="label">{{@key}}</span>
-              <span class="value"><strong>{{this.value}}</strong> <span>{{this.unit}}</span></span>
-            </div>
-          {{/each}}
-
         </div>
-                   
-        <div class="topic-group">
-          <div class="topic-header">Material Provenance</div>
-          <table>
+        <div class="hero-content">
+            <span class="manufacturer-tag">{{credentialSubject.producedByParty.name}}</span>
+            <h1>{{credentialSubject.name}}</h1>
+            <p style="color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem;">{{credentialSubject.description}}</p>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Origin</span>
+                    <span class="info-value">{{credentialSubject.countryOfProduction}}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Facility</span>
+                    <span class="info-value">{{credentialSubject.producedAtFacility.name}}</span>
+                </div>
+                {{#if credentialSubject.productionDate}}
+                <div class="info-item">
+                    <span class="info-label">MFG Date</span>
+                    <span class="info-value">{{credentialSubject.productionDate}}</span>
+                </div>
+                {{/if}}
+                <div class="info-item">
+                    <span class="info-label">Dimensions</span>
+                    <span class="info-value">
+                        {{#each credentialSubject.dimensions}}
+                            {{this.value}}{{this.unit}} {{#unless @last}}×{{/unless}}
+                        {{/each}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="stat-row">
+        {{#if credentialSubject.circularityScorecard.materialCircularityIndicator}}
+        <div class="stat-card">
+            <div class="stat-circle bg-safe">{{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%</div>
+            <div class="info-label">Circularity</div>
+        </div>
+        {{/if}}
+
+        {{#if credentialSubject.emissionsScorecard.carbonFootprint}}
+        <div class="stat-card">
+            <div class="stat-circle" style="background: var(--accent-dark);">{{credentialSubject.emissionsScorecard.carbonFootprint}}</div>
+            <div class="info-label">kg CO2e Footprint</div>
+        </div>
+        {{/if}}
+
+        <div class="stat-card">
+            <div class="stat-circle bg-warn">8.5</div>
+            <div class="info-label">Repair Score</div>
+        </div>
+    </section>
+
+    <section class="section-container">
+        <h2 class="section-title">Material Provenance</h2>
+        <table class="modern-table">
             <thead>
-              <tr>
-                <th>Material</th>
-                <th>Mass fraction</th>
-                <th>Recycled</th>
-                <th>Hazardousity</th>
-                <th>Origin</th>
-              </tr>
+                <tr>
+                    <th>Material</th>
+                    <th>Composition</th>
+                    <th>Recycled</th>
+                    <th>Safety</th>
+                    <th>Origin</th>
+                </tr>
             </thead>
             <tbody>
-              {{#each credentialSubject.materialsProvenance}}
+                {{#each credentialSubject.materialsProvenance}}
                 <tr>
-                  <td>{{name}}</td>
-                  <td>{{multiply massFraction 100}}% ({{massAmount.value}} {{massAmount.unit}})</td>
-                  <td>{{multiply recycledAmount 100}}%</td>
-                  <td>
-                    {{#if (lookup . 'hazardous')}}
-                      {{#if hazardous}}
-                        <span class="badge hazardous-badge">HAZARDOUS</span>
-                      {{else}}
-                        <span class="badge safe-badge">SAFE</span>
-                      {{/if}}
-                    {{else}}
-                      <span class="badge unknown-badge">UNKNOWN</span>
-                    {{/if}}
-                  </td>
-                  <td>{{originCountry}}</td>
+                    <td><strong>{{name}}</strong></td>
+                    <td>{{multiply massFraction 100}}%</td>
+                    <td>{{multiply recycledAmount 100}}%</td>
+                    <td>
+                        {{#if hazardous}}
+                            <span class="status-pill bg-danger">HAZARDOUS</span>
+                        {{else}}
+                            <span class="status-pill bg-safe">SAFE</span>
+                        {{/if}}
+                    </td>
+                    <td>{{originCountry}}</td>
                 </tr>
-              {{/each}}
+                {{/each}}
             </tbody>
-          </table>
-        </div>
+        </table>
+    </section>
 
-        {{#if credentialSubject.circularityScorecard}}
-        <div class="topic-group">
-          <div class="topic-header">Circularity scorecard</div>
-
-          {{#if credentialSubject.circularityScorecard.recycledContent}}
-            <div class="data-row">
-              <span class="label">Recycled content</span>
-              <div class="value score-container">
-                <span>{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span>
-                <div class="score-track">
-                  <div class="score-fill {{getScoreMeterClass credentialSubject.circularityScorecard.recycledContent}}" style="width: {{multiply credentialSubject.circularityScorecard.recycledContent 100}}%"></div>
-                </div>
-              </div>
-            </div>              
-          {{/if}}
-          
-          {{#if credentialSubject.circularityScorecard.recyclableContent}}
-            <div class="data-row">
-              <span class="label">Recyclable content</span>
-              <div class="value score-container">
-                <span>{{multiply credentialSubject.circularityScorecard.recyclableContent 100}}%</span>
-                <div class="score-track">
-                  <div class="score-fill {{getScoreMeterClass credentialSubject.circularityScorecard.recyclableContent}}" style="width: {{multiply credentialSubject.circularityScorecard.recyclableContent 100}}%"></div>
-                </div>
-              </div>         
-            </div>
-          {{/if}}
-
-          {{#if credentialSubject.circularityScorecard.materialCircularityIndicator}}
-            <div class="data-row">
-              <span class="label">Circularity indicator</span>
-              <div class="value score-container">
-                <span>{{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%</span>
-                <div class="score-track">
-                  <div class="score-fill {{getScoreMeterClass credentialSubject.circularityScorecard.materialCircularityIndicator}}" style="width: {{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%"></div>
-                </div>
-              </div>         
-            </div>
-          {{/if}}
-
-                    
-          {{#if credentialSubject.circularityScorecard.utilityFactor}}
-            <div class="data-row">
-              <span class="label">Utility factor</span>
-              <span class="value">{{credentialSubject.circularityScorecard.utilityFactor}}</span>           
-            </div>
-          {{/if}}
-          
-        </div>        
-        {{/if}}
-     
-        <div class="topic-group">
-          <div class="topic-header">Circularity</div>
-          
-          <div class="data-row">
-            <span class="label">Recyclability Score</span>
-            <div class="value score-container">
-              <span>6.5 / 10</span>
-              <div class="score-track">
-                <div class="score-fill score-mid" style="width: 65%">                  
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="data-row">
-            <span class="label">Repair Score</span>
-            <div class="value score-container">
-              <span>8.5 / 10</span>
-              <div class="score-track">
-                <div class="score-fill score-high" style="width: 85%">                  
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="data-row">
-            <span class="label">Carbon Footprint</span>
-            <div class="value score-container">
-              <span>3.2 / 10</span>
-              <div class="score-track">
-                <div class="score-fill score-low" style="width: 32%"></div>
-              </div>
-            </div>
-          </div>  
-
-          <div class="data-row">
-            <span class="label">Recycling information</span>
-            <span class="value"><a href="https://example.com/Recycling_information.pdf" target="_blank" class="external-link">Recycling_information.pdf</a></span>
-          </div>
-
-          <div class="data-row">
-            <span class="label">Repair information</span>
-            <span class="value"><a href="https://example.com/Repair_information.pdf" target="_blank" class="external-link">Repair_guide.pdf</a></span>
-          </div>
-
-        </div>
-
-      {{#if credentialSubject.emissionsScorecard}}
-        <div class="topic-group">
-          <div class="topic-header">Emissions scorecard</div>
-
-         {{#if credentialSubject.emissionsScorecard.carbonFootprint}}
-          <div class="data-row">
-            <span class="label">Carbon Footprint</span>
-            <span class="value larger" style="color: #374151;">
-              {{credentialSubject.emissionsScorecard.carbonFootprint}} 
-              <span style="font-size: 0.85rem; font-weight: 500;">kg CO2e / {{credentialSubject.emissionsScorecard.declaredUnit}}</span>
-            </span>
-          </div>
-        {{/if}}
-
-        {{#if credentialSubject.emissionsScorecard.operationalScope}}
-          <div class="data-row">
-            <span class="label">Scope</span>
-            <span class="value">{{credentialSubject.emissionsScorecard.operationalScope}}</span>
-          </div>
-        {{/if}}
-
-      {{#if credentialSubject.emissionsScorecard.primarySourcedRatio}}
-          <div class="data-row">
-            <span class="label">Primary Data Ratio</span>
-            <div class="value score-container">
-              <span>{{multiply credentialSubject.emissionsScorecard.primarySourcedRatio 100}}%</span>
-              <div class="score-track">
-                <div class="score-fill score-mid" style="width: {{multiply credentialSubject.emissionsScorecard.primarySourcedRatio 100}}%"></div>
-              </div>
-            </div>
-          </div>
-        {{/if}}
-
-        {{#if credentialSubject.emissionsScorecard.reportingStandard}}
-          <div class="data-row" style="margin-top: 10px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
-            <span class="label">Reporting Standard</span>
-            <span class="value">
-              <a href="{{credentialSubject.emissionsScorecard.reportingStandard.id}}" target="_blank" class="external-link">
-                {{credentialSubject.emissionsScorecard.reportingStandard.name}} ({{credentialSubject.emissionsScorecard.reportingStandard.issueDate}})
-              </a>
-            </span>
-          </div>
-        {{/if}}
-
-     </div>
-  {{/if}}        
-
-{{#if credentialSubject.conformityClaim}}
-<div class="topic-group">
-  <div class="topic-header">Conformity Declarations</div>
-
-  {{#each credentialSubject.conformityClaim}}
-  <div class="claim-card">
-    <div class="claim-meta">
-      <div class="claim-info">
-        <div class="topic-label">{{conformityTopic}}</div>
-        <div class="standard-name">{{referenceStandard.name}}</div>
-      </div>
-      <div class="status-container">
-        {{#if conformance}}
-          <span class="badge safe-badge">CONFORMANT</span>
-        {{else}}
-          <span class="badge revoked-badge">NON-CONFORMANT</span>
-        {{/if}}
-      </div>
-    </div>
-
-    <div class="nested-metrics">
-      {{#each declaredValue}}
-      <div class="metric-pill">
-        <div class="metric-details">
-          <span class="metric-label primary-label">Declared Metric</span>
-          <div class="metric-name">{{metricName}}</div>
-          <div class="metric-val"><strong>{{metricValue.value}}</strong> {{metricValue.unit}}</div>
-        </div>
+    <div class="section-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
         
-        {{#if ../conformityEvidence.linkURL}}
-        <a href="{{../conformityEvidence.linkURL}}" target="_blank" class="pill-link">
-          {{#if ../conformityEvidence.linkName}}{{../conformityEvidence.linkName}}{{else}}View Evidence{{/if}} ↗
-        </a>
-        {{/if}}
-      </div>
-      {{/each}}
-
-      {{#each assessmentCriteria}}
-        {{#each thresholdValue}}
-        <div class="metric-pill criterion-pill">
-          <div class="metric-details">
-            <span class="metric-label criterion-label">Assessment Limit</span>
-            <div class="metric-name">{{metricName}}</div>
-            <div class="metric-val"><strong>{{metricValue.value}}</strong> {{metricValue.unit}}</div>
-          </div>
-
-          {{#if ../id}}
-          <a href="{{../id}}" target="_blank" class="pill-link criterion-link">
-             View Criterion Reference ↗
-          </a>
-          {{/if}}
+        {{#if credentialSubject.conformityClaim}}
+        <div>
+            <h2 class="section-title">Compliance</h2>
+            {{#each credentialSubject.conformityClaim}}
+            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <span style="font-size: 0.8rem; font-weight: 700;">{{referenceStandard.name}}</span>
+                    {{#if conformance}}<span class="status-pill bg-safe">PASS</span>{{/if}}
+                </div>
+                <div style="margin-top: 10px;">
+                    {{#each declaredValue}}
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">{{metricName}}: <strong>{{metricValue.value}} {{metricValue.unit}}</strong></div>
+                    {{/each}}
+                </div>
+            </div>
+            {{/each}}
         </div>
-        {{/each}}
-      {{/each}}
-    </div>
-  </div>
-  {{/each}}
-</div>
-{{/if}}
+        {{/if}}
 
         {{#if credentialSubject.traceabilityInformation}}
-            <div class="topic-group">
-              <div class="topic-header">Traceability Events </div>
-              
-              <div class="data-row">
-                <span class="label">Process Step</span>
-                <span class="value">{{credentialSubject.traceabilityInformation.valueChainProcess}}</span>
-              </div>
-
-            {{#if credentialSubject.traceabilityInformation.verifiedRatio}}
-              <div class="data-row">
-                <span class="label">Verified Ratio</span>
-                <div class="value score-container">
-                  <span>{{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%</span>
-                  <div class="score-track">
-                    <div class="score-fill verified-badge" style="width: {{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%"></div>
-                  </div>
+        <div>
+            <h2 class="section-title">Chain of Custody</h2>
+            <div style="background: var(--accent-dark); color: white; padding: 15px; border-radius: 8px;">
+                <div class="info-label" style="color: rgba(255,255,255,0.6)">Process Step</div>
+                <div style="font-weight: 600; margin-bottom: 15px;">{{credentialSubject.traceabilityInformation.valueChainProcess}}</div>
+                
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
+                    <a href="{{linkURL}}" class="btn-link" style="background: rgba(255,255,255,0.1); border: none; color: white;">
+                        {{linkName}} ↗
+                    </a>
+                    {{/each}}
                 </div>
-              </div>
-            {{/if}}
-    
-              <table>
-                <thead>
-                  <tr>
-                    <th>Traceable Events</th>
-                    <th style="text-align: right;">Event Data</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
-                    <tr>
-                      <td style="font-weight: 500;">{{linkName}}</td>
-                      <td style="text-align: right;">
-                        <a href="{{linkURL}}" target="_blank" class="external-link">View Event</a>
-                      </td>
-                    </tr>
-                  {{/each}}
-                </tbody>
-              </table>
             </div>
+        </div>
         {{/if}}
+    </div>
 
-          
-      </div>
-    </article>
-          </div>
-        
-      </div>
-  
-
+    <footer style="padding: 1rem 2rem; background: var(--accent-soft); border-top: 1px solid var(--border-color); display: flex; gap: 15px;">
+        <span class="info-label" style="align-self: center;">Resources:</span>
+        <a href="https://example.com/Repair_guide.pdf" class="btn-link">Repair Guide</a>
+        <a href="https://example.com/Recycling_information.pdf" class="btn-link">Recycling Specs</a>
+    </footer>
+</div>
