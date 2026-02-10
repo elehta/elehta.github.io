@@ -96,8 +96,14 @@
         </header>
 
         <div class="stat-grid">
+            
             <div class="stat-tile">
-                <span class="tile-label">Manufacturing Origin</span>
+                <span class="tile-label">Manufacturer</span>
+                <span class="tile-value">{{credentialSubject.producedByParty.name}}</span>              
+            </div>
+            
+            <div class="stat-tile">
+                <span class="tile-label">Manufacturing Location</span>
                 <span class="tile-value">{{credentialSubject.producedAtFacility.name}}, {{credentialSubject.countryOfProduction}}</span>
               
             </div>
@@ -116,8 +122,19 @@
         </div>
 
         <div class="panel-section">
-            <span class="tile-label">Description</span>
-            <p class="product-brief-text">{{credentialSubject.description}}</p>
+            {{#if credentialSubject.description}}
+                <span class="tile-label">Description</span>
+                <p class="product-brief-text">{{credentialSubject.description}}</p>
+            {{/if}}
+            {{#if credentialSubject.productCategory}}
+                <span class="tile-label">Product Category</span>
+                {{#each credentialSubject.productCategory}}
+                    <p class="product-brief-text">{{credentialSubject.productCategory.code}}</p>
+                    <p class="product-brief-text">{{credentialSubject.productCategory.id}}</p>
+                    <p class="product-brief-text">{{credentialSubject.productCategory.name}}</p>
+                {{/each}}
+            {{/if}}
+            
         </div>
 
         <div class="panel-section">
@@ -136,7 +153,7 @@
                     {{#each credentialSubject.materialsProvenance}}
                     <tr>
                         <td><strong>{{name}}</strong></td>
-                        <td>{{multiply massFraction 100}}% <small>({{massAmount.value}}{{massAmount.unit}})</small></td>
+                        <td>{{multiply massFraction 100}}% <small>({{massAmount.value}} {{massAmount.unit}})</small></td>
                         <td>{{multiply recycledAmount 100}}%</td>
                         <td>
                             {{#if (lookup . 'hazardous')}}
