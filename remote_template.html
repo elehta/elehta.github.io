@@ -140,8 +140,17 @@
                 <span class="tile-label">Further Information</span>
                 {{#each credentialSubject.furtherInformation}}
                     </p><a href="{{linkURL}}" span class="btn-action">{{linkName}} ↗</a></span>
-                {{/each}}
+                {{/each}}                
             {{/if}}
+            {{#if credentialSubject.circularityScorecard.recyclingInformation}}
+                </p><a href="{{credentialSubject.circularityScorecard.recyclingInformation.linkURL}}" span class="btn-action">{{credentialSubject.circularityScorecard.recyclingInformation.linkName}} ↗</a></span>
+            {{/if}}
+            {{#if credentialSubject.circularityScorecard.repairInformation}}
+                 </p><a href="{{credentialSubject.circularityScorecard.repairInformation.linkURL}}" span class="btn-action">{{credentialSubject.circularityScorecard.repairInformation.linkName}} ↗</a></span>
+            {{/if}}
+            
+            <a href="https://example.com/Repair_information.pdf" class="btn-action">Repair Guide</a>
+            <a href="https://example.com/Recycling_information.pdf" class="btn-action">Recycling Data</a>
             
         </div>
 
@@ -258,8 +267,7 @@
         {{/if}}
 
         <div class="footer-actions">
-            <a href="https://example.com/Repair_information.pdf" class="btn-action">Repair Guide</a>
-            <a href="https://example.com/Recycling_information.pdf" class="btn-action">Recycling Data</a>
+
         </div>
     </main>
 </div>
