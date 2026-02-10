@@ -159,14 +159,14 @@
                 <span class="tile-label">Further Information</span>
                 </p>
                 {{#each credentialSubject.furtherInformation}}
-                    <a href="{{linkURL}}" span class="btn-action">{{linkName}} ↗</a></span>
+                    <a href="{{linkURL}}" span class="btn-action">{{linkName}} ↗</a></span><br>
                 {{/each}}                
             {{/if}}
             {{#if credentialSubject.circularityScorecard.recyclingInformation}}
-                <br>Recycling: <a href="{{credentialSubject.circularityScorecard.recyclingInformation.linkURL}}" span class="btn-action">{{credentialSubject.circularityScorecard.recyclingInformation.linkName}} ↗</a></span>
+                Recycling: <a href="{{credentialSubject.circularityScorecard.recyclingInformation.linkURL}}" span class="btn-action">{{credentialSubject.circularityScorecard.recyclingInformation.linkName}} ↗</a></span><br>
             {{/if}}
             {{#if credentialSubject.circularityScorecard.repairInformation}}
-                <br>Repair: <a href="{{credentialSubject.circularityScorecard.repairInformation.linkURL}}" span class="btn-action">{{credentialSubject.circularityScorecard.repairInformation.linkName}} ↗</a></span>
+                Repair: <a href="{{credentialSubject.circularityScorecard.repairInformation.linkURL}}" span class="btn-action">{{credentialSubject.circularityScorecard.repairInformation.linkName}} ↗</a></span>
             {{/if}}
             
         </div>
