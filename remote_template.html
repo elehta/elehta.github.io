@@ -204,40 +204,29 @@
         </div>
 
         <div class="scorecard-grid">
-            {{#if credentialSubject.circularityScorecard}}
-            <div class="panel-section">
-                <div class="section-title">Circularity Scorecard</div>
-                {{#if credentialSubject.circularityScorecard.recycledContent}}
-                <div class="progress-box">
-                    <div class="progress-meta"><span>Recycled Content</span><span>{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span></div>
-                    <div class="progress-track"><div class="progress-fill" style="width:{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%"></div></div>
+            {{#if credentialSubject.circularityScorecard}}            
+                <div class="panel-section">
+                    <div class="section-title">Circularity Scorecard</div>
+                    {{#if credentialSubject.circularityScorecard.recycledContent}}
+                    <div class="progress-box">
+                        <div class="progress-meta"><span>Recycled Content</span><span>{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span></div>
+                        <div class="progress-track"><div class="progress-fill" style="width:{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%"></div></div>
+                    </div>
+                    {{/if}}
+                    {{#if credentialSubject.circularityScorecard.materialCircularityIndicator}}
+                    <div class="progress-box">
+                        <div class="progress-meta"><span>Circularity Index</span><span>{{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%</span></div>
+                        <div class="progress-track"><div class="progress-fill" style="width:{{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%"></div></div>
+                    </div>
+                    {{/if}}
+                    {{#if credentialSubject.circularityScorecard.utilityFactor}}
+                        <div class="progress-meta">Utility Factor: <b>{{credentialSubject.circularityScorecard.utilityFactor}}</b></div>
+                    {{/if}}
                 </div>
-                {{/if}}
-                {{#if credentialSubject.circularityScorecard.materialCircularityIndicator}}
-                <div class="progress-box">
-                    <div class="progress-meta"><span>Circularity Index</span><span>{{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%</span></div>
-                    <div class="progress-track"><div class="progress-fill" style="width:{{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%"></div></div>
-                </div>
-                {{/if}}
-                {{#if credentialSubject.circularityScorecard.utilityFactor}}
-                    <div class="progress-meta">Utility Factor: <b>{{credentialSubject.circularityScorecard.utilityFactor}}</b></div>
-                {{/if}}
-            </div>
-            {{/if}}
-
-            {{#if credentialSubject.emissionsScorecard}}
-            <div class="panel-section">
-                <div class="section-title">Carbon Footprint</div>
-                {{#if credentialSubject.emissionsScorecard.carbonFootprint}}
-                <div class="emissions-value">{{credentialSubject.emissionsScorecard.carbonFootprint}} <small class="emissions-unit">kg CO2e</small></div>
-                {{/if}}
-                {{#if credentialSubject.emissionsScorecard.reportingStandard}}
-                <a href="{{credentialSubject.emissionsScorecard.reportingStandard.id}}" class="btn-action">Standard: {{credentialSubject.emissionsScorecard.reportingStandard.name}}</a>
-                {{/if}}
-            </div>
             {{/if}}
 
             
+            {{#if credentialSubject.emissionsScorecard}}
             <div class="panel-section">
                 <div class="section-title">Carbon Footprint</div>
                 
@@ -270,7 +259,7 @@
                 </a>
                 {{/if}}
             </div>
-            
+         {{/if}}  
         </div>
 
         {{#if credentialSubject.conformityClaim}}
