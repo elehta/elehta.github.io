@@ -247,14 +247,13 @@
                     <small class="emissions-unit">kg CO2e</small>
                 </div>
                 {{/if}}
-            
-                <div class="emissions-meta-container">
-                    {{#if credentialSubject.emissionsScorecard.scope}}
+                           
+                {{#if credentialSubject.emissionsScorecard.scope}}
+                 <div class="emissions-meta-container">
                     <div class="emissions-meta-item">
                         <span class="tile-label">Scope</span>
                         <span class="meta-value">{{credentialSubject.emissionsScorecard.scope}}</span>
-                    </div>
-                    {{/if}}
+                    </div>                   
                     
                     {{#if credentialSubject.emissionsScorecard.ratio}}
                     <div class="emissions-meta-item">
@@ -263,7 +262,8 @@
                     </div>
                     {{/if}}
                 </div>
-            
+             {{/if}}
+                
                 {{#if credentialSubject.emissionsScorecard.reportingStandard}}
                 <a href="{{credentialSubject.emissionsScorecard.reportingStandard.id}}" class="btn-action">
                     Standard: {{credentialSubject.emissionsScorecard.reportingStandard.name}}
