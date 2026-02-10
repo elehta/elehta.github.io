@@ -1,312 +1,183 @@
 <style>
     :root {
-        --panel-bg: #0f172a;
-        --sidebar-bg: #1e293b;
-        --accent: #38bdf8;
-        --success: #22c55e;
-        --danger: #ef4444;
+        --bg-main: #1e293b; /* Slightly lighter slate */
+        --bg-card: #334155;
+        --bg-inset: #0f172a;
+        --neon-cyan: #06b6d4;
+        --neon-amber: #f59e0b;
+        --neon-green: #10b981;
+        --text-bright: #f1f5f9;
         --text-dim: #94a3b8;
-        --border: #334155;
+        --border: #475569;
+        --radius: 12px;
     }
 
-    .dpp-dashboard {
-        font-family: 'Inter', system-ui, sans-serif;
-        display: grid;
-        grid-template-columns: 280px 1fr;
-        min-height: 600px;
-        background: #020617;
-        color: #f1f5f9;
-        border-radius: 16px;
-        overflow: hidden;
+    .dpp-narrow-card {
+        font-family: 'Inter', -apple-system, sans-serif;
+        max-width: 580px; /* 2/3 of previous width */
+        margin: 20px auto;
+        background: var(--bg-main);
+        color: var(--text-bright);
+        border-radius: var(--radius);
         border: 1px solid var(--border);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
     }
 
-    /* Left Side Navigation/Identity */
-    .dpp-sidebar {
-        background: var(--sidebar-bg);
-        padding: 30px 20px;
-        border-right: 1px solid var(--border);
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
+    /* Identity Header */
+    .dpp-head {
+        padding: 24px;
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        border-bottom: 3px solid var(--neon-cyan);
     }
 
-    .sidebar-img { 
-        width: 100%; 
-        aspect-ratio: 1; 
-        object-fit: cover; 
-        border-radius: 12px; 
-        border: 2px solid var(--border);
-    }
-
-    .id-block {
-        background: #0f172a;
-        padding: 12px;
-        border-radius: 8px;
+    .product-title { font-size: 1.5rem; font-weight: 800; margin: 0; letter-spacing: -0.5px; }
+    .mfg-name { color: var(--neon-cyan); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+    
+    .id-ribbon {
+        margin-top: 15px;
         font-family: 'JetBrains Mono', monospace;
         font-size: 0.7rem;
-        word-break: break-all;
-        color: var(--accent);
+        padding: 6px 10px;
+        background: rgba(0,0,0,0.3);
+        border-radius: 4px;
+        color: var(--text-dim);
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
-    /* Main Content Area */
-    .dpp-content { padding: 30px; overflow-y: auto; }
-    
-    .dashboard-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        margin-bottom: 30px;
-        border-bottom: 2px solid var(--border);
-        padding-bottom: 15px;
-    }
-
-    /* Modern Grid Layout */
-    .stat-grid {
+    /* Visual Media Section */
+    .dpp-media-strip {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-        margin-bottom: 30px;
-    }
-
-    .stat-tile {
-        background: var(--sidebar-bg);
-        padding: 15px;
-        border-radius: 10px;
-        border: 1px solid var(--border);
-    }
-
-    .tile-label { color: var(--text-dim); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; }
-    .tile-value { font-size: 1.1rem; font-weight: 700; margin-top: 5px; display: block; }
-
-    /* Tables & Lists */
-    .panel-section {
-        background: var(--sidebar-bg);
-        border-radius: 12px;
+        grid-template-columns: 180px 1fr;
+        gap: 20px;
         padding: 20px;
-        margin-bottom: 20px;
-        border: 1px solid var(--border);
+        background: var(--bg-inset);
     }
+    .thumb { width: 100%; border-radius: 8px; border: 1px solid var(--border); }
 
-    .section-title { color: var(--accent); font-size: 0.9rem; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; }
+    /* Compact Grid */
+    .spec-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    .spec-item { padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .spec-label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; display: block; }
+    .spec-value { font-size: 0.85rem; font-weight: 600; }
 
-    .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-    .data-table th { text-align: left; padding: 10px; border-bottom: 2px solid var(--border); color: var(--text-dim); }
-    .data-table td { padding: 12px 10px; border-bottom: 1px solid var(--border); }
+    /* Tables */
+    .panel { padding: 20px; }
+    .section-label { 
+        color: var(--neon-cyan); 
+        font-size: 0.75rem; 
+        font-weight: 900; 
+        margin-bottom: 12px; 
+        display: flex; 
+        align-items: center; 
+        gap: 8px; 
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    /* Circularity Progress */
-    .progress-box { margin-bottom: 15px; }
-    .progress-meta { display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 5px; }
-    .progress-track { height: 6px; background: #0f172a; border-radius: 3px; }
-    .progress-fill { height: 100%; border-radius: 3px; background: var(--accent); }
+    .mini-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .mini-table th { text-align: left; padding: 8px; color: var(--text-dim); border-bottom: 1px solid var(--border); }
+    .mini-table td { padding: 10px 8px; border-bottom: 1px solid #47556955; }
 
-    /* Badges */
-    .status-pill {
-        padding: 2px 8px;
+    /* Neon Accents */
+    .neon-pill {
+        padding: 2px 6px;
         border-radius: 4px;
         font-size: 0.65rem;
-        font-weight: 900;
+        font-weight: 800;
+        text-transform: uppercase;
     }
-    .pill-safe { background: rgba(34, 197, 94, 0.2); color: var(--success); border: 1px solid var(--success); }
-    .pill-danger { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger); }
+    .neon-pill.cyan { background: rgba(6, 182, 212, 0.1); color: var(--neon-cyan); border: 1px solid var(--neon-cyan); }
+    .neon-pill.green { background: rgba(16, 185, 129, 0.1); color: var(--neon-green); border: 1px solid var(--neon-green); }
+    .neon-pill.amber { background: rgba(245, 158, 11, 0.1); color: var(--neon-amber); border: 1px solid var(--neon-amber); }
 
-    /* Conformity Cards */
-    .conformity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    .compliance-card { 
-        background: #0f172a; 
-        padding: 15px; 
-        border-radius: 8px; 
-        border-left: 4px solid var(--accent);
+    /* Footer Stats */
+    .footer-dashboard {
+        display: flex;
+        justify-content: space-between;
+        background: var(--bg-inset);
+        padding: 15px 20px;
+        border-top: 1px solid var(--border);
     }
+    .stat-val { display: block; font-size: 1.1rem; font-weight: 800; color: var(--neon-amber); }
 
-    .btn-action {
-        display: inline-block;
-        margin-top: 10px;
-        color: var(--accent);
+    .btn-resource {
         text-decoration: none;
+        color: var(--neon-cyan);
         font-size: 0.75rem;
-        font-weight: 600;
+        font-weight: 700;
+        border: 1px solid var(--neon-cyan);
+        padding: 5px 10px;
+        border-radius: 4px;
+        transition: all 0.2s;
     }
-    .btn-action:hover { text-decoration: underline; }
+    .btn-resource:hover { background: var(--neon-cyan); color: var(--bg-inset); }
 
-    @media (max-width: 900px) {
-        .dpp-dashboard { grid-template-columns: 1fr; }
-        .dpp-sidebar { border-right: none; border-bottom: 1px solid var(--border); }
-        .conformity-grid { grid-template-columns: 1fr; }
-    }
 </style>
 
-<div class="dpp-dashboard">
-    <aside class="dpp-sidebar">
-        {{#if credentialSubject.productImage.linkURL}}
-            <img src="{{credentialSubject.productImage.linkURL}}" class="sidebar-img" onerror="this.src='https://placehold.co/300x300/1e293b/white?text=No+Image';">
-        {{else}}
-            <img src="https://placehold.co/300x300/1e293b/white?text=Product" class="sidebar-img">
-        {{/if}}
+<div class="dpp-narrow-card">
+    <header class="dpp-head">
+        <span class="mfg-name">{{credentialSubject.producedByParty.name}}</span>
+        <h1 class="product-title">{{credentialSubject.name}}</h1>
+        <code class="id-ribbon" title="{{credentialSubject.id}}">ID: {{credentialSubject.id}}</code>
+    </header>
+
+    <div class="dpp-media-strip">
+        <img src="{{#if credentialSubject.productImage.linkURL}}{{credentialSubject.productImage.linkURL}}{{else}}https://placehold.co/180x180/334155/f1f5f9?text=Product{{/if}}" 
+             class="thumb" onerror="this.src='https://placehold.co/180x180/334155/f1f5f9?text=Product';">
         
-        <div>
-            <span class="tile-label">Digital Product ID</span>
-            <div class="id-block" title="{{credentialSubject.id}}">{{credentialSubject.id}}</div>
-        </div>
-
-        <div>
-            <span class="tile-label">Dimensions</span>
-            <div style="font-size: 0.85rem; margin-top:5px;">
-                {{#each credentialSubject.dimensions}}
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px; border-bottom:1px solid #334155;">
-                        <span style="color:var(--text-dim)">{{@key}}</span>
-                        <span>{{this.value}} {{this.unit}}</span>
-                    </div>
-                {{/each}}
+        <div class="spec-grid">
+            <div class="spec-item">
+                <span class="spec-label">Location</span>
+                <span class="spec-value">{{credentialSubject.countryOfProduction}}</span>
             </div>
-        </div>
-    </aside>
-
-    <main class="dpp-content">
-        <header class="dashboard-header">
-            <div>
-                <h1 style="margin:0; font-size: 1.8rem;">{{credentialSubject.name}}</h1>
-                <span style="color: var(--accent);">{{credentialSubject.producedByParty.name}}</span>
-            </div>
-            <div style="text-align:right">
-                <span class="tile-label">Status</span><br>
-                <span class="status-pill pill-safe">CERTIFIED ACTIVE</span>
-            </div>
-        </header>
-
-        <div class="stat-grid">
-            <div class="stat-tile">
-                <span class="tile-label">Manufacturing Origin</span>
-                <span class="tile-value">{{credentialSubject.countryOfProduction}}</span>
-                <span style="font-size: 0.7rem; color: var(--text-dim)">{{credentialSubject.producedAtFacility.name}}</span>
+            <div class="spec-item">
+                <span class="spec-label">Facility</span>
+                <span class="spec-value">{{credentialSubject.producedAtFacility.name}}</span>
             </div>
             {{#if credentialSubject.productionDate}}
-            <div class="stat-tile">
-                <span class="tile-label">Production Date</span>
-                <span class="tile-value">{{credentialSubject.productionDate}}</span>
+            <div class="spec-item">
+                <span class="spec-label">Date</span>
+                <span class="spec-value">{{credentialSubject.productionDate}}</span>
             </div>
             {{/if}}
             {{#if credentialSubject.batchNumber}}
-            <div class="stat-tile">
-                <span class="tile-label">Batch Group</span>
-                <span class="tile-value">{{credentialSubject.batchNumber}}</span>
+            <div class="spec-item">
+                <span class="spec-label">Batch</span>
+                <span class="spec-value">{{credentialSubject.batchNumber}}</span>
             </div>
             {{/if}}
         </div>
+    </div>
 
-        <div class="panel-section">
-            <span class="tile-label">Product Brief</span>
-            <p style="margin: 10px 0 0 0; line-height: 1.6; font-size: 0.9rem; color: #cbd5e1;">{{credentialSubject.description}}</p>
-        </div>
-
-        <div class="panel-section">
-            <div class="section-title">Material Matrix</div>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Substance</th>
-                        <th>Composition</th>
-                        <th>Recycled</th>
-                        <th>Safety Status</th>
-                        <th>Source</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each credentialSubject.materialsProvenance}}
-                    <tr>
-                        <td><strong>{{name}}</strong></td>
-                        <td>{{multiply massFraction 100}}% <small>({{massAmount.value}}{{massAmount.unit}})</small></td>
-                        <td>{{multiply recycledAmount 100}}%</td>
-                        <td>
-                            {{#if (lookup . 'hazardous')}}
-                                {{#if hazardous}}<span class="status-pill pill-danger">HAZARDOUS</span>
-                                {{else}}<span class="status-pill pill-safe">SAFE</span>{{/if}}
-                            {{else}}<span class="status-pill" style="background:#334155">UNKNOWN</span>{{/if}}
-                        </td>
-                        <td>{{originCountry}}</td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-            {{#if credentialSubject.circularityScorecard}}
-            <div class="panel-section">
-                <div class="section-title">Circularity Metrics</div>
-                {{#if credentialSubject.circularityScorecard.recycledContent}}
-                <div class="progress-box">
-                    <div class="progress-meta"><span>Recycled Content</span><span>{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span></div>
-                    <div class="progress-track"><div class="progress-fill" style="width:{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%"></div></div>
-                </div>
-                {{/if}}
-                {{#if credentialSubject.circularityScorecard.materialCircularityIndicator}}
-                <div class="progress-box">
-                    <div class="progress-meta"><span>Circularity Index</span><span>{{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%</span></div>
-                    <div class="progress-track"><div class="progress-fill" style="width:{{multiply credentialSubject.circularityScorecard.materialCircularityIndicator 100}}%"></div></div>
-                </div>
-                {{/if}}
-                {{#if credentialSubject.circularityScorecard.utilityFactor}}
-                <div style="font-size:0.8rem; color:var(--text-dim)">Utility Factor: <b style="color:#fff">{{credentialSubject.circularityScorecard.utilityFactor}}</b></div>
-                {{/if}}
-            </div>
-            {{/if}}
-
-            {{#if credentialSubject.emissionsScorecard}}
-            <div class="panel-section">
-                <div class="section-title">Carbon Footprint</div>
-                {{#if credentialSubject.emissionsScorecard.carbonFootprint}}
-                <div style="font-size: 2rem; font-weight: 800; color: #fff;">{{credentialSubject.emissionsScorecard.carbonFootprint}} <small style="font-size:0.8rem; color:var(--text-dim)">kg CO2e</small></div>
-                {{/if}}
-                {{#if credentialSubject.emissionsScorecard.reportingStandard}}
-                <a href="{{credentialSubject.emissionsScorecard.reportingStandard.id}}" class="btn-action">Standard: {{credentialSubject.emissionsScorecard.reportingStandard.name}}</a>
-                {{/if}}
-            </div>
-            {{/if}}
-        </div>
-
-        {{#if credentialSubject.conformityClaim}}
-        <div class="section-title">Compliance & Certification</div>
-        <div class="conformity-grid">
-            {{#each credentialSubject.conformityClaim}}
-            <div class="compliance-card">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                    <span class="tile-label">{{conformityTopic}}</span>
-                    {{#if conformance}}<span class="status-pill pill-safe">PASS</span>{{else}}<span class="status-pill pill-danger">FAIL</span>{{/if}}
-                </div>
-                <div style="font-size:0.85rem; font-weight:700;">{{referenceStandard.name}}</div>
-                
-                <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:5px;">
-                    {{#each declaredValue}}
-                        <div style="background:#1e293b; padding:5px; border-radius:4px; font-size:0.7rem; flex:1">
-                            <div style="color:var(--accent)">Value</div>
-                            {{metricName}}: {{metricValue.value}}{{metricValue.unit}}
-                        </div>
-                    {{/each}}
-                </div>
-                {{#if conformityEvidence.linkURL}}
-                <a href="{{conformityEvidence.linkURL}}" class="btn-action">View Evidence ↗</a>
-                {{/if}}
-            </div>
-            {{/each}}
-        </div>
-        {{/if}}
-
-        {{#if credentialSubject.traceabilityInformation}}
-        <div class="panel-section" style="margin-top:30px;">
-            <div class="section-title">Value Chain Traceability</div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <span style="font-size:0.9rem">Current Step: <b>{{credentialSubject.traceabilityInformation.valueChainProcess}}</b></span>
-                {{#if credentialSubject.traceabilityInformation.verifiedRatio}}
-                <span class="status-pill pill-safe">Verified: {{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%</span>
-                {{/if}}
-            </div>
-            <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap:10px;">
-                {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
-                <a href="{{linkURL}}" class="btn-action" style="background:var(--sidebar-bg); padding:10px; border-radius:6px; border:1px solid var(--border)">{{linkName}} ↗</a>
+    <div class="panel">
+        <span class="section-label">Composition Matrix</span>
+        <table class="mini-table">
+            <thead>
+                <tr>
+                    <th>Material</th>
+                    <th>Mass</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each credentialSubject.materialsProvenance}}
+                <tr>
+                    <td><strong>{{name}}</strong><br><small style="color:var(--text-dim)">Source: {{originCountry}}</small></td>
+                    <td>{{multiply massFraction 100}}%</td>
+                    <td>
+                        {{#if (lookup . 'hazardous')}}
+                            {{#if hazardous}}<span class="neon-pill amber">Hazard</span>
+                            {{else}}<span class="neon-pill green">Safe</span>{{/if}}
+                        {{else}}<span class="neon-pill cyan">N/A</span>{{/if}}
+                    </td>
+                </tr>
                 {{/each}}
-            </div>
-        </div>
-        {{/if}}
-
-        <div style="display:flex; gap:20px; border-top:1px solid var
+            </tbody>
+        </table>
+    </div>
