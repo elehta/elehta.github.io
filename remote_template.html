@@ -47,6 +47,7 @@
     .standard-link:hover { text-decoration: underline; }
     .declared-values-grid { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 5px; }
     .declared-box { background: #1e293b; padding: 5px; border-radius: 4px; font-size: 0.7rem; flex: 1; }
+    .declared-topic { color: var(--accent); font-size: 0.8rem;  }
     .trace-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
     .trace-events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
     .trace-link { background: var(--sidebar-bg); padding: 10px; border-radius: 6px; border: 1px solid var(--border); }
@@ -134,6 +135,13 @@
                     <p><span class="standard-name"><a class="standard-link" href="{{id}}">{{code}} - {{name}}</a></span></p>
                 {{/each}}
             {{/if}}
+
+            {{#if credentialSubject.furtherInformation}}
+                <span class="tile-label">Further Information</span>
+                {{#each credentialSubject.furtherInformation}}
+                    <a href="{{linkURL}}" class="btn-action">{{linkName}}</a>
+                {{/each}}
+            {{/if}}
             
         </div>
 
@@ -171,7 +179,7 @@
         <div class="scorecard-grid">
             {{#if credentialSubject.circularityScorecard}}
             <div class="panel-section">
-                <div class="section-title">Circularity Metrics</div>
+                <div class="section-title">Circularity Scorecard</div>
                 {{#if credentialSubject.circularityScorecard.recycledContent}}
                 <div class="progress-box">
                     <div class="progress-meta"><span>Recycled Content</span><span>{{multiply credentialSubject.circularityScorecard.recycledContent 100}}%</span></div>
@@ -217,7 +225,7 @@
                 <div class="declared-values-grid">
                     {{#each declaredValue}}
                         <div class="declared-box">
-                            <div class="header-sub-title">Value</div>
+                            <div class="declared-topic">Measured Value</div>
                             {{metricName}}: {{metricValue.value}}{{metricValue.unit}}
                         </div>
                     {{/each}}
