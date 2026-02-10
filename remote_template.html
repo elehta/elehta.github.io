@@ -69,6 +69,19 @@
     }
     .pass { color: #4ade80; border: 1px solid #4ade80; }
     .fail { color: #f87171; border: 1px solid #f87171; }
+    
+    .id-block {
+    background: #0f172a;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    word-break: break-all;
+    color: var(--accent);
+}
+
+    .tile-label { color: var(--text-dim); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; }
+    .tile-value { font-size: 1.1rem; font-weight: 700; margin-top: 5px; display: block; }    
 
 </style>
 
@@ -77,10 +90,10 @@
         <span class="label">Manufacturer // {{credentialSubject.producedByParty.name}}</span>
         <div class="value-lg">{{credentialSubject.name}}</div>
     </div>
-    <div class="cell span-4 header-cell">
-        <span class="label">Passport ID</span>
-        <div class="id-mono" title="{{credentialSubject.id}}">{{credentialSubject.id}}</div>
-    </div>
+        <div>
+            <span class="tile-label">Digital Product ID</span>
+            <div class="id-block" title="{{credentialSubject.id}}">{{credentialSubject.id}}</div>
+        </div>
 
     <div class="cell span-4 image-cell">
         <img src="{{#if credentialSubject.productImage.linkURL}}{{credentialSubject.productImage.linkURL}}{{else}}https://placehold.co/400x400/1e293b/white?text=No+Image{{/if}}">
