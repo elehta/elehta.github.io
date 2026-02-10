@@ -132,7 +132,7 @@
             {{#if credentialSubject.productCategory}}
                 <span class="tile-label">Product Category</span>
                 {{#each credentialSubject.productCategory}}                    
-                    <p><span class="standard-name"><a class="standard-link" href="{{id}}">{{code}} - {{name}}</a></span><br><span class="declared-topic">({{schemeName}})</span></p>
+                    <p><span class="standard-name"><a class="standard-link" href="{{id}}">{{code}} - {{name}}</a></span><br><span class="declared-value">({{schemeName}})</span></p>
                 {{/each}}
             {{/if}}
 
@@ -217,6 +217,41 @@
                 {{/if}}
             </div>
             {{/if}}
+
+            
+            <div class="panel-section">
+                <div class="section-title">Carbon Footprint</div>
+                
+                {{#if credentialSubject.emissionsScorecard.carbonFootprint}}
+                <div class="emissions-value">
+                    {{credentialSubject.emissionsScorecard.carbonFootprint}} 
+                    <small class="emissions-unit">kg CO2e</small>
+                </div>
+                {{/if}}
+            
+                <div class="emissions-meta-container">
+                    {{#if credentialSubject.emissionsScorecard.scope}}
+                    <div class="emissions-meta-item">
+                        <span class="tile-label">Scope</span>
+                        <span class="meta-value">{{credentialSubject.emissionsScorecard.scope}}</span>
+                    </div>
+                    {{/if}}
+                    
+                    {{#if credentialSubject.emissionsScorecard.ratio}}
+                    <div class="emissions-meta-item">
+                        <span class="tile-label">Intensity Ratio</span>
+                        <span class="meta-value">{{credentialSubject.emissionsScorecard.ratio}}</span>
+                    </div>
+                    {{/if}}
+                </div>
+            
+                {{#if credentialSubject.emissionsScorecard.reportingStandard}}
+                <a href="{{credentialSubject.emissionsScorecard.reportingStandard.id}}" class="btn-action">
+                    Standard: {{credentialSubject.emissionsScorecard.reportingStandard.name}}
+                </a>
+                {{/if}}
+            </div>
+            
         </div>
 
         {{#if credentialSubject.conformityClaim}}
