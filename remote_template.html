@@ -128,8 +128,8 @@
             {{/if}}
             {{#if credentialSubject.productCategory}}
                 <span class="tile-label">Product Category</span>
-                {{#each credentialSubject.productCategory}}
-                    <span class="standard-name"><a href="{{id}}">{{code}}</a>- {{name}}</span> 
+                {{#each credentialSubject.productCategory}}                    
+                    <p span class="standard-name"><a href="{{id}}">{{code}}</a> - {{name}}</span>
                 {{/each}}
             {{/if}}
             
