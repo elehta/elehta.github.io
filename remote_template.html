@@ -160,7 +160,9 @@
                 <tbody>
                     {{#each credentialSubject.materialsProvenance}}
                     <tr>
-                        <td><strong>{{name}}</strong></td>
+                        <td><strong>
+                            {{name}}{{#if materialType.code}} ({{materialType.code}}){{/if}}
+                        </strong></td>
                         <td>{{multiply massFraction 100}}% <small>({{massAmount.value}} {{massAmount.unit}})</small></td>
                         <td>{{multiply recycledAmount 100}}%</td>
                         <td>
