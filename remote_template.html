@@ -129,9 +129,7 @@
             {{#if credentialSubject.productCategory}}
                 <span class="tile-label">Product Category</span>
                 {{#each credentialSubject.productCategory}}
-                    <p class="product-brief-text">{{code}}</p>
-                    <p class="product-brief-text">{{id}}</p>
-                    <p class="product-brief-text">{{name}}</p>
+                    <p class="product-brief-text"><a href="{{id}}" class="btn-action trace-link">{{code}}</a> - {{name}}</p>
                 {{/each}}
             {{/if}}
             
