@@ -35,7 +35,7 @@
     .header-sub-title { color: var(--accent); font-size: 1.4rem;  }
     .header-status-area { text-align: right; }
     .origin-facility { font-size: 0.7rem; color: var(--text-dim); }
-    .product-brief-text { margin: 10px 0 0 0; line-height: 1.6; font-size: 0.9rem; color: #cbd5e1; margin-bottom: 15px }
+    .product-brief-text { margin: 10px 0 0 0; line-height: 1.6; font-size: 0.9rem; color: #cbd5e1; margin-bottom: 15px; padding-left: 10px; }
     .scorecard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .utility-factor { font-size: 0.8rem; color: var(--text-dim); }
     .utility-factor b { color: #fff; }
@@ -132,7 +132,7 @@
             {{#if credentialSubject.productCategory}}
                 <span class="tile-label">Product Category</span>
                 {{#each credentialSubject.productCategory}}                    
-                    <p><span class="standard-name"><a class="standard-link" href="{{id}}">{{code}} - {{name}}</a></span><span class="product-brief-text"> ({{schemeName}})</span></p>
+                    <p><span class="standard-name"><a class="standard-link" href="{{id}}">{{code}} - {{name}}</a></span><br><span class="product-brief-text">({{schemeName}})</span></p>
                 {{/each}}
             {{/if}}
 
