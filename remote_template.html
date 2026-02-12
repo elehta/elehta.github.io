@@ -510,43 +510,11 @@
     </div>
     <div class="json-block" id="raw-json"><pre id="json-content"></pre></div>
   </div>
-</script>
+
 
 <div id="passport-root"></div>
 
 <script>
-  // No Handlebars.registerHelper calls 
-  const template = Handlebars.compile(document.getElementById('dpp-template').innerHTML);
-
-  // Pre-formatted data example [cite: 167, 173]
-  const dppData = {
-    credentialId: "https://example.com/id",
-    validFrom: "March 15, 2024",
-    validUntil: "March 15, 2034",
-    product: {
-      name: "EV Battery 300Ah",
-      registeredId: "GTIN-12345678",
-      countryOfProduction: "AU"
-    },
-    emissionsScorecard: {
-      carbonFootprint: 1.8,
-      declaredUnit: "KGM",
-      primarySourcedRatio: "73" // Pre-calculated percentage
-    },
-    materialsProvenance: [
-      { displayIndex: "1", name: "Lithium Carbonate", originCountry: "CL", massFraction: "18", hazardous: false },
-      { displayIndex: "2", name: "Cobalt", originCountry: "CD", massFraction: "9", hazardous: true }
-    ],
-    conformityClaim: [
-      { 
-        description: "GHG Emissions Compliance", 
-        conformityTopic: "Environment", 
-        uiClass: "topic-environment", // Pre-assigned CSS class
-        conformance: true,
-        assessmentDate: "2024-03-15"
-      }
-    ]
-  };
 
   document.getElementById('passport-root').innerHTML = template(dppData);
 
