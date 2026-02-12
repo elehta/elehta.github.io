@@ -520,6 +520,25 @@
       </div>
     </div>
     {{/if}}
+
+    {{#if credentialSubject.traceabilityInformation.length}}
+    <div class="section-card">
+      <div class="section-head"><div class="section-icon icon-blue">🔗</div><h2>Traceability Information</h2></div>
+      <div class="section-body">
+        {{#each traceabilityInformation}}
+        <div class="trace-item">
+          <div class="trace-line"><div class="trace-dot"></div>{{#unless @last}}<div class="trace-connector"></div>{{/unless}}</div>
+          <div class="trace-content">
+            <div class="trace-process">{{valueChainProcess}}</div>
+            {{#if verifiedRatio}}<div class="trace-ratio">Verified ratio: {{multiplyByHundred verifiedRatio}}%</div>{{/if}}
+            {{#if traceabilityEvent.length}}<div class="trace-links">{{#each traceabilityEvent}}<a href="{{linkURL}}" target="_blank" class="trace-link-chip">🔗 {{linkName}}</a>{{/each}}</div>{{/if}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
     
     <div style="display:flex;justify-content:flex-end">
       <button class="json-toggle" onclick="toggleJson()"><span>{ }</span> View Raw JSON</button>
