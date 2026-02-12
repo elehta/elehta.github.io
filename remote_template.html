@@ -26,14 +26,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 
-    .passport-header {
-      background: var(--un-dark);
-      color: white;
-      padding: 0;
-      position: relative;
-      overflow: hidden;
-      max-width: 800px;
-    }
+
     .passport-header::before {
       content: '';
       position: absolute;
@@ -46,16 +39,38 @@
         rgba(0,158,219,0.04) 41px
       );
     }
-    .header-inner {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 40px 40px 32px;
-      position: relative;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 24px;
-      align-items: start;
-    }
+.passport-header {
+  background: var(--un-dark);
+  color: white;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  /* Add these two lines to constrain the dark background */
+  max-width: 800px;
+  margin: 0 auto; 
+}
+
+.header-inner {
+  /* Match the body width */
+  max-width: 800px; 
+  margin: 0 auto;
+  padding: 40px;
+  position: relative;
+  display: grid;
+  /* Make it responsive */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.passport-body {
+  /* Match the header width */
+  max-width: 800px; 
+  margin: 0 auto;
+  padding: 32px 40px;
+  display: grid;
+  gap: 24px;
+}
     .header-badge {
       display: inline-flex;
       align-items: center;
@@ -148,13 +163,7 @@
       font-size: 2.5rem;
     }
 
-    .passport-body {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 32px 40px;
-      display: grid;
-      gap: 24px;
-    }
+
 
     .section-card {
       background: var(--surface);
