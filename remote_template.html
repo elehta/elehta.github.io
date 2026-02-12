@@ -521,6 +521,7 @@
     </div>
     {{/if}}
 <pre> {{ credentialSubject.traceabilityInformation }} </pre>
+    {{ credentialSubject.traceabilityInformation.[0].valueChainProcess }}
     {{#if credentialSubject.traceabilityInformation.length}}
     z
     <div class="section-card">
