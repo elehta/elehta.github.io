@@ -25,13 +25,6 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 0 0 60px;
-    }
 
     .passport-header {
       background: var(--un-dark);
@@ -39,6 +32,7 @@
       padding: 0;
       position: relative;
       overflow: hidden;
+      max-width: 800px;
     }
     .passport-header::before {
       content: '';
@@ -155,7 +149,7 @@
     }
 
     .passport-body {
-      max-width: 1000px;
+      max-width: 800px;
       margin: 0 auto;
       padding: 32px 40px;
       display: grid;
