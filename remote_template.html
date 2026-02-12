@@ -21,23 +21,13 @@
       --shadow-sm: 0 1px 4px rgba(10,22,40,0.06);
     }
 
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-
-
-    .passport-header::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 40px,
-        rgba(0,158,219,0.04) 40px,
-        rgba(0,158,219,0.04) 41px
-      );
-    }
-
+.contain_dpp {
+  width: 800px;
+  margin: 0 auto;
+}
+    
 .passport-header {
   background: var(--un-dark);
   color: white;
@@ -48,9 +38,8 @@
   margin: 0 auto;  
 }
 
-/* 2. Constrain the Inner Header Content */
+
 .header-inner {
-  /* Remove max-width here so it fills the 800px parent */
   width: 100%; 
   margin: 0;
   padding: 40px 40px 32px;
@@ -406,6 +395,7 @@
   </style>
 
   {{#if credentialSubject.id}}
+<div class="contain_dpp">
   <header class="passport-header">
     <div class="header-inner">
       <div>
@@ -521,7 +511,7 @@
 
 
 <div id="passport-root"></div>
-
+</div>
 <script>
 
   document.getElementById('passport-root').innerHTML = template(dppData);
