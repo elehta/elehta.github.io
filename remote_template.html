@@ -401,6 +401,44 @@
     }
   </style>
 </head>
+<script>
+  Handlebars.registerHelper('formatDate', function(d) {
+    if (!d) return '—';
+    try { return new Date(d).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }); }
+    catch(e) { return d; }
+  });
+  Handlebars.registerHelper('multiplyByHundred', function(v) { return v == null ? '—' : Math.round(v * 100); });
+  Handlebars.registerHelper('addOne', function(i) { return i + 1; });
+  Handlebars.registerHelper('truncate', function(s, l) { return s && s.length > l ? s.slice(0,l)+'…' : s||''; });
+  Handlebars.registerHelper('topicClass', function(t) {
+    if (!t) return 'topic-default';
+    const s = t.toLowerCase();
+    if (s.includes('emission')) return 'topic-emissions';
+    if (s.includes('circular')||s.includes('content')||s.includes('waste')) return 'topic-circularity';
+    if (s.includes('environment')||s.includes('energy')) return 'topic-environment';
+    if (s.includes('social')) return 'topic-social';
+    return 'topic-default';
+  });
+  Handlebars.registerHelper('firstLetter', function(s) { return s ? s.charAt(0).toUpperCase() : '?'; });
+
+  const template = Handlebars.compile(document.getElementById('dpp-template').innerHTML);
+  document.getElementById('passport-root').innerHTML = template(dppData);
+  window._dppData = dppData;
+
+  function toggleClaim(el) {
+    const body = el.nextElementSibling;
+    const chevron = el.querySelector('.claim-chevron');
+    const open = body.classList.toggle('open');
+    chevron.classList.toggle('open', open);
+    el.classList.toggle('active', open);
+  }
+  function toggleJson() {
+    const block = document.getElementById('raw-json');
+    if (!block.classList.contains('open')) document.getElementById('json-content').textContent = JSON.stringify(window._dppData, null, 2);
+    block.classList.toggle('open');
+  }
+</script>
+  
 <body>
 
 <script id="dpp-template" type="text/x-handlebars-template">
@@ -675,42 +713,5 @@
 
 <div id="passport-root"></div>
 
-<script>
-  Handlebars.registerHelper('formatDate', function(d) {
-    if (!d) return '—';
-    try { return new Date(d).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }); }
-    catch(e) { return d; }
-  });
-  Handlebars.registerHelper('multiplyByHundred', function(v) { return v == null ? '—' : Math.round(v * 100); });
-  Handlebars.registerHelper('addOne', function(i) { return i + 1; });
-  Handlebars.registerHelper('truncate', function(s, l) { return s && s.length > l ? s.slice(0,l)+'…' : s||''; });
-  Handlebars.registerHelper('topicClass', function(t) {
-    if (!t) return 'topic-default';
-    const s = t.toLowerCase();
-    if (s.includes('emission')) return 'topic-emissions';
-    if (s.includes('circular')||s.includes('content')||s.includes('waste')) return 'topic-circularity';
-    if (s.includes('environment')||s.includes('energy')) return 'topic-environment';
-    if (s.includes('social')) return 'topic-social';
-    return 'topic-default';
-  });
-  Handlebars.registerHelper('firstLetter', function(s) { return s ? s.charAt(0).toUpperCase() : '?'; });
-
-  const template = Handlebars.compile(document.getElementById('dpp-template').innerHTML);
-  document.getElementById('passport-root').innerHTML = template(dppData);
-  window._dppData = dppData;
-
-  function toggleClaim(el) {
-    const body = el.nextElementSibling;
-    const chevron = el.querySelector('.claim-chevron');
-    const open = body.classList.toggle('open');
-    chevron.classList.toggle('open', open);
-    el.classList.toggle('active', open);
-  }
-  function toggleJson() {
-    const block = document.getElementById('raw-json');
-    if (!block.classList.contains('open')) document.getElementById('json-content').textContent = JSON.stringify(window._dppData, null, 2);
-    block.classList.toggle('open');
-  }
-</script>
 </body>
 </html>
