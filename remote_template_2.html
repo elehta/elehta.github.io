@@ -388,23 +388,24 @@
         {{#if credentialSubject.traceabilityInformation}}
             <div class="topic-group">
               <div class="topic-header">Traceability Events </div>
-              
-              <div class="data-row">
-                <span class="label">Process Step</span>
-                <span class="value">{{credentialSubject.traceabilityInformation.valueChainProcess}}</span>
-              </div>
 
-            {{#if credentialSubject.traceabilityInformation.verifiedRatio}}
-              <div class="data-row">
-                <span class="label">Verified Ratio</span>
-                <div class="value score-container">
-                  <span>{{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%</span>
-                  <div class="score-track">
-                    <div class="score-fill verified-badge" style="width: {{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%"></div>
-                  </div>
-                </div>
-              </div>
-            {{/if}}
+             {{#each credentialSubject.traceabilityInformation }}
+                    <div class="data-row">
+                      <span class="label">Process Step</span>
+                      <span class="value">{{valueChainProcess}}</span>
+                    </div>
+
+                  {{#ifverifiedRatio}}
+                    <div class="data-row">
+                      <span class="label">Verified Ratio</span>
+                      <div class="value score-container">
+                        <span>{{multiply verifiedRatio 100}}%</span>
+                        <div class="score-track">
+                          <div class="score-fill verified-badge" style="width: {{multiply verifiedRatio 100}}%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  {{/if}}
     
               <table>
                 <thead>
@@ -414,7 +415,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
+                  {{#each traceabilityEvent}}
                     <tr>
                       <td style="font-weight: 500;">{{linkName}}</td>
                       <td style="text-align: right;">
@@ -424,6 +425,7 @@
                   {{/each}}
                 </tbody>
               </table>
+            {{//each}}
             </div>
         {{/if}}
 
