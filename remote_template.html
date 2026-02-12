@@ -43,28 +43,26 @@
   padding: 0;
   position: relative;
   overflow: hidden;
-  /* Add these two lines to constrain the dark background */
-  max-width: 800px;
-  margin: 0 auto; 
+  max-width: 800px; /* Force header to 800px */
+  margin: 0 auto;   /* Center it */
 }
 
+/* Constrain the inner content of the header */
 .header-inner {
-  /* Match the body width */
   max-width: 800px; 
   margin: 0 auto;
-  padding: 40px;
+  padding: 40px;    /* Matches body padding logic */
   position: relative;
   display: grid;
-  /* Make it responsive */
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 1fr auto;
   gap: 24px;
   align-items: start;
 }
 
+/* Constrain the body to the exact same width as header */
 .passport-body {
-  /* Match the header width */
-  max-width: 800px; 
-  margin: 0 auto;
+  max-width: 800px; /* Force body to 800px */
+  margin: 0 auto;   /* Center it */
   padding: 32px 40px;
   display: grid;
   gap: 24px;
