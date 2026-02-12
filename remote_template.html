@@ -410,9 +410,9 @@
       <div>
         <div class="header-badge"><span></span>UN Transparency Protocol · Digital Product Passport</div>
         <h1 class="passport-title">{{credentialSubject.name}}</h1>
-        <p class="passport-subtitle">Credential ID: {id}}</p>
+        <p class="passport-subtitle truncate">Credential ID: {id}}</p>
         <div class="header-meta">
-          {{#if credentialSubject.id}}<div class="meta-pill"><div class="dot" style="background:#009EDB"></div><span class="label">ID</span> {{credentialSubject.id}}</div>{{/if}}
+          {{#if credentialSubject.id}}<div class="meta-pill "><div class="dot" style="background:#009EDB"></div><span class="label" truncate>ID</span> {{credentialSubject.id}}</div>{{/if}}
           {{#if credentialSubject.serialNumber}}<div class="meta-pill"><div class="dot" style="background:#00C4B3"></div><span class="label">S/N</span> {{credentialSubject.serialNumber}}</div>{{/if}}
           {{#if credentialSubject.batchNumber}}<div class="meta-pill"><div class="dot" style="background:#F7B731"></div><span class="label">Batch</span> {{credentialSubject.batchNumber}}</div>{{/if}}
           {{#if credentialSubject.countryOfProduction}}<div class="meta-pill"><div class="dot" style="background:#26C281"></div><span class="label">Origin</span> {{credentialSubject.countryOfProduction}}</div>{{/if}}
