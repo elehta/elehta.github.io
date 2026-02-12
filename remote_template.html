@@ -37,19 +37,22 @@
         rgba(0,158,219,0.04) 41px
       );
     }
+* 1. Constrain the Dark Header Background */
 .passport-header {
   background: var(--un-dark);
   color: white;
   padding: 0;
   position: relative;
   overflow: hidden;
-  max-width: 800px; /* Force the dark background to 800px */
+  max-width: 800px; /* Force the dark bar to 800px */
   margin: 0 auto;   /* Center it */
 }
 
+/* 2. Constrain the Inner Header Content */
 .header-inner {
-  max-width: 800px; 
-  margin: 0 auto;
+  /* Remove max-width here so it fills the 800px parent */
+  width: 100%; 
+  margin: 0;
   padding: 40px 40px 32px;
   position: relative;
   display: grid;
@@ -58,8 +61,9 @@
   align-items: start;
 }
 
+/* 3. Constrain the Body to match the Header exactly */
 .passport-body {
-  max-width: 800px; /* Matches header exactly */
+  max-width: 800px; /* Force body to 800px */
   margin: 0 auto;   /* Center it */
   padding: 32px 40px;
   display: grid;
