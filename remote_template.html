@@ -43,15 +43,14 @@
   padding: 0;
   position: relative;
   overflow: hidden;
-  max-width: 800px; /* Force header to 800px */
+  max-width: 800px; /* Force the dark background to 800px */
   margin: 0 auto;   /* Center it */
 }
 
-/* Constrain the inner content of the header */
 .header-inner {
   max-width: 800px; 
   margin: 0 auto;
-  padding: 40px;    /* Matches body padding logic */
+  padding: 40px 40px 32px;
   position: relative;
   display: grid;
   grid-template-columns: 1fr auto;
@@ -59,9 +58,8 @@
   align-items: start;
 }
 
-/* Constrain the body to the exact same width as header */
 .passport-body {
-  max-width: 800px; /* Force body to 800px */
+  max-width: 800px; /* Matches header exactly */
   margin: 0 auto;   /* Center it */
   padding: 32px 40px;
   display: grid;
@@ -114,6 +112,7 @@
       border-radius: 20px;
       font-size: 0.78rem;
       color: rgba(255,255,255,0.7);
+      max-width: 250px;
     }
     .meta-pill .dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
     .meta-pill .label { color: rgba(255,255,255,0.4); margin-right: 2px; }
@@ -134,13 +133,12 @@
       border-radius: 20px;
       margin-bottom: 10px;
     }
-    .truncate {
-      white-space: nowrap;    
-      overflow: hidden;      
-      text-overflow: ellipsis;  
-      display: block;         
-      max-width: 200px;       
-    }
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
     .product-image-wrap {
       width: 100px;
       height: 100px;
@@ -411,7 +409,7 @@
         <h1 class="passport-title">{{credentialSubject.name}}</h1>
         <p class="passport-subtitle truncate">Credential ID: {{id}}</p>
         <div class="header-meta">
-          {{#if credentialSubject.id}}<div class="meta-pill"><div class="dot" style="background:#009EDB"></div><span class="label">ID</span><div class="truncate">{{credentialSubject.id}}</div></div>{{/if}}
+          {{#if credentialSubject.id}}<div class="meta-pill truncate"><div class="dot" style="background:#009EDB"></div><span class="label">ID</span>{{credentialSubject.id}}</div>{{/if}}
           {{#if credentialSubject.serialNumber}}<div class="meta-pill"><div class="dot" style="background:#00C4B3"></div><span class="label">S/N</span> {{credentialSubject.serialNumber}}</div>{{/if}}
           {{#if credentialSubject.batchNumber}}<div class="meta-pill"><div class="dot" style="background:#F7B731"></div><span class="label">Batch</span> {{credentialSubject.batchNumber}}</div>{{/if}}
           {{#if credentialSubject.countryOfProduction}}<div class="meta-pill"><div class="dot" style="background:#26C281"></div><span class="label">Origin</span> {{credentialSubject.countryOfProduction}}</div>{{/if}}
