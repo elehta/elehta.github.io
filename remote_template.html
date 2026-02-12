@@ -489,7 +489,7 @@
         <div class="material-item">
           <div class="material-index">{{#if displayIndex}}{{displayIndex}}{{else}}•{{/if}}</div>
           <div class="material-main"><div class="mat-name">{{name}}</div><div class="mat-origin">{{originCountry}}{{#if materialType.name}} · {{materialType.name}}{{/if}}</div></div>
-          <div class="material-fraction"><div class="frac-val">{{massFraction}}%</div><div class="frac-label">mass</div></div>
+          <div class="material-fraction"><div class="frac-val">{{multiply massFraction 100}}%</div><div class="frac-label">mass</div></div>
           <div>{{#if hazardous}}<span class="hazard-tag hazard-yes">⚠ Hazardous</span>{{else}}<span class="hazard-tag hazard-no">✓ Safe</span>{{/if}}</div>
         </div>
         {{/each}}
