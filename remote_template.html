@@ -40,14 +40,14 @@
 
 
 .header-inner {
-  width: 100%; 
-  margin: 0;
-  padding: 40px 40px 32px;
-  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 24px;
-  align-items: start;
+  /* Use auto-fit: it stacks when there isn't room for both */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  align-items: center;
 }
 
 /* 3. Constrain the Body to match the Header exactly */
@@ -392,6 +392,24 @@
       .scorecard-grid { grid-template-columns: 1fr; }
       .field-grid.thirds { grid-template-columns: 1fr 1fr; }
     }
+
+    @media (max-width: 600px) {
+  .header-inner {
+    padding: 24px;
+    text-align: center; /* Better look for mobile */
+  }
+  .header-right {
+    text-align: center;
+    margin: 0 auto;
+  }
+  .product-image-wrap {
+    margin: 0 auto; /* Centers the image on mobile */
+  }
+  .header-meta {
+    justify-content: center;
+  }
+}
+    
   </style>
 
   {{#if credentialSubject.id}}
