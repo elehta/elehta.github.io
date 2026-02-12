@@ -522,10 +522,12 @@
     {{/if}}
 xxxxx
     {{#if credentialSubject.traceabilityInformation.length}}
+    z
     <div class="section-card">
       <div class="section-head"><div class="section-icon icon-blue">🔗</div><h2>Traceability Information</h2></div>
       <div class="section-body">
         {{#each credentialSubject.traceabilityInformation}}
+        w
         <div class="trace-item">
           <div class="trace-line"><div class="trace-dot"></div>{{#unless @last}}<div class="trace-connector"></div>{{/unless}}</div>
           <div class="trace-content">
