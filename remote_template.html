@@ -1,4 +1,11 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UNTP Digital Product Passport</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
       --un-blue: #009EDB;
@@ -394,50 +401,6 @@
     }
   </style>
 
-<script>
-  Handlebars.registerHelper('formatDate', function(d) {
-    if (!d) return '—';
-    try { return new Date(d).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }); }
-    catch(e) { return d; }
-  });
-  Handlebars.registerHelper('multiplyByHundred', function(v) { return v == null ? '—' : Math.round(v * 100); });
-  Handlebars.registerHelper('addOne', function(i) { return i + 1; });
-  Handlebars.registerHelper('truncate', function(s, l) { return s && s.length > l ? s.slice(0,l)+'…' : s||''; });
-  Handlebars.registerHelper('topicClass', function(t) {
-    if (!t) return 'topic-default';
-    const s = t.toLowerCase();
-    if (s.includes('emission')) return 'topic-emissions';
-    if (s.includes('circular')||s.includes('content')||s.includes('waste')) return 'topic-circularity';
-    if (s.includes('environment')||s.includes('energy')) return 'topic-environment';
-    if (s.includes('social')) return 'topic-social';
-    return 'topic-default';
-  });
-  Handlebars.registerHelper('firstLetter', function(s) { return s ? s.charAt(0).toUpperCase() : '?'; });
-
-  const template = Handlebars.compile(document.getElementById('dpp-template').innerHTML);
-  document.getElementById('passport-root').innerHTML = template(dppData);
-  window._dppData = dppData;
-
-  function toggleClaim(el) {
-    const body = el.nextElementSibling;
-    const chevron = el.querySelector('.claim-chevron');
-    const open = body.classList.toggle('open');
-    chevron.classList.toggle('open', open);
-    el.classList.toggle('active', open);
-  }
-  function toggleJson() {
-    const block = document.getElementById('raw-json');
-    if (!block.classList.contains('open')) document.getElementById('json-content').textContent = JSON.stringify(window._dppData, null, 2);
-    block.classList.toggle('open');
-  }
-
-</script>
-
-  <title>UNTP Digital Product Passport</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
-
-
   {{#if product.name}}
   <header class="passport-header">
     <div class="header-inner">
@@ -470,9 +433,9 @@
   <div class="passport-body">
     {{#if validFrom}}
     <div class="validity-bar">
-      <div class="validity-date"><div class="vd-label">Valid From</div><div class="vd-val">{{formatDate validFrom}}</div></div>
+      <div class="validity-date"><div class="vd-label">Valid From</div><div class="vd-val">{{validFrom}}</div></div>
       <div class="validity-arrow">→</div>
-      <div class="validity-date end"><div class="vd-label">Valid Until</div><div class="vd-val">{{#if validUntil}}{{formatDate validUntil}}{{else}}–{{/if}}</div></div>
+      <div class="validity-date end"><div class="vd-label">Valid Until</div><div class="vd-val">{{#if validUntil}}{{validUntil}}{{else}}–{{/if}}</div></div>
     </div>
     {{/if}}
 
@@ -480,74 +443,12 @@
       <div class="section-head"><div class="section-icon icon-blue">🏷️</div><h2>Product Identification</h2></div>
       <div class="section-body">
         <div class="field-grid">
-          <div class="field"><div class="field-label">Product Name</div><div class="field-value">{{#if product.name}}{{product.name}}{{else}}<span class="empty">—</span>{{/if}}</div></div>
-          <div class="field"><div class="field-label">Registered ID</div><div class="field-value mono">{{#if product.registeredId}}{{product.registeredId}}{{else}}<span class="empty">—</span>{{/if}}</div></div>
-          <div class="field"><div class="field-label">Serial Number</div><div class="field-value mono">{{#if product.serialNumber}}{{product.serialNumber}}{{else}}<span class="empty">—</span>{{/if}}</div></div>
-          <div class="field"><div class="field-label">Batch Number</div><div class="field-value mono">{{#if product.batchNumber}}{{product.batchNumber}}{{else}}<span class="empty">—</span>{{/if}}</div></div>
-          <div class="field"><div class="field-label">Country of Production</div><div class="field-value country-code">{{#if product.countryOfProduction}}🌏 {{product.countryOfProduction}}{{else}}<span class="empty">—</span>{{/if}}</div></div>
-          <div class="field"><div class="field-label">Production Date</div><div class="field-value mono">{{#if product.productionDate}}{{product.productionDate}}{{else}}<span class="empty">—</span>{{/if}}</div></div>
-        </div>
-        {{#if product.description}}<div class="divider"></div><div class="field"><div class="field-label">Description</div><div class="field-value">{{product.description}}</div></div>{{/if}}
-        {{#if product.idScheme.name}}
-        <div class="divider"></div>
-        <div class="field-grid halves">
-          <div class="field"><div class="field-label">ID Scheme</div><div class="field-value">{{product.idScheme.name}}</div></div>
-          <div class="field"><div class="field-label">Scheme URI</div><div class="field-value link"><a href="{{product.idScheme.id}}" target="_blank">{{product.idScheme.id}}</a></div></div>
-        </div>
-        {{/if}}
-        {{#if product.productCategory.length}}
-        <div class="divider"></div>
-        <div class="field-label" style="margin-bottom:10px">Product Categories</div>
-        {{#each product.productCategory}}
-        <div style="display:flex;gap:10px;align-items:center;padding:8px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;margin-bottom:6px">
-          <div style="font-family:'DM Mono',monospace;font-size:0.75rem;background:var(--un-dark);color:var(--un-blue);padding:3px 8px;border-radius:4px">{{code}}</div>
-          <div style="flex:1;font-size:0.85rem">{{name}}</div>
-          <div style="font-size:0.72rem;color:var(--text-muted)">{{schemeName}}</div>
-        </div>
-        {{/each}}
-        {{/if}}
-      </div>
-    </div>
-
-    {{#if product.dimensions}}
-    <div class="section-card">
-      <div class="section-head"><div class="section-icon icon-teal">📐</div><h2>Physical Dimensions</h2></div>
-      <div class="section-body">
-        <div class="dimensions-grid">
-          {{#if product.dimensions.weight}}<div class="dim-block"><div class="dim-icon">⚖️</div><div class="dim-value">{{product.dimensions.weight.value}}</div><div class="dim-unit">{{product.dimensions.weight.unit}}</div><div class="dim-label">Weight</div></div>{{/if}}
-          {{#if product.dimensions.length}}<div class="dim-block"><div class="dim-icon">↔️</div><div class="dim-value">{{product.dimensions.length.value}}</div><div class="dim-unit">{{product.dimensions.length.unit}}</div><div class="dim-label">Length</div></div>{{/if}}
-          {{#if product.dimensions.width}}<div class="dim-block"><div class="dim-icon">↕️</div><div class="dim-value">{{product.dimensions.width.value}}</div><div class="dim-unit">{{product.dimensions.width.unit}}</div><div class="dim-label">Width</div></div>{{/if}}
-          {{#if product.dimensions.height}}<div class="dim-block"><div class="dim-icon">📏</div><div class="dim-value">{{product.dimensions.height.value}}</div><div class="dim-unit">{{product.dimensions.height.unit}}</div><div class="dim-label">Height</div></div>{{/if}}
-          {{#if product.dimensions.volume}}<div class="dim-block"><div class="dim-icon">🧊</div><div class="dim-value">{{product.dimensions.volume.value}}</div><div class="dim-unit">{{product.dimensions.volume.unit}}</div><div class="dim-label">Volume</div></div>{{/if}}
-        </div>
-      </div>
-    </div>
-    {{/if}}
-
-    <div class="section-card">
-      <div class="section-head"><div class="section-icon icon-dark">🏭</div><h2>Manufacturer & Facility</h2></div>
-      <div class="section-body">
-        <div class="field-grid halves">
-          <div>
-            <div class="field-label" style="margin-bottom:8px">Produced By</div>
-            {{#if product.producedByParty.name}}
-            <div style="padding:12px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)">
-              <div style="font-weight:500;margin-bottom:4px">{{product.producedByParty.name}}</div>
-              <div style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--text-muted)">{{product.producedByParty.registeredId}}</div>
-              {{#if product.producedByParty.idScheme.name}}<div style="font-size:0.72rem;color:var(--text-light);margin-top:2px">{{product.producedByParty.idScheme.name}}</div>{{/if}}
-            </div>
-            {{else}}<div class="field-value empty">Not specified</div>{{/if}}
-          </div>
-          <div>
-            <div class="field-label" style="margin-bottom:8px">Produced At Facility</div>
-            {{#if product.producedAtFacility.name}}
-            <div style="padding:12px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)">
-              <div style="font-weight:500;margin-bottom:4px">{{product.producedAtFacility.name}}</div>
-              <div style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--text-muted)">{{product.producedAtFacility.registeredId}}</div>
-              {{#if product.producedAtFacility.idScheme.name}}<div style="font-size:0.72rem;color:var(--text-light);margin-top:2px">{{product.producedAtFacility.idScheme.name}}</div>{{/if}}
-            </div>
-            {{else}}<div class="field-value empty">Not specified</div>{{/if}}
-          </div>
+          <div class="field"><div class="field-label">Product Name</div><div class="field-value">{{#if product.name}}{{product.name}}{{else}}—{{/if}}</div></div>
+          <div class="field"><div class="field-label">Registered ID</div><div class="field-value mono">{{#if product.registeredId}}{{product.registeredId}}{{else}}—{{/if}}</div></div>
+          <div class="field"><div class="field-label">Serial Number</div><div class="field-value mono">{{#if product.serialNumber}}{{product.serialNumber}}{{else}}—{{/if}}</div></div>
+          <div class="field"><div class="field-label">Batch Number</div><div class="field-value mono">{{#if product.batchNumber}}{{product.batchNumber}}{{else}}—{{/if}}</div></div>
+          <div class="field"><div class="field-label">Country of Production</div><div class="field-value country-code">{{#if product.countryOfProduction}}🌏 {{product.countryOfProduction}}{{else}}—{{/if}}</div></div>
+          <div class="field"><div class="field-label">Production Date</div><div class="field-value mono">{{#if product.productionDate}}{{product.productionDate}}{{else}}—{{/if}}</div></div>
         </div>
       </div>
     </div>
@@ -558,28 +459,12 @@
       <div class="section-body">
         <div class="scorecard-grid">
           <div class="score-item"><div class="score-label">Carbon Footprint</div><div class="score-value">{{emissionsScorecard.carbonFootprint}}</div><div class="score-unit">CO₂e / {{emissionsScorecard.declaredUnit}}</div></div>
-          <div class="score-item"><div class="score-label">Primary Sourced Ratio</div><div class="score-value">{{multiplyByHundred emissionsScorecard.primarySourcedRatio}}%</div><div class="score-unit">Directly measured data</div><div class="progress-bar"><div class="progress-fill fill-green" style="width:{{multiplyByHundred emissionsScorecard.primarySourcedRatio}}%"></div></div></div>
+          <div class="score-item">
+            <div class="score-label">Primary Sourced Ratio</div>
+            <div class="score-value">{{emissionsScorecard.primarySourcedRatio}}%</div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:{{emissionsScorecard.primarySourcedRatio}}%"></div></div>
+          </div>
         </div>
-        <div class="divider"></div>
-        <div class="field-grid thirds">
-          <div class="field"><div class="field-label">Operational Scope</div><div class="field-value"><span class="status-badge status-neutral">{{emissionsScorecard.operationalScope}}</span></div></div>
-          {{#if emissionsScorecard.reportingStandard.name}}<div class="field"><div class="field-label">Reporting Standard</div><div class="field-value link"><a href="{{emissionsScorecard.reportingStandard.id}}" target="_blank">{{emissionsScorecard.reportingStandard.name}}</a></div></div>{{/if}}
-          {{#if emissionsScorecard.reportingStandard.issuingParty.name}}<div class="field"><div class="field-label">Issuing Party</div><div class="field-value">{{emissionsScorecard.reportingStandard.issuingParty.name}}</div></div>{{/if}}
-        </div>
-      </div>
-    </div>
-    {{/if}}
-
-    {{#if circularityScorecard}}
-    <div class="section-card">
-      <div class="section-head"><div class="section-icon icon-green">♻️</div><h2>Circularity Scorecard</h2></div>
-      <div class="section-body">
-        <div class="scorecard-grid">
-          {{#if circularityScorecard.recycledContent}}<div class="score-item"><div class="score-label">Recycled Content</div><div class="score-value">{{multiplyByHundred circularityScorecard.recycledContent}}%</div><div class="score-unit">by mass fraction</div><div class="progress-bar"><div class="progress-fill fill-green" style="width:{{multiplyByHundred circularityScorecard.recycledContent}}%"></div></div></div>{{/if}}
-          {{#if circularityScorecard.recyclableContent}}<div class="score-item"><div class="score-label">Recyclable Content</div><div class="score-value">{{multiplyByHundred circularityScorecard.recyclableContent}}%</div><div class="score-unit">by mass fraction</div><div class="progress-bar"><div class="progress-fill fill-blue" style="width:{{multiplyByHundred circularityScorecard.recyclableContent}}%"></div></div></div>{{/if}}
-        </div>
-        {{#if circularityScorecard.repairability}}<div class="divider"></div><div class="field-grid thirds"><div class="field"><div class="field-label">Repairability Score</div><div class="field-value number">{{circularityScorecard.repairability}}</div></div></div>{{/if}}
-        {{#if circularityScorecard.recyclingInformation.linkURL}}<div class="divider"></div><div class="field"><div class="field-label">Recycling Information</div><div class="field-value link"><a href="{{circularityScorecard.recyclingInformation.linkURL}}" target="_blank">{{circularityScorecard.recyclingInformation.linkName}}</a></div></div>{{/if}}
       </div>
     </div>
     {{/if}}
@@ -590,9 +475,9 @@
       <div class="section-body">
         {{#each materialsProvenance}}
         <div class="material-item">
-          <div class="material-index">{{addOne @index}}</div>
+          <div class="material-index">{{#if displayIndex}}{{displayIndex}}{{else}}•{{/if}}</div>
           <div class="material-main"><div class="mat-name">{{name}}</div><div class="mat-origin">{{originCountry}}{{#if materialType.name}} · {{materialType.name}}{{/if}}</div></div>
-          <div class="material-fraction"><div class="frac-val">{{multiplyByHundred massFraction}}%</div><div class="frac-label">mass</div>{{#if recycledMassFraction}}<div style="font-size:0.68rem;color:var(--un-green);margin-top:2px">{{multiplyByHundred recycledMassFraction}}% recycled</div>{{/if}}</div>
+          <div class="material-fraction"><div class="frac-val">{{massFraction}}%</div><div class="frac-label">mass</div></div>
           <div>{{#if hazardous}}<span class="hazard-tag hazard-yes">⚠ Hazardous</span>{{else}}<span class="hazard-tag hazard-no">✓ Safe</span>{{/if}}</div>
         </div>
         {{/each}}
@@ -607,105 +492,79 @@
         {{#each conformityClaim}}
         <div class="claim-item">
           <div class="claim-header" onclick="toggleClaim(this)">
-            <span class="topic-badge {{topicClass conformityTopic}}">{{conformityTopic}}</span>
-            <span class="claim-title">{{#if description}}{{truncate description 80}}{{else}}Claim {{addOne @index}}{{/if}}</span>
+            <span class="topic-badge {{uiClass}}">{{conformityTopic}}</span>
+            <span class="claim-title">{{description}}</span>
             <span class="claim-conformance">{{#if conformance}}<span class="status-badge status-true">✓ Conformant</span>{{else}}<span class="status-badge status-false">✗ Non-conformant</span>{{/if}}</span>
             <div class="claim-chevron">▾</div>
           </div>
           <div class="claim-body">
-            <div class="field-grid halves" style="margin-bottom:14px">
-              {{#if referenceStandard.name}}<div class="field"><div class="field-label">Reference Standard</div><div class="field-value link"><a href="{{referenceStandard.id}}" target="_blank">{{referenceStandard.name}}</a></div></div>{{/if}}
-              {{#if referenceRegulation.name}}<div class="field"><div class="field-label">Reference Regulation</div><div class="field-value link"><a href="{{referenceRegulation.id}}" target="_blank">{{referenceRegulation.name}}</a></div></div>{{/if}}
+            <div class="field-grid halves">
               {{#if assessmentDate}}<div class="field"><div class="field-label">Assessment Date</div><div class="field-value mono">{{assessmentDate}}</div></div>{{/if}}
               {{#if conformityEvidence.linkURL}}<div class="field"><div class="field-label">Evidence</div><div class="field-value link"><a href="{{conformityEvidence.linkURL}}" target="_blank">{{conformityEvidence.linkName}}</a></div></div>{{/if}}
             </div>
-            {{#if declaredValue.length}}
-            <div class="field-label" style="margin-bottom:8px">Declared Metrics</div>
-            <div class="metrics-row">
-              {{#each declaredValue}}
-              <div class="metric-chip"><div class="mc-name">{{metricName}}</div><div class="mc-value">{{metricValue.value}} <span style="font-size:0.7rem;opacity:0.6">{{metricValue.unit}}</span></div>{{#if score}}<div style="font-size:0.68rem;margin-top:2px;opacity:0.7">Score: {{score}}</div>{{/if}}</div>
-              {{/each}}
-            </div>
-            {{/if}}
           </div>
         </div>
         {{/each}}
       </div>
     </div>
     {{/if}}
-
-    {{#if traceabilityInformation.length}}
-    <div class="section-card">
-      <div class="section-head"><div class="section-icon icon-blue">🔗</div><h2>Traceability Information</h2></div>
-      <div class="section-body">
-        {{#each traceabilityInformation}}
-        <div class="trace-item">
-          <div class="trace-line"><div class="trace-dot"></div>{{#unless @last}}<div class="trace-connector"></div>{{/unless}}</div>
-          <div class="trace-content">
-            <div class="trace-process">{{valueChainProcess}}</div>
-            {{#if verifiedRatio}}<div class="trace-ratio">Verified ratio: {{multiplyByHundred verifiedRatio}}%</div>{{/if}}
-            {{#if traceabilityEvent.length}}<div class="trace-links">{{#each traceabilityEvent}}<a href="{{linkURL}}" target="_blank" class="trace-link-chip">🔗 {{linkName}}</a>{{/each}}</div>{{/if}}
-          </div>
-        </div>
-        {{/each}}
-      </div>
-    </div>
-    {{/if}}
-
-    {{#if dueDiligenceDeclaration.linkURL}}
-    <div class="section-card">
-      <div class="section-head"><div class="section-icon icon-red">⚖️</div><h2>Due Diligence Declaration</h2></div>
-      <div class="section-body">
-        <div class="field-grid halves">
-          <div class="field"><div class="field-label">Document Name</div><div class="field-value">{{dueDiligenceDeclaration.linkName}}</div></div>
-          <div class="field"><div class="field-label">Document Link</div><div class="field-value link"><a href="{{dueDiligenceDeclaration.linkURL}}" target="_blank">{{dueDiligenceDeclaration.linkURL}}</a></div></div>
-        </div>
-      </div>
-    </div>
-    {{/if}}
-
-    {{#if product.furtherInformation.length}}
-    <div class="section-card">
-      <div class="section-head"><div class="section-icon icon-dark">📎</div><h2>Further Information</h2></div>
-      <div class="section-body">
-        {{#each product.furtherInformation}}
-        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;margin-bottom:8px">
-          <div style="flex:1"><div style="font-weight:500;font-size:0.85rem;margin-bottom:2px">{{linkName}}</div><div style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--text-muted)">{{linkType}}</div></div>
-          <a href="{{linkURL}}" target="_blank" style="font-size:0.78rem;color:var(--un-blue);text-decoration:none;border:1px solid rgba(0,158,219,0.3);padding:4px 12px;border-radius:4px">View →</a>
-        </div>
-        {{/each}}
-      </div>
-    </div>
-    {{/if}}
-
-    {{#if issuer.name}}
-    <div class="section-card">
-      <div class="section-head"><div class="section-icon icon-dark">🏛️</div><h2>Credential Issuer</h2></div>
-      <div class="section-body">
-        <div class="issuer-grid">
-          <div class="issuer-avatar">{{firstLetter issuer.name}}</div>
-          <div><div class="issuer-name">{{issuer.name}}</div><div class="issuer-did">{{issuer.id}}</div></div>
-        </div>
-        {{#if issuer.issuerAlsoKnownAs.length}}
-        <div class="divider"></div>
-        <div class="field-label" style="margin-bottom:8px">Also Known As</div>
-        <div class="known-as-list">
-          {{#each issuer.issuerAlsoKnownAs}}
-          <div class="known-as-item"><div style="flex:1"><div class="known-as-id">{{registeredId}}</div><div class="known-as-scheme">{{idScheme.name}}</div></div><a href="{{id}}" target="_blank" style="font-size:0.72rem;color:var(--un-blue);text-decoration:none">↗</a></div>
-          {{/each}}
-        </div>
-        {{/if}}
-      </div>
-    </div>
-    {{/if}}
-
+    
     <div style="display:flex;justify-content:flex-end">
       <button class="json-toggle" onclick="toggleJson()"><span>{ }</span> View Raw JSON</button>
     </div>
     <div class="json-block" id="raw-json"><pre id="json-content"></pre></div>
-
   </div>
-
+</script>
 
 <div id="passport-root"></div>
 
+<script>
+  // No Handlebars.registerHelper calls 
+  const template = Handlebars.compile(document.getElementById('dpp-template').innerHTML);
+
+  // Pre-formatted data example [cite: 167, 173]
+  const dppData = {
+    credentialId: "https://example.com/id",
+    validFrom: "March 15, 2024",
+    validUntil: "March 15, 2034",
+    product: {
+      name: "EV Battery 300Ah",
+      registeredId: "GTIN-12345678",
+      countryOfProduction: "AU"
+    },
+    emissionsScorecard: {
+      carbonFootprint: 1.8,
+      declaredUnit: "KGM",
+      primarySourcedRatio: "73" // Pre-calculated percentage
+    },
+    materialsProvenance: [
+      { displayIndex: "1", name: "Lithium Carbonate", originCountry: "CL", massFraction: "18", hazardous: false },
+      { displayIndex: "2", name: "Cobalt", originCountry: "CD", massFraction: "9", hazardous: true }
+    ],
+    conformityClaim: [
+      { 
+        description: "GHG Emissions Compliance", 
+        conformityTopic: "Environment", 
+        uiClass: "topic-environment", // Pre-assigned CSS class
+        conformance: true,
+        assessmentDate: "2024-03-15"
+      }
+    ]
+  };
+
+  document.getElementById('passport-root').innerHTML = template(dppData);
+
+  function toggleClaim(el) {
+    const body = el.nextElementSibling;
+    const chevron = el.querySelector('.claim-chevron');
+    body.classList.toggle('open');
+    chevron.classList.toggle('open');
+    el.classList.toggle('active');
+  }
+
+  function toggleJson() {
+    const block = document.getElementById('raw-json');
+    if (!block.classList.contains('open')) document.getElementById('json-content').textContent = JSON.stringify(dppData, null, 2);
+    block.classList.toggle('open');
+  }
+</script>
