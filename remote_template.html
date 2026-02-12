@@ -397,26 +397,26 @@
     }
   </style>
 
-  {{#if product.name}}
+  {{#if credentialSubject.id}}
   <header class="passport-header">
     <div class="header-inner">
       <div>
         <div class="header-badge"><span></span>UN Transparency Protocol · Digital Product Passport</div>
-        <h1 class="passport-title">{{product.name}}</h1>
-        <p class="passport-subtitle">Credential ID: {{credentialId}}</p>
+        <h1 class="passport-title">{{credentialSubject.name}}</h1>
+        <p class="passport-subtitle">Credential ID: {id}}</p>
         <div class="header-meta">
-          {{#if product.registeredId}}<div class="meta-pill"><div class="dot" style="background:#009EDB"></div><span class="label">ID</span> {{product.registeredId}}</div>{{/if}}
-          {{#if product.serialNumber}}<div class="meta-pill"><div class="dot" style="background:#00C4B3"></div><span class="label">S/N</span> {{product.serialNumber}}</div>{{/if}}
-          {{#if product.batchNumber}}<div class="meta-pill"><div class="dot" style="background:#F7B731"></div><span class="label">Batch</span> {{product.batchNumber}}</div>{{/if}}
-          {{#if product.countryOfProduction}}<div class="meta-pill"><div class="dot" style="background:#26C281"></div><span class="label">Origin</span> {{product.countryOfProduction}}</div>{{/if}}
-          {{#if product.productionDate}}<div class="meta-pill"><div class="dot" style="background:#9B59B6"></div><span class="label">Produced</span> {{product.productionDate}}</div>{{/if}}
+          {{#if credentialSubject.id}}<div class="meta-pill"><div class="dot" style="background:#009EDB"></div><span class="label">ID</span> {{credentialSubject.id}}</div>{{/if}}
+          {{#if credentialSubject.serialNumber}}<div class="meta-pill"><div class="dot" style="background:#00C4B3"></div><span class="label">S/N</span> {{credentialSubject.serialNumber}}</div>{{/if}}
+          {{#if credentialSubject.batchNumber}}<div class="meta-pill"><div class="dot" style="background:#F7B731"></div><span class="label">Batch</span> {{credentialSubject.batchNumber}}</div>{{/if}}
+          {{#if credentialSubject.countryOfProduction}}<div class="meta-pill"><div class="dot" style="background:#26C281"></div><span class="label">Origin</span> {{credentialSubject.countryOfProduction}}</div>{{/if}}
+          {{#if credentialSubject.productionDate}}<div class="meta-pill"><div class="dot" style="background:#9B59B6"></div><span class="label">Produced</span> {{credentialSubject.productionDate}}</div>{{/if}}
         </div>
       </div>
       <div class="header-right">
         {{#if granularityLevel}}<div class="granularity-badge">{{granularityLevel}}</div>{{/if}}
         <div class="product-image-wrap">
-          {{#if product.productImage.linkURL}}
-          <img src="{{product.productImage.linkURL}}" alt="{{product.name}}" onerror="this.style.display='none'"/>
+          {{#if credentialSubject.productImage.linkURL}}
+          <img src="{{credentialSubject.productImage.linkURL}}" alt="{{credentialSubject.name}}" onerror="this.style.display='none'"/>
           {{else}}
           <div class="product-image-placeholder">📦</div>
           {{/if}}
@@ -439,37 +439,37 @@
       <div class="section-head"><div class="section-icon icon-blue">🏷️</div><h2>Product Identification</h2></div>
       <div class="section-body">
         <div class="field-grid">
-          <div class="field"><div class="field-label">Product Name</div><div class="field-value">{{#if product.name}}{{product.name}}{{else}}—{{/if}}</div></div>
-          <div class="field"><div class="field-label">Registered ID</div><div class="field-value mono">{{#if product.registeredId}}{{product.registeredId}}{{else}}—{{/if}}</div></div>
-          <div class="field"><div class="field-label">Serial Number</div><div class="field-value mono">{{#if product.serialNumber}}{{product.serialNumber}}{{else}}—{{/if}}</div></div>
-          <div class="field"><div class="field-label">Batch Number</div><div class="field-value mono">{{#if product.batchNumber}}{{product.batchNumber}}{{else}}—{{/if}}</div></div>
-          <div class="field"><div class="field-label">Country of Production</div><div class="field-value country-code">{{#if product.countryOfProduction}}🌏 {{product.countryOfProduction}}{{else}}—{{/if}}</div></div>
-          <div class="field"><div class="field-label">Production Date</div><div class="field-value mono">{{#if product.productionDate}}{{product.productionDate}}{{else}}—{{/if}}</div></div>
+          <div class="field"><div class="field-label">Product Name</div><div class="field-value">{{#if credentialSubject.name}}{{credentialSubject.name}}{{else}}—{{/if}}</div></div>
+          <div class="field"><div class="field-label">Registered ID</div><div class="field-value mono">{{#if credentialSubject.registeredId}}{{credentialSubject.registeredId}}{{else}}—{{/if}}</div></div>
+          <div class="field"><div class="field-label">Serial Number</div><div class="field-value mono">{{#if credentialSubject.serialNumber}}{{credentialSubject.serialNumber}}{{else}}—{{/if}}</div></div>
+          <div class="field"><div class="field-label">Batch Number</div><div class="field-value mono">{{#if credentialSubject.batchNumber}}{{credentialSubject.batchNumber}}{{else}}—{{/if}}</div></div>
+          <div class="field"><div class="field-label">Country of Production</div><div class="field-value country-code">{{#if credentialSubject.countryOfProduction}}🌏 {{credentialSubject.countryOfProduction}}{{else}}—{{/if}}</div></div>
+          <div class="field"><div class="field-label">Production Date</div><div class="field-value mono">{{#if credentialSubject.productionDate}}{{credentialSubject.productionDate}}{{else}}—{{/if}}</div></div>
         </div>
       </div>
     </div>
 
-    {{#if emissionsScorecard}}
+    {{#if credentialSubject.emissionsScorecard}}
     <div class="section-card">
       <div class="section-head"><div class="section-icon icon-yellow">🌡️</div><h2>Emissions Scorecard</h2></div>
       <div class="section-body">
         <div class="scorecard-grid">
-          <div class="score-item"><div class="score-label">Carbon Footprint</div><div class="score-value">{{emissionsScorecard.carbonFootprint}}</div><div class="score-unit">CO₂e / {{emissionsScorecard.declaredUnit}}</div></div>
+          <div class="score-item"><div class="score-label">Carbon Footprint</div><div class="score-value">{{credentialSubject.emissionsScorecard.carbonFootprint}}</div><div class="score-unit">CO₂e / {{credentialSubject.emissionsScorecard.declaredUnit}}</div></div>
           <div class="score-item">
             <div class="score-label">Primary Sourced Ratio</div>
-            <div class="score-value">{{emissionsScorecard.primarySourcedRatio}}%</div>
-            <div class="progress-bar"><div class="progress-fill fill-green" style="width:{{emissionsScorecard.primarySourcedRatio}}%"></div></div>
+            <div class="score-value">{{credentialSubject.emissionsScorecard.primarySourcedRatio}}%</div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:{{credentialSubject.emissionsScorecard.primarySourcedRatio}}%"></div></div>
           </div>
         </div>
       </div>
     </div>
     {{/if}}
 
-    {{#if materialsProvenance.length}}
+    {{#if credentialSubject.materialsProvenance.length}}
     <div class="section-card">
       <div class="section-head"><div class="section-icon icon-teal">🧱</div><h2>Materials Provenance</h2></div>
       <div class="section-body">
-        {{#each materialsProvenance}}
+        {{#each credentialSubject.materialsProvenance}}
         <div class="material-item">
           <div class="material-index">{{#if displayIndex}}{{displayIndex}}{{else}}•{{/if}}</div>
           <div class="material-main"><div class="mat-name">{{name}}</div><div class="mat-origin">{{originCountry}}{{#if materialType.name}} · {{materialType.name}}{{/if}}</div></div>
@@ -481,11 +481,11 @@
     </div>
     {{/if}}
 
-    {{#if conformityClaim.length}}
+    {{#if credentialSubject.conformityClaim.length}}
     <div class="section-card">
       <div class="section-head"><div class="section-icon icon-purple">📋</div><h2>Conformity Claims</h2></div>
       <div class="section-body">
-        {{#each conformityClaim}}
+        {{#each credentialSubject.conformityClaim}}
         <div class="claim-item">
           <div class="claim-header" onclick="toggleClaim(this)">
             <span class="topic-badge {{uiClass}}">{{conformityTopic}}</span>
