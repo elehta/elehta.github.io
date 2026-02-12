@@ -295,13 +295,13 @@
             <div class="section-title">Value Chain Traceability</div>
             {{#each credentialSubject.traceabilityInformation}}
                 <div class="trace-header">
-                    <span style="font-size:0.9rem">Process Step: <b>{{credentialSubject.traceabilityInformation.valueChainProcess}}</b></span>
-                    {{#if credentialSubject.traceabilityInformation.verifiedRatio}}
-                    <span class="status-pill pill-safe">Verified: {{multiply credentialSubject.traceabilityInformation.verifiedRatio 100}}%</span>
+                    <span style="font-size:0.9rem">Process Step: <b>{{valueChainProcess}}</b></span>
+                    {{#if verifiedRatio}}
+                    <span class="status-pill pill-safe">Verified: {{multiply verifiedRatio 100}}%</span>
                     {{/if}}
                 </div>
                 <div class="trace-events-grid">
-                    {{#each credentialSubject.traceabilityInformation.traceabilityEvent}}
+                    {{#each traceabilityEvent}}
                     <a href="{{linkURL}}" class="btn-action trace-link">{{linkName}} ↗</a>
                     {{/each}}
                 </div>
