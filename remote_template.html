@@ -1,7 +1,4 @@
 
-  <title>UNTP Digital Product Passport</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
   <style>
     :root {
       --un-blue: #009EDB;
@@ -433,11 +430,14 @@
     if (!block.classList.contains('open')) document.getElementById('json-content').textContent = JSON.stringify(window._dppData, null, 2);
     block.classList.toggle('open');
   }
+
 </script>
-  
+
+  <title>UNTP Digital Product Passport</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
 
 
-<script id="dpp-template" type="text/x-handlebars-template">
   {{#if product.name}}
   <header class="passport-header">
     <div class="header-inner">
@@ -705,7 +705,7 @@
     <div class="json-block" id="raw-json"><pre id="json-content"></pre></div>
 
   </div>
-</script>
+
 
 <div id="passport-root"></div>
 
