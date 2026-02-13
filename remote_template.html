@@ -498,7 +498,7 @@ DPP_DATA:
     </div>
 
     <!-- ── EMISSIONS SCORECARD ────────────────── -->
-    {{#if emissionsScorecard}}
+    {{#if credentialSubject.emissionsScorecard}}
     <div class="section-card">
       <div class="section-head">
         <div class="section-icon icon-yellow">🌡️</div>
@@ -508,15 +508,15 @@ DPP_DATA:
         <div class="scorecard-grid">
           <div class="score-item">
             <div class="score-label">Carbon Footprint</div>
-            <div class="score-value">{{emissionsScorecard.carbonFootprint}}</div>
-            <div class="score-unit">CO₂e / {{emissionsScorecard.declaredUnit}}</div>
+            <div class="score-value">{{credentialSubject.emissionsScorecard.carbonFootprint}}</div>
+            <div class="score-unit">CO₂e / {{credentialSubject.emissionsScorecard.declaredUnit}}</div>
           </div>
           <div class="score-item">
             <div class="score-label">Primary Sourced Ratio</div>
-            <div class="score-value">{{emissionsScorecard.primarySourcedRatio}}</div>
+            <div class="score-value">{{credentialSubject.emissionsScorecard.primarySourcedRatio}}</div>
             <div class="score-unit">Directly measured data fraction</div>
             <div class="progress-bar">
-              <div class="progress-fill fill-green" style="width:{{emissionsScorecard.primarySourcedRatioPercent}}%"></div>
+              <div class="progress-fill fill-green" style="width:{{credentialSubject.emissionsScorecard.primarySourcedRatioPercent}}%"></div>
             </div>
           </div>
         </div>
@@ -524,18 +524,18 @@ DPP_DATA:
         <div class="field-grid thirds">
           <div class="field">
             <div class="field-label">Operational Scope</div>
-            <div class="field-value"><span class="status-badge status-neutral">{{emissionsScorecard.operationalScope}}</span></div>
+            <div class="field-value"><span class="status-badge status-neutral">{{credentialSubject.emissionsScorecard.operationalScope}}</span></div>
           </div>
-          {{#if emissionsScorecard.reportingStandard.name}}
+          {{#if credentialSubject.emissionsScorecard.reportingStandard.name}}
           <div class="field">
             <div class="field-label">Reporting Standard</div>
-            <div class="field-value"><a href="{{emissionsScorecard.reportingStandard.id}}" target="_blank">{{emissionsScorecard.reportingStandard.name}}</a></div>
+            <div class="field-value"><a href="{{credentialSubject.emissionsScorecard.reportingStandard.id}}" target="_blank">{{credentialSubject.emissionsScorecard.reportingStandard.name}}</a></div>
           </div>
           {{/if}}
-          {{#if emissionsScorecard.reportingStandard.issuingParty.name}}
+          {{#if credentialSubject.emissionsScorecard.reportingStandard.issuingParty.name}}
           <div class="field">
             <div class="field-label">Issuing Party</div>
-            <div class="field-value">{{emissionsScorecard.reportingStandard.issuingParty.name}}</div>
+            <div class="field-value">{{credentialSubject.emissionsScorecard.reportingStandard.issuingParty.name}}</div>
           </div>
           {{/if}}
         </div>
