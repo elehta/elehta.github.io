@@ -310,24 +310,24 @@
           <span></span>UN Transparency Protocol · Digital Product Passport
         </div>
         <h1 class="passport-title">
-          {{#if product.name}}{{product.name}}{{else}}<em>Untitled Product</em>{{/if}}
+          {{#if credentialSubject.product.name}}{{credentialSubject.product.name}}{{else}}<em>Untitled Product</em>{{/if}}
         </h1>
         <p class="passport-subtitle">Credential ID: {{id}}</p>
         <div class="header-meta">
-          {{#if product.registeredId}}
-          <div class="meta-pill"><div class="dot" style="background:#009EDB"></div><span class="label">ID</span>{{product.registeredId}}</div>
+          {{#if credentialSubject.product.registeredId}}
+          <div class="meta-pill"><div class="dot" style="background:#009EDB"></div><span class="label">ID</span>{{credentialSubject.product.registeredId}}</div>
           {{/if}}
-          {{#if product.serialNumber}}
-          <div class="meta-pill"><div class="dot" style="background:#00C4B3"></div><span class="label">S/N</span>{{product.serialNumber}}</div>
+          {{#if credentialSubject.product.serialNumber}}
+          <div class="meta-pill"><div class="dot" style="background:#00C4B3"></div><span class="label">S/N</span>{{credentialSubject.product.serialNumber}}</div>
           {{/if}}
-          {{#if product.batchNumber}}
-          <div class="meta-pill"><div class="dot" style="background:#F7B731"></div><span class="label">Batch</span>{{product.batchNumber}}</div>
+          {{#if credentialSubject.product.batchNumber}}
+          <div class="meta-pill"><div class="dot" style="background:#F7B731"></div><span class="label">Batch</span>{{credentialSubject.product.batchNumber}}</div>
           {{/if}}
-          {{#if product.countryOfProduction}}
-          <div class="meta-pill"><div class="dot" style="background:#26C281"></div><span class="label">Origin</span>{{product.countryOfProduction}}</div>
+          {{#if credentialSubject.product.countryOfProduction}}
+          <div class="meta-pill"><div class="dot" style="background:#26C281"></div><span class="label">Origin</span>{{credentialSubject.product.countryOfProduction}}</div>
           {{/if}}
-          {{#if product.productionDate}}
-          <div class="meta-pill"><div class="dot" style="background:#9B59B6"></div><span class="label">Produced</span>{{product.productionDate}}</div>
+          {{#if credentialSubject.product.productionDate}}
+          <div class="meta-pill"><div class="dot" style="background:#9B59B6"></div><span class="label">Produced</span>{{credentialSubject.product.productionDate}}</div>
           {{/if}}
         </div>
       </div>
@@ -335,9 +335,9 @@
         {{#if granularityLevel}}
         <div class="granularity-badge">{{granularityLevel}}</div>
         {{/if}}
-        {{#if product.productImage.linkURL}}
+        {{#if credentialSubject.product.productImage.linkURL}}
         <div class="product-image-wrap">
-          <img src="{{product.productImage.linkURL}}" alt="{{product.name}}"/>
+          <img src="{{credentialSubject.product.productImage.linkURL}}" alt="{{credentialSubject.product.name}}"/>
         </div>
         {{else}}
         <div class="product-image-wrap">
@@ -376,53 +376,53 @@
         <div class="field-grid">
           <div class="field">
             <div class="field-label">Product Name</div>
-            <div class="field-value">{{#if product.name}}{{product.name}}{{else}}<span class="empty">—</span>{{/if}}</div>
+            <div class="field-value">{{#if credentialSubject.product.name}}{{credentialSubject.product.name}}{{else}}<span class="empty">—</span>{{/if}}</div>
           </div>
           <div class="field">
             <div class="field-label">Registered ID</div>
-            <div class="field-value mono">{{#if product.registeredId}}{{product.registeredId}}{{else}}<span class="empty">—</span>{{/if}}</div>
+            <div class="field-value mono">{{#if credentialSubject.product.registeredId}}{{credentialSubject.product.registeredId}}{{else}}<span class="empty">—</span>{{/if}}</div>
           </div>
           <div class="field">
             <div class="field-label">Serial Number</div>
-            <div class="field-value mono">{{#if product.serialNumber}}{{product.serialNumber}}{{else}}<span class="empty">—</span>{{/if}}</div>
+            <div class="field-value mono">{{#if credentialSubject.product.serialNumber}}{{credentialSubject.product.serialNumber}}{{else}}<span class="empty">—</span>{{/if}}</div>
           </div>
           <div class="field">
             <div class="field-label">Batch Number</div>
-            <div class="field-value mono">{{#if product.batchNumber}}{{product.batchNumber}}{{else}}<span class="empty">—</span>{{/if}}</div>
+            <div class="field-value mono">{{#if credentialSubject.product.batchNumber}}{{credentialSubject.product.batchNumber}}{{else}}<span class="empty">—</span>{{/if}}</div>
           </div>
           <div class="field">
             <div class="field-label">Country of Production</div>
-            <div class="field-value mono">{{#if product.countryOfProduction}}{{product.countryOfProduction}}{{else}}<span class="empty">—</span>{{/if}}</div>
+            <div class="field-value mono">{{#if credentialSubject.product.countryOfProduction}}{{credentialSubject.product.countryOfProduction}}{{else}}<span class="empty">—</span>{{/if}}</div>
           </div>
           <div class="field">
             <div class="field-label">Production Date</div>
-            <div class="field-value mono">{{#if product.productionDate}}{{product.productionDate}}{{else}}<span class="empty">—</span>{{/if}}</div>
+            <div class="field-value mono">{{#if credentialSubject.product.productionDate}}{{credentialSubject.product.productionDate}}{{else}}<span class="empty">—</span>{{/if}}</div>
           </div>
         </div>
-        {{#if product.description}}
+        {{#if credentialSubject.product.description}}
         <div class="divider"></div>
         <div class="field">
           <div class="field-label">Description</div>
-          <div class="field-value">{{product.description}}</div>
+          <div class="field-value">{{credentialSubject.product.description}}</div>
         </div>
         {{/if}}
-        {{#if product.idScheme.name}}
+        {{#if credentialSubject.product.idScheme.name}}
         <div class="divider"></div>
         <div class="field-grid halves">
           <div class="field">
             <div class="field-label">ID Scheme</div>
-            <div class="field-value">{{product.idScheme.name}}</div>
+            <div class="field-value">{{credentialSubject.product.idScheme.name}}</div>
           </div>
           <div class="field">
             <div class="field-label">Scheme URI</div>
-            <div class="field-value"><a href="{{product.idScheme.id}}" target="_blank">{{product.idScheme.id}}</a></div>
+            <div class="field-value"><a href="{{credentialSubject.product.idScheme.id}}" target="_blank">{{credentialSubject.product.idScheme.id}}</a></div>
           </div>
         </div>
         {{/if}}
-        {{#if product.productCategory.length}}
+        {{#if credentialSubject.product.productCategory.length}}
         <div class="divider"></div>
         <div class="field-label" style="margin-bottom:10px">Product Categories</div>
-        {{#each product.productCategory}}
+        {{#each credentialSubject.product.productCategory}}
         <div class="category-row">
           <div class="category-code">{{code}}</div>
           <div class="category-name">{{name}}</div>
@@ -434,7 +434,7 @@
     </div>
 
     <!-- ── PHYSICAL DIMENSIONS ────────────────── -->
-    {{#if product.dimensions}}
+    {{#if credentialSubject.product.dimensions}}
     <div class="section-card">
       <div class="section-head">
         <div class="section-icon icon-teal">📐</div>
@@ -442,20 +442,20 @@
       </div>
       <div class="section-body">
         <div class="dimensions-grid">
-          {{#if product.dimensions.weight}}
-          <div class="dim-block"><div class="dim-icon">⚖️</div><div class="dim-value">{{product.dimensions.weight.value}}</div><div class="dim-unit">{{product.dimensions.weight.unit}}</div><div class="dim-label">Weight</div></div>
+          {{#if credentialSubject.product.dimensions.weight}}
+          <div class="dim-block"><div class="dim-icon">⚖️</div><div class="dim-value">{{credentialSubject.product.dimensions.weight.value}}</div><div class="dim-unit">{{credentialSubject.product.dimensions.weight.unit}}</div><div class="dim-label">Weight</div></div>
           {{/if}}
-          {{#if product.dimensions.length}}
-          <div class="dim-block"><div class="dim-icon">↔️</div><div class="dim-value">{{product.dimensions.length.value}}</div><div class="dim-unit">{{product.dimensions.length.unit}}</div><div class="dim-label">Length</div></div>
+          {{#if credentialSubject.product.dimensions.length}}
+          <div class="dim-block"><div class="dim-icon">↔️</div><div class="dim-value">{{credentialSubject.product.dimensions.length.value}}</div><div class="dim-unit">{{credentialSubject.product.dimensions.length.unit}}</div><div class="dim-label">Length</div></div>
           {{/if}}
-          {{#if product.dimensions.width}}
-          <div class="dim-block"><div class="dim-icon">↕️</div><div class="dim-value">{{product.dimensions.width.value}}</div><div class="dim-unit">{{product.dimensions.width.unit}}</div><div class="dim-label">Width</div></div>
+          {{#if credentialSubject.product.dimensions.width}}
+          <div class="dim-block"><div class="dim-icon">↕️</div><div class="dim-value">{{credentialSubject.product.dimensions.width.value}}</div><div class="dim-unit">{{credentialSubject.product.dimensions.width.unit}}</div><div class="dim-label">Width</div></div>
           {{/if}}
-          {{#if product.dimensions.height}}
-          <div class="dim-block"><div class="dim-icon">📏</div><div class="dim-value">{{product.dimensions.height.value}}</div><div class="dim-unit">{{product.dimensions.height.unit}}</div><div class="dim-label">Height</div></div>
+          {{#if credentialSubject.product.dimensions.height}}
+          <div class="dim-block"><div class="dim-icon">📏</div><div class="dim-value">{{credentialSubject.product.dimensions.height.value}}</div><div class="dim-unit">{{credentialSubject.product.dimensions.height.unit}}</div><div class="dim-label">Height</div></div>
           {{/if}}
-          {{#if product.dimensions.volume}}
-          <div class="dim-block"><div class="dim-icon">🧊</div><div class="dim-value">{{product.dimensions.volume.value}}</div><div class="dim-unit">{{product.dimensions.volume.unit}}</div><div class="dim-label">Volume</div></div>
+          {{#if credentialSubject.product.dimensions.volume}}
+          <div class="dim-block"><div class="dim-icon">🧊</div><div class="dim-value">{{credentialSubject.product.dimensions.volume.value}}</div><div class="dim-unit">{{credentialSubject.product.dimensions.volume.unit}}</div><div class="dim-label">Volume</div></div>
           {{/if}}
         </div>
       </div>
@@ -472,21 +472,21 @@
         <div class="field-grid halves">
           <div>
             <div class="field-label" style="margin-bottom:8px">Produced By</div>
-            {{#if product.producedByParty.name}}
+            {{#if credentialSubject.product.producedByParty.name}}
             <div class="party-block">
-              <div class="party-name">{{product.producedByParty.name}}</div>
-              <div class="party-id">{{product.producedByParty.registeredId}}</div>
-              {{#if product.producedByParty.idScheme.name}}<div class="party-scheme">{{product.producedByParty.idScheme.name}}</div>{{/if}}
+              <div class="party-name">{{credentialSubject.product.producedByParty.name}}</div>
+              <div class="party-id">{{credentialSubject.product.producedByParty.registeredId}}</div>
+              {{#if credentialSubject.product.producedByParty.idScheme.name}}<div class="party-scheme">{{credentialSubject.product.producedByParty.idScheme.name}}</div>{{/if}}
             </div>
             {{else}}<div class="field-value empty">Not specified</div>{{/if}}
           </div>
           <div>
             <div class="field-label" style="margin-bottom:8px">Produced At Facility</div>
-            {{#if product.producedAtFacility.name}}
+            {{#if credentialSubject.product.producedAtFacility.name}}
             <div class="party-block">
-              <div class="party-name">{{product.producedAtFacility.name}}</div>
-              <div class="party-id">{{product.producedAtFacility.registeredId}}</div>
-              {{#if product.producedAtFacility.idScheme.name}}<div class="party-scheme">{{product.producedAtFacility.idScheme.name}}</div>{{/if}}
+              <div class="party-name">{{credentialSubject.product.producedAtFacility.name}}</div>
+              <div class="party-id">{{credentialSubject.product.producedAtFacility.registeredId}}</div>
+              {{#if credentialSubject.product.producedAtFacility.idScheme.name}}<div class="party-scheme">{{credentialSubject.product.producedAtFacility.idScheme.name}}</div>{{/if}}
             </div>
             {{else}}<div class="field-value empty">Not specified</div>{{/if}}
           </div>
@@ -728,14 +728,14 @@
     {{/if}}
 
     <!-- ── FURTHER INFORMATION ────────────────── -->
-    {{#if product.furtherInformation.length}}
+    {{#if credentialSubject.product.furtherInformation.length}}
     <div class="section-card">
       <div class="section-head">
         <div class="section-icon icon-dark">📎</div>
         <h2>Further Information</h2>
       </div>
       <div class="section-body">
-        {{#each product.furtherInformation}}
+        {{#each credentialSubject.product.furtherInformation}}
         <div class="link-row">
           <div class="link-row-info">
             <div class="link-row-name">{{linkName}}</div>
