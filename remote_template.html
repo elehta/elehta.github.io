@@ -302,6 +302,12 @@
     }
   </style>
 
+  <script>
+    Handlebars.registerHelper('loud', function (aString) {
+      return aString.toUpperCase()
+    })
+  </script>
+
   <!-- ══ HEADER ══════════════════════════════════ -->
   <header class="passport-header">
     <div class="header-inner">
