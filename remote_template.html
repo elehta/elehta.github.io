@@ -313,24 +313,24 @@ DPP_DATA:
           <span></span>UN Transparency Protocol · Digital Product Passport
         </div>
         <h1 class="passport-title">
-          {{#if credentialSubject.product.name}}{{credentialSubject.product.name}}{{else}}<em>Untitled Product</em>{{/if}}
+          {{#if credentialSubject.name}}{{credentialSubject.name}}{{else}}<em>Untitled Product</em>{{/if}}
         </h1>
         <p class="passport-subtitle">Credential ID: {{id}}</p>
         <div class="header-meta">
-          {{#if credentialSubject.product.registeredId}}
-          <div class="meta-pill"><div class="dot" style="background:#009EDB"></div><span class="label">ID</span>{{credentialSubject.product.registeredId}}</div>
+          {{#if credentialSubject.registeredId}}
+          <div class="meta-pill"><div class="dot" style="background:#009EDB"></div><span class="label">ID</span>{{credentialSubject.registeredId}}</div>
           {{/if}}
-          {{#if credentialSubject.product.serialNumber}}
-          <div class="meta-pill"><div class="dot" style="background:#00C4B3"></div><span class="label">S/N</span>{{credentialSubject.product.serialNumber}}</div>
+          {{#if credentialSubject.serialNumber}}
+          <div class="meta-pill"><div class="dot" style="background:#00C4B3"></div><span class="label">S/N</span>{{credentialSubject.serialNumber}}</div>
           {{/if}}
-          {{#if credentialSubject.product.batchNumber}}
-          <div class="meta-pill"><div class="dot" style="background:#F7B731"></div><span class="label">Batch</span>{{credentialSubject.product.batchNumber}}</div>
+          {{#if credentialSubject.batchNumber}}
+          <div class="meta-pill"><div class="dot" style="background:#F7B731"></div><span class="label">Batch</span>{{credentialSubject.batchNumber}}</div>
           {{/if}}
-          {{#if credentialSubject.product.countryOfProduction}}
-          <div class="meta-pill"><div class="dot" style="background:#26C281"></div><span class="label">Origin</span>{{credentialSubject.product.countryOfProduction}}</div>
+          {{#if credentialSubject.countryOfProduction}}
+          <div class="meta-pill"><div class="dot" style="background:#26C281"></div><span class="label">Origin</span>{{credentialSubject.countryOfProduction}}</div>
           {{/if}}
-          {{#if credentialSubject.product.productionDate}}
-          <div class="meta-pill"><div class="dot" style="background:#9B59B6"></div><span class="label">Produced</span>{{credentialSubject.product.productionDate}}</div>
+          {{#if credentialSubject.productionDate}}
+          <div class="meta-pill"><div class="dot" style="background:#9B59B6"></div><span class="label">Produced</span>{{credentialSubject.productionDate}}</div>
           {{/if}}
         </div>
       </div>
@@ -338,9 +338,9 @@ DPP_DATA:
         {{#if granularityLevel}}
         <div class="granularity-badge">{{granularityLevel}}</div>
         {{/if}}
-        {{#if credentialSubject.product.productImage.linkURL}}
+        {{#if credentialSubject.productImage.linkURL}}
         <div class="product-image-wrap">
-          <img src="{{credentialSubject.product.productImage.linkURL}}" alt="{{credentialSubject.product.name}}"/>
+          <img src="{{credentialSubject.productImage.linkURL}}" alt="{{credentialSubject.name}}"/>
         </div>
         {{else}}
         <div class="product-image-wrap">
@@ -379,53 +379,53 @@ DPP_DATA:
         <div class="field-grid">
           <div class="field">
             <div class="field-label">Product Name</div>
-            <div class="field-value">{{#if credentialSubject.product.name}}{{credentialSubject.product.name}}{{else}}<span class="empty">—</span>{{/if}}</div>
+            <div class="field-value">{{#if credentialSubject.name}}{{credentialSubject.name}}{{else}}<span class="empty">—</span>{{/if}}</div>
           </div>
           <div class="field">
             <div class="field-label">Registered ID</div>
-            <div class="field-value mono">{{#if credentialSubject.product.registeredId}}{{credentialSubject.product.registeredId}}{{else}}<span class="empty">—</span>{{/if}}</div>
+            <div class="field-value mono">{{#if credentialSubject.registeredId}}{{credentialSubject.registeredId}}{{else}}<span class="empty">—</span>{{/if}}</div>
           </div>
           <div class="field">
             <div class="field-label">Serial Number</div>
-            <div class="field-value mono">{{#if credentialSubject.product.serialNumber}}{{credentialSubject.product.serialNumber}}{{else}}<span class="empty">—</span>{{/if}}</div>
+            <div class="field-value mono">{{#if credentialSubject.serialNumber}}{{credentialSubject.serialNumber}}{{else}}<span class="empty">—</span>{{/if}}</div>
           </div>
           <div class="field">
             <div class="field-label">Batch Number</div>
-            <div class="field-value mono">{{#if credentialSubject.product.batchNumber}}{{credentialSubject.product.batchNumber}}{{else}}<span class="empty">—</span>{{/if}}</div>
+            <div class="field-value mono">{{#if credentialSubject.batchNumber}}{{credentialSubject.batchNumber}}{{else}}<span class="empty">—</span>{{/if}}</div>
           </div>
           <div class="field">
             <div class="field-label">Country of Production</div>
-            <div class="field-value mono">{{#if credentialSubject.product.countryOfProduction}}{{credentialSubject.product.countryOfProduction}}{{else}}<span class="empty">—</span>{{/if}}</div>
+            <div class="field-value mono">{{#if credentialSubject.countryOfProduction}}{{credentialSubject.countryOfProduction}}{{else}}<span class="empty">—</span>{{/if}}</div>
           </div>
           <div class="field">
             <div class="field-label">Production Date</div>
-            <div class="field-value mono">{{#if credentialSubject.product.productionDate}}{{credentialSubject.product.productionDate}}{{else}}<span class="empty">—</span>{{/if}}</div>
+            <div class="field-value mono">{{#if credentialSubject.productionDate}}{{credentialSubject.productionDate}}{{else}}<span class="empty">—</span>{{/if}}</div>
           </div>
         </div>
-        {{#if credentialSubject.product.description}}
+        {{#if credentialSubject.description}}
         <div class="divider"></div>
         <div class="field">
           <div class="field-label">Description</div>
-          <div class="field-value">{{credentialSubject.product.description}}</div>
+          <div class="field-value">{{credentialSubject.description}}</div>
         </div>
         {{/if}}
-        {{#if credentialSubject.product.idScheme.name}}
+        {{#if credentialSubject.idScheme.name}}
         <div class="divider"></div>
         <div class="field-grid halves">
           <div class="field">
             <div class="field-label">ID Scheme</div>
-            <div class="field-value">{{credentialSubject.product.idScheme.name}}</div>
+            <div class="field-value">{{credentialSubject.idScheme.name}}</div>
           </div>
           <div class="field">
             <div class="field-label">Scheme URI</div>
-            <div class="field-value"><a href="{{credentialSubject.product.idScheme.id}}" target="_blank">{{credentialSubject.product.idScheme.id}}</a></div>
+            <div class="field-value"><a href="{{credentialSubject.idScheme.id}}" target="_blank">{{credentialSubject.idScheme.id}}</a></div>
           </div>
         </div>
         {{/if}}
-        {{#if credentialSubject.product.productCategory.length}}
+        {{#if credentialSubject.productCategory.length}}
         <div class="divider"></div>
         <div class="field-label" style="margin-bottom:10px">Product Categories</div>
-        {{#each credentialSubject.product.productCategory}}
+        {{#each credentialSubject.productCategory}}
         <div class="category-row">
           <div class="category-code">{{code}}</div>
           <div class="category-name">{{name}}</div>
@@ -437,7 +437,7 @@ DPP_DATA:
     </div>
 
     <!-- ── PHYSICAL DIMENSIONS ────────────────── -->
-    {{#if credentialSubject.product.dimensions}}
+    {{#if credentialSubject.dimensions}}
     <div class="section-card">
       <div class="section-head">
         <div class="section-icon icon-teal">📐</div>
@@ -445,20 +445,20 @@ DPP_DATA:
       </div>
       <div class="section-body">
         <div class="dimensions-grid">
-          {{#if credentialSubject.product.dimensions.weight}}
-          <div class="dim-block"><div class="dim-icon">⚖️</div><div class="dim-value">{{credentialSubject.product.dimensions.weight.value}}</div><div class="dim-unit">{{credentialSubject.product.dimensions.weight.unit}}</div><div class="dim-label">Weight</div></div>
+          {{#if credentialSubject.dimensions.weight}}
+          <div class="dim-block"><div class="dim-icon">⚖️</div><div class="dim-value">{{credentialSubject.dimensions.weight.value}}</div><div class="dim-unit">{{credentialSubject.dimensions.weight.unit}}</div><div class="dim-label">Weight</div></div>
           {{/if}}
-          {{#if credentialSubject.product.dimensions.length}}
-          <div class="dim-block"><div class="dim-icon">↔️</div><div class="dim-value">{{credentialSubject.product.dimensions.length.value}}</div><div class="dim-unit">{{credentialSubject.product.dimensions.length.unit}}</div><div class="dim-label">Length</div></div>
+          {{#if credentialSubject.dimensions.length}}
+          <div class="dim-block"><div class="dim-icon">↔️</div><div class="dim-value">{{credentialSubject.dimensions.length.value}}</div><div class="dim-unit">{{credentialSubject.dimensions.length.unit}}</div><div class="dim-label">Length</div></div>
           {{/if}}
-          {{#if credentialSubject.product.dimensions.width}}
-          <div class="dim-block"><div class="dim-icon">↕️</div><div class="dim-value">{{credentialSubject.product.dimensions.width.value}}</div><div class="dim-unit">{{credentialSubject.product.dimensions.width.unit}}</div><div class="dim-label">Width</div></div>
+          {{#if credentialSubject.dimensions.width}}
+          <div class="dim-block"><div class="dim-icon">↕️</div><div class="dim-value">{{credentialSubject.dimensions.width.value}}</div><div class="dim-unit">{{credentialSubject.dimensions.width.unit}}</div><div class="dim-label">Width</div></div>
           {{/if}}
-          {{#if credentialSubject.product.dimensions.height}}
-          <div class="dim-block"><div class="dim-icon">📏</div><div class="dim-value">{{credentialSubject.product.dimensions.height.value}}</div><div class="dim-unit">{{credentialSubject.product.dimensions.height.unit}}</div><div class="dim-label">Height</div></div>
+          {{#if credentialSubject.dimensions.height}}
+          <div class="dim-block"><div class="dim-icon">📏</div><div class="dim-value">{{credentialSubject.dimensions.height.value}}</div><div class="dim-unit">{{credentialSubject.dimensions.height.unit}}</div><div class="dim-label">Height</div></div>
           {{/if}}
-          {{#if credentialSubject.product.dimensions.volume}}
-          <div class="dim-block"><div class="dim-icon">🧊</div><div class="dim-value">{{credentialSubject.product.dimensions.volume.value}}</div><div class="dim-unit">{{credentialSubject.product.dimensions.volume.unit}}</div><div class="dim-label">Volume</div></div>
+          {{#if credentialSubject.dimensions.volume}}
+          <div class="dim-block"><div class="dim-icon">🧊</div><div class="dim-value">{{credentialSubject.dimensions.volume.value}}</div><div class="dim-unit">{{credentialSubject.dimensions.volume.unit}}</div><div class="dim-label">Volume</div></div>
           {{/if}}
         </div>
       </div>
@@ -475,21 +475,21 @@ DPP_DATA:
         <div class="field-grid halves">
           <div>
             <div class="field-label" style="margin-bottom:8px">Produced By</div>
-            {{#if credentialSubject.product.producedByParty.name}}
+            {{#if credentialSubject.producedByParty.name}}
             <div class="party-block">
-              <div class="party-name">{{credentialSubject.product.producedByParty.name}}</div>
-              <div class="party-id">{{credentialSubject.product.producedByParty.registeredId}}</div>
-              {{#if credentialSubject.product.producedByParty.idScheme.name}}<div class="party-scheme">{{credentialSubject.product.producedByParty.idScheme.name}}</div>{{/if}}
+              <div class="party-name">{{credentialSubject.producedByParty.name}}</div>
+              <div class="party-id">{{credentialSubject.producedByParty.registeredId}}</div>
+              {{#if credentialSubject.producedByParty.idScheme.name}}<div class="party-scheme">{{credentialSubject.producedByParty.idScheme.name}}</div>{{/if}}
             </div>
             {{else}}<div class="field-value empty">Not specified</div>{{/if}}
           </div>
           <div>
             <div class="field-label" style="margin-bottom:8px">Produced At Facility</div>
-            {{#if credentialSubject.product.producedAtFacility.name}}
+            {{#if credentialSubject.producedAtFacility.name}}
             <div class="party-block">
-              <div class="party-name">{{credentialSubject.product.producedAtFacility.name}}</div>
-              <div class="party-id">{{credentialSubject.product.producedAtFacility.registeredId}}</div>
-              {{#if credentialSubject.product.producedAtFacility.idScheme.name}}<div class="party-scheme">{{credentialSubject.product.producedAtFacility.idScheme.name}}</div>{{/if}}
+              <div class="party-name">{{credentialSubject.producedAtFacility.name}}</div>
+              <div class="party-id">{{credentialSubject.producedAtFacility.registeredId}}</div>
+              {{#if credentialSubject.producedAtFacility.idScheme.name}}<div class="party-scheme">{{credentialSubject.producedAtFacility.idScheme.name}}</div>{{/if}}
             </div>
             {{else}}<div class="field-value empty">Not specified</div>{{/if}}
           </div>
@@ -731,14 +731,14 @@ DPP_DATA:
     {{/if}}
 
     <!-- ── FURTHER INFORMATION ────────────────── -->
-    {{#if credentialSubject.product.furtherInformation.length}}
+    {{#if credentialSubject.furtherInformation.length}}
     <div class="section-card">
       <div class="section-head">
         <div class="section-icon icon-dark">📎</div>
         <h2>Further Information</h2>
       </div>
       <div class="section-body">
-        {{#each credentialSubject.product.furtherInformation}}
+        {{#each credentialSubject.furtherInformation}}
         <div class="link-row">
           <div class="link-row-info">
             <div class="link-row-name">{{linkName}}</div>
