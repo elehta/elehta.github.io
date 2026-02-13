@@ -544,7 +544,7 @@ DPP_DATA:
     {{/if}}
 
     <!-- ── CIRCULARITY SCORECARD ──────────────── -->
-    {{#if circularityScorecard}}
+    {{#if credentialSubject.circularityScorecard}}
     <div class="section-card">
       <div class="section-head">
         <div class="section-icon icon-green">♻️</div>
@@ -552,44 +552,44 @@ DPP_DATA:
       </div>
       <div class="section-body">
         <div class="scorecard-grid">
-          {{#if circularityScorecard.recycledContent}}
+          {{#if credentialSubject.circularityScorecard.recycledContent}}
           <div class="score-item">
             <div class="score-label">Recycled Content</div>
-            <div class="score-value">{{circularityScorecard.recycledContent}}</div>
+            <div class="score-value">{{credentialSubject.circularityScorecard.recycledContent}}</div>
             <div class="score-unit">by mass fraction</div>
-            <div class="progress-bar"><div class="progress-fill fill-green" style="width:{{circularityScorecard.recycledContentPercent}}%"></div></div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:{{credentialSubject.circularityScorecard.recycledContentPercent}}%"></div></div>
           </div>
           {{/if}}
-          {{#if circularityScorecard.recyclableContent}}
+          {{#if credentialSubject.circularityScorecard.recyclableContent}}
           <div class="score-item">
             <div class="score-label">Recyclable Content</div>
-            <div class="score-value">{{circularityScorecard.recyclableContent}}</div>
+            <div class="score-value">{{credentialSubject.circularityScorecard.recyclableContent}}</div>
             <div class="score-unit">by mass fraction</div>
-            <div class="progress-bar"><div class="progress-fill fill-blue" style="width:{{circularityScorecard.recyclableContentPercent}}%"></div></div>
+            <div class="progress-bar"><div class="progress-fill fill-blue" style="width:{{credentialSubject.circularityScorecard.recyclableContentPercent}}%"></div></div>
           </div>
           {{/if}}
         </div>
-        {{#if circularityScorecard.repairability}}
+        {{#if credentialSubject.circularityScorecard.repairability}}
         <div class="divider"></div>
-        <div class="field"><div class="field-label">Repairability Score</div><div class="field-value number">{{circularityScorecard.repairability}}</div></div>
+        <div class="field"><div class="field-label">Repairability Score</div><div class="field-value number">{{credentialSubject.circularityScorecard.repairability}}</div></div>
         {{/if}}
-        {{#if circularityScorecard.recyclingInformation.linkURL}}
+        {{#if credentialSubject.circularityScorecard.recyclingInformation.linkURL}}
         <div class="divider"></div>
-        <div class="field"><div class="field-label">Recycling Information</div><div class="field-value"><a href="{{circularityScorecard.recyclingInformation.linkURL}}" target="_blank">{{circularityScorecard.recyclingInformation.linkName}}</a></div></div>
+        <div class="field"><div class="field-label">Recycling Information</div><div class="field-value"><a href="{{credentialSubject.circularityScorecard.recyclingInformation.linkURL}}" target="_blank">{{credentialSubject.circularityScorecard.recyclingInformation.linkName}}</a></div></div>
         {{/if}}
       </div>
     </div>
     {{/if}}
 
     <!-- ── MATERIALS PROVENANCE ───────────────── -->
-    {{#if materialsProvenance.length}}
+    {{#if credentialSubject.materialsProvenance.length}}
     <div class="section-card">
       <div class="section-head">
         <div class="section-icon icon-teal">🧱</div>
         <h2>Materials Provenance</h2>
       </div>
       <div class="section-body">
-        {{#each materialsProvenance}}
+        {{#each credentialSubject.materialsProvenance}}
         <div class="material-item">
           <div class="material-index">{{@index}}</div>
           <div class="material-main">
@@ -611,14 +611,14 @@ DPP_DATA:
     {{/if}}
 
     <!-- ── CONFORMITY CLAIMS ──────────────────── -->
-    {{#if conformityClaim.length}}
+    {{#if credentialSubject.conformityClaim.length}}
     <div class="section-card">
       <div class="section-head">
         <div class="section-icon icon-purple">📋</div>
         <h2>Conformity Claims</h2>
       </div>
       <div class="section-body">
-        {{#each conformityClaim}}
+        {{#each credentialSubject.conformityClaim}}
         <div class="claim-item">
           <div class="claim-header">
             <span class="topic-badge">{{conformityTopic}}</span>
@@ -686,14 +686,14 @@ DPP_DATA:
     {{/if}}
 
     <!-- ── TRACEABILITY INFORMATION ───────────── -->
-    {{#if traceabilityInformation.length}}
+    {{#if credentialSubject.traceabilityInformation.length}}
     <div class="section-card">
       <div class="section-head">
         <div class="section-icon icon-blue">🔗</div>
         <h2>Traceability Information</h2>
       </div>
       <div class="section-body">
-        {{#each traceabilityInformation}}
+        {{#each credentialSubject.traceabilityInformation}}
         <div class="trace-item">
           <div class="trace-line">
             <div class="trace-dot"></div>
@@ -715,7 +715,7 @@ DPP_DATA:
     {{/if}}
 
     <!-- ── DUE DILIGENCE DECLARATION ─────────── -->
-    {{#if dueDiligenceDeclaration.linkURL}}
+    {{#if credentialSubject.dueDiligenceDeclaration.linkURL}}
     <div class="section-card">
       <div class="section-head">
         <div class="section-icon icon-red">⚖️</div>
