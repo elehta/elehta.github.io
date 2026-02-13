@@ -1,0 +1,786 @@
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --un-blue: #009EDB;
+      --un-dark: #0A1628;
+      --un-mid: #1A2E4A;
+      --un-accent: #00C4B3;
+      --un-green: #26C281;
+      --un-red: #FC5C65;
+      --bg: #F4F6FA;
+      --surface: #FFFFFF;
+      --surface2: #EEF2F9;
+      --border: #D5DDED;
+      --text: #1A2E4A;
+      --text-muted: #6B7B99;
+      --text-light: #9EB3CB;
+      --radius: 10px;
+      --shadow-sm: 0 1px 4px rgba(10,22,40,0.06);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0 0 60px;
+    }
+
+    /* ── HEADER ──────────────────────────────────── */
+    .passport-header {
+      background: var(--un-dark);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .passport-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg, transparent, transparent 40px,
+        rgba(0,158,219,0.04) 40px, rgba(0,158,219,0.04) 41px
+      );
+    }
+    .header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 40px 32px;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: start;
+    }
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,158,219,0.15);
+      border: 1px solid rgba(0,158,219,0.35);
+      color: var(--un-blue);
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    .header-badge span { width: 6px; height: 6px; background: var(--un-blue); border-radius: 50%; }
+    h1.passport-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.6rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: white;
+      margin-bottom: 10px;
+    }
+    h1.passport-title em { color: var(--un-blue); font-style: italic; }
+    .passport-subtitle { font-size: 0.875rem; color: rgba(255,255,255,0.5); font-weight: 300; margin-bottom: 24px; }
+    .header-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+    .meta-pill {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 0.78rem; color: rgba(255,255,255,0.7);
+    }
+    .meta-pill .dot   { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+    .meta-pill .label { color: rgba(255,255,255,0.4); margin-right: 2px; }
+    .header-right { text-align: right; padding-top: 8px; }
+    .granularity-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--un-blue), var(--un-accent));
+      color: white; font-family: 'DM Mono', monospace;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 6px 16px; border-radius: 20px; margin-bottom: 10px;
+    }
+    .product-image-wrap {
+      width: 100px; height: 100px; border-radius: 12px;
+      border: 2px solid rgba(255,255,255,0.12); overflow: hidden;
+      background: rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: center; margin-left: auto;
+    }
+    .product-image-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .product-image-placeholder { color: rgba(255,255,255,0.2); font-size: 2.5rem; }
+
+    /* ── BODY LAYOUT ─────────────────────────────── */
+    .passport-body {
+      max-width: 1000px; margin: 0 auto;
+      padding: 32px 40px; display: grid; gap: 24px;
+    }
+
+    /* ── VALIDITY BAR ────────────────────────────── */
+    .validity-bar {
+      display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center;
+      padding: 14px 18px;
+      background: linear-gradient(135deg, rgba(0,158,219,0.06), rgba(0,196,179,0.06));
+      border: 1px solid rgba(0,158,219,0.2); border-radius: 8px;
+    }
+    .validity-date .vd-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-light); font-family: 'DM Mono', monospace; }
+    .validity-date .vd-val { font-family: 'DM Mono', monospace; font-size: 0.85rem; font-weight: 500; color: var(--text); margin-top: 2px; }
+    .validity-arrow { text-align: center; color: var(--un-blue); font-size: 1rem; }
+    .validity-date.end .vd-label, .validity-date.end .vd-val { text-align: right; }
+
+    /* ── SECTION CARD ────────────────────────────── */
+    .section-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-sm);
+      overflow: hidden; animation: fadeUp 0.4s ease both;
+    }
+    .section-card:nth-child(2)  { animation-delay: 0.05s; }
+    .section-card:nth-child(3)  { animation-delay: 0.10s; }
+    .section-card:nth-child(4)  { animation-delay: 0.15s; }
+    .section-card:nth-child(5)  { animation-delay: 0.20s; }
+    .section-card:nth-child(6)  { animation-delay: 0.25s; }
+    .section-card:nth-child(7)  { animation-delay: 0.30s; }
+    .section-card:nth-child(8)  { animation-delay: 0.35s; }
+    .section-card:nth-child(9)  { animation-delay: 0.40s; }
+    .section-card:nth-child(10) { animation-delay: 0.45s; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+    .section-head { display: flex; align-items: center; gap: 12px; padding: 16px 22px; border-bottom: 1px solid var(--border); background: var(--surface2); }
+    .section-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .section-head h2 { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+    .section-body { padding: 20px 22px; }
+
+    /* ── FIELD GRID ──────────────────────────────── */
+    .field-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .field-grid.halves { grid-template-columns: 1fr 1fr; }
+    .field-grid.thirds { grid-template-columns: 1fr 1fr 1fr; }
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    .field-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-light); }
+    .field-value { font-size: 0.88rem; color: var(--text); line-height: 1.4; word-break: break-word; }
+    .field-value.mono { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--un-mid); }
+    .field-value a { color: var(--un-blue); text-decoration: none; border-bottom: 1px dashed rgba(0,158,219,0.4); }
+    .field-value a:hover { border-bottom-style: solid; }
+    .field-value.empty { color: var(--text-light); font-style: italic; font-size: 0.8rem; }
+    .field-value.number { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 500; }
+
+    /* ── BADGES ──────────────────────────────────── */
+    .status-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
+    .status-true    { background: rgba(38,194,129,0.12);  color: var(--un-green); }
+    .status-false   { background: rgba(252,92,101,0.12);  color: var(--un-red); }
+    .status-neutral { background: rgba(107,123,153,0.12); color: var(--text-muted); }
+    .topic-badge { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; background: rgba(107,123,153,0.12); color: var(--text-muted); }
+
+    /* ── ICON COLOUR VARIANTS ────────────────────── */
+    .icon-blue   { background: rgba(0,158,219,0.1); }
+    .icon-green  { background: rgba(38,194,129,0.1); }
+    .icon-yellow { background: rgba(247,183,49,0.1); }
+    .icon-purple { background: rgba(155,89,182,0.1); }
+    .icon-teal   { background: rgba(0,196,179,0.1); }
+    .icon-dark   { background: rgba(26,46,74,0.08); }
+    .icon-red    { background: rgba(252,92,101,0.1); }
+
+    /* ── DIVIDER ─────────────────────────────────── */
+    .divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+    /* ── DIMENSIONS ──────────────────────────────── */
+    .dimensions-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; }
+    .dim-block { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; }
+    .dim-block .dim-icon  { font-size: 1.4rem; margin-bottom: 4px; }
+    .dim-block .dim-value { font-family: 'DM Mono', monospace; font-size: 1rem; font-weight: 500; }
+    .dim-block .dim-unit  { font-size: 0.7rem; color: var(--text-muted); }
+    .dim-block .dim-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-light); margin-top: 2px; }
+
+    /* ── SCORECARD ───────────────────────────────── */
+    .scorecard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .score-item { background: var(--surface2); border-radius: 8px; padding: 14px 16px; border: 1px solid var(--border); }
+    .score-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 6px; }
+    .score-value { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: var(--text); margin-bottom: 4px; }
+    .score-unit  { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--text-muted); }
+    .progress-bar { height: 6px; background: var(--border); border-radius: 3px; margin-top: 8px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 3px; }
+    .fill-green { background: linear-gradient(90deg, var(--un-green), var(--un-accent)); }
+    .fill-blue  { background: linear-gradient(90deg, var(--un-blue), var(--un-accent)); }
+
+    /* ── PARTY BLOCK ─────────────────────────────── */
+    .party-block { padding: 12px; background: var(--surface2); border-radius: 8px; border: 1px solid var(--border); }
+    .party-block .party-name   { font-weight: 500; margin-bottom: 4px; }
+    .party-block .party-id     { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--text-muted); }
+    .party-block .party-scheme { font-size: 0.72rem; color: var(--text-light); margin-top: 2px; }
+
+    /* ── CATEGORY ROW ────────────────────────────── */
+    .category-row { display: flex; gap: 10px; align-items: center; padding: 8px 12px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; }
+    .category-row:last-child { margin-bottom: 0; }
+    .category-code { font-family: 'DM Mono', monospace; font-size: 0.75rem; background: var(--un-dark); color: var(--un-blue); padding: 3px 8px; border-radius: 4px; flex-shrink: 0; }
+    .category-name   { flex: 1; font-size: 0.85rem; }
+    .category-scheme { font-size: 0.72rem; color: var(--text-muted); }
+
+    /* ── MATERIALS ───────────────────────────────── */
+    .material-item { display: grid; grid-template-columns: auto 1fr auto auto; gap: 12px; align-items: center; padding: 12px 16px; border-radius: 8px; background: var(--surface2); border: 1px solid var(--border); margin-bottom: 10px; }
+    .material-item:last-child { margin-bottom: 0; }
+    .material-index { width: 28px; height: 28px; background: var(--un-dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 0.72rem; font-weight: 500; flex-shrink: 0; }
+    .material-main .mat-name   { font-weight: 500; font-size: 0.88rem; }
+    .material-main .mat-origin { font-size: 0.75rem; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+    .material-fraction { text-align: right; }
+    .material-fraction .frac-val      { font-family: 'DM Serif Display', serif; font-size: 1.3rem; }
+    .material-fraction .frac-label    { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; }
+    .material-fraction .frac-recycled { font-size: 0.68rem; color: var(--un-green); margin-top: 2px; }
+    .hazard-tag { font-size: 0.68rem; font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 4px; }
+    .hazard-yes { background: rgba(252,92,101,0.12); color: var(--un-red); }
+    .hazard-no  { background: rgba(38,194,129,0.10); color: var(--un-green); }
+
+    /* ── CONFORMITY CLAIMS ───────────────────────── */
+    .claim-item { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
+    .claim-item:last-child { margin-bottom: 0; }
+    .claim-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--surface2); }
+    .claim-title       { font-size: 0.85rem; font-weight: 500; flex: 1; }
+    .claim-conformance { margin-left: auto; flex-shrink: 0; }
+    .claim-body { padding: 16px; border-top: 1px solid var(--border); }
+    .metrics-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .metric-chip { background: var(--un-dark); color: white; border-radius: 6px; padding: 8px 14px; font-family: 'DM Mono', monospace; font-size: 0.78rem; }
+    .metric-chip .mc-name  { font-size: 0.65rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.05em; }
+    .metric-chip .mc-value { font-size: 1rem; font-weight: 500; margin-top: 2px; }
+    .metric-chip .mc-score { font-size: 0.68rem; opacity: 0.7; margin-top: 2px; }
+
+    /* ── CRITERIA ────────────────────────────────── */
+    .criterion-item { padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; }
+    .criterion-item:last-child { margin-bottom: 0; }
+    .criterion-name { font-weight: 500; font-size: 0.85rem; margin-bottom: 4px; }
+    .criterion-desc { font-size: 0.78rem; color: var(--text-muted); }
+    .criterion-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
+
+    /* ── EVIDENCE BLOCK ──────────────────────────── */
+    .evidence-block { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: rgba(0,158,219,0.05); border: 1px solid rgba(0,158,219,0.2); border-radius: 6px; margin-top: 12px; text-decoration: none; }
+    .evidence-block .ev-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-light); font-family: 'DM Mono', monospace; }
+    .evidence-block .ev-name  { font-size: 0.85rem; color: var(--un-blue); font-weight: 500; }
+    .evidence-block .ev-hash  { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--text-muted); margin-top: 2px; word-break: break-all; }
+    .evidence-block .ev-arrow { color: var(--un-blue); font-size: 1rem; flex-shrink: 0; }
+
+    /* ── TRACEABILITY ────────────────────────────── */
+    .trace-item { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .trace-item:last-child { border-bottom: none; }
+    .trace-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+    .trace-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--un-blue); border: 2px solid white; box-shadow: 0 0 0 2px var(--un-blue); flex-shrink: 0; margin-top: 4px; }
+    .trace-connector { width: 2px; flex: 1; background: var(--border); margin: 4px 0; min-height: 20px; }
+    .trace-content   { flex: 1; }
+    .trace-process   { font-weight: 500; font-size: 0.88rem; margin-bottom: 4px; }
+    .trace-ratio     { font-size: 0.78rem; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+    .trace-links     { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .trace-link-chip { font-size: 0.72rem; padding: 3px 10px; border-radius: 4px; background: var(--surface2); border: 1px solid var(--border); color: var(--un-blue); text-decoration: none; }
+    .trace-link-chip:hover { background: var(--border); }
+
+    /* ── LINK ROW ────────────────────────────────── */
+    .link-row { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; }
+    .link-row:last-child { margin-bottom: 0; }
+    .link-row-info { flex: 1; }
+    .link-row-name { font-weight: 500; font-size: 0.85rem; margin-bottom: 2px; }
+    .link-row-type { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--text-muted); }
+    .link-row-btn { font-size: 0.78rem; color: var(--un-blue); text-decoration: none; border: 1px solid rgba(0,158,219,0.3); padding: 4px 12px; border-radius: 4px; white-space: nowrap; }
+    .link-row-btn:hover { background: rgba(0,158,219,0.08); }
+
+    /* ── ISSUER ──────────────────────────────────── */
+    .issuer-grid { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start; }
+    .issuer-avatar { width: 48px; height: 48px; background: var(--un-dark); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--un-blue); flex-shrink: 0; }
+    .issuer-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
+    .issuer-did  { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--text-muted); word-break: break-all; }
+    .known-as-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+    .known-as-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: var(--surface2); border-radius: 6px; border: 1px solid var(--border); }
+    .known-as-id     { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; }
+    .known-as-scheme { font-size: 0.72rem; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+    .known-as-link   { font-size: 0.72rem; color: var(--un-blue); text-decoration: none; margin-left: auto; }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 700px) {
+      .header-inner       { grid-template-columns: 1fr; }
+      .header-right       { display: flex; align-items: center; gap: 12px; }
+      .product-image-wrap { margin-left: 0; }
+      .passport-body      { padding: 20px 16px; }
+      h1.passport-title   { font-size: 1.8rem; }
+      .dimensions-grid    { grid-template-columns: repeat(3,1fr); }
+      .scorecard-grid     { grid-template-columns: 1fr; }
+      .field-grid.thirds  { grid-template-columns: 1fr 1fr; }
+      .field-grid.halves  { grid-template-columns: 1fr; }
+    }
+  </style>
+
+
+  <!-- ══ HEADER ══════════════════════════════════ -->
+  <header class="passport-header">
+    <div class="header-inner">
+      <div>
+        <div class="header-badge">
+          <span></span>UN Transparency Protocol · Digital Product Passport
+        </div>
+        <h1 class="passport-title">
+          {{#if product.name}}{{product.name}}{{else}}<em>Untitled Product</em>{{/if}}
+        </h1>
+        <p class="passport-subtitle">Credential ID: {{id}}</p>
+        <div class="header-meta">
+          {{#if product.registeredId}}
+          <div class="meta-pill"><div class="dot" style="background:#009EDB"></div><span class="label">ID</span>{{product.registeredId}}</div>
+          {{/if}}
+          {{#if product.serialNumber}}
+          <div class="meta-pill"><div class="dot" style="background:#00C4B3"></div><span class="label">S/N</span>{{product.serialNumber}}</div>
+          {{/if}}
+          {{#if product.batchNumber}}
+          <div class="meta-pill"><div class="dot" style="background:#F7B731"></div><span class="label">Batch</span>{{product.batchNumber}}</div>
+          {{/if}}
+          {{#if product.countryOfProduction}}
+          <div class="meta-pill"><div class="dot" style="background:#26C281"></div><span class="label">Origin</span>{{product.countryOfProduction}}</div>
+          {{/if}}
+          {{#if product.productionDate}}
+          <div class="meta-pill"><div class="dot" style="background:#9B59B6"></div><span class="label">Produced</span>{{product.productionDate}}</div>
+          {{/if}}
+        </div>
+      </div>
+      <div class="header-right">
+        {{#if granularityLevel}}
+        <div class="granularity-badge">{{granularityLevel}}</div>
+        {{/if}}
+        {{#if product.productImage.linkURL}}
+        <div class="product-image-wrap">
+          <img src="{{product.productImage.linkURL}}" alt="{{product.name}}"/>
+        </div>
+        {{else}}
+        <div class="product-image-wrap">
+          <div class="product-image-placeholder">📦</div>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ BODY ════════════════════════════════════ -->
+  <div class="passport-body">
+
+    <!-- VALIDITY -->
+    {{#if validFrom}}
+    <div class="validity-bar">
+      <div class="validity-date">
+        <div class="vd-label">Valid From</div>
+        <div class="vd-val">{{validFrom}}</div>
+      </div>
+      <div class="validity-arrow">→</div>
+      <div class="validity-date end">
+        <div class="vd-label">Valid Until</div>
+        <div class="vd-val">{{#if validUntil}}{{validUntil}}{{else}}—{{/if}}</div>
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- ── PRODUCT IDENTIFICATION ─────────────── -->
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-blue">🏷️</div>
+        <h2>Product Identification</h2>
+      </div>
+      <div class="section-body">
+        <div class="field-grid">
+          <div class="field">
+            <div class="field-label">Product Name</div>
+            <div class="field-value">{{#if product.name}}{{product.name}}{{else}}<span class="empty">—</span>{{/if}}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Registered ID</div>
+            <div class="field-value mono">{{#if product.registeredId}}{{product.registeredId}}{{else}}<span class="empty">—</span>{{/if}}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Serial Number</div>
+            <div class="field-value mono">{{#if product.serialNumber}}{{product.serialNumber}}{{else}}<span class="empty">—</span>{{/if}}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Batch Number</div>
+            <div class="field-value mono">{{#if product.batchNumber}}{{product.batchNumber}}{{else}}<span class="empty">—</span>{{/if}}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Country of Production</div>
+            <div class="field-value mono">{{#if product.countryOfProduction}}{{product.countryOfProduction}}{{else}}<span class="empty">—</span>{{/if}}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Production Date</div>
+            <div class="field-value mono">{{#if product.productionDate}}{{product.productionDate}}{{else}}<span class="empty">—</span>{{/if}}</div>
+          </div>
+        </div>
+        {{#if product.description}}
+        <div class="divider"></div>
+        <div class="field">
+          <div class="field-label">Description</div>
+          <div class="field-value">{{product.description}}</div>
+        </div>
+        {{/if}}
+        {{#if product.idScheme.name}}
+        <div class="divider"></div>
+        <div class="field-grid halves">
+          <div class="field">
+            <div class="field-label">ID Scheme</div>
+            <div class="field-value">{{product.idScheme.name}}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Scheme URI</div>
+            <div class="field-value"><a href="{{product.idScheme.id}}" target="_blank">{{product.idScheme.id}}</a></div>
+          </div>
+        </div>
+        {{/if}}
+        {{#if product.productCategory.length}}
+        <div class="divider"></div>
+        <div class="field-label" style="margin-bottom:10px">Product Categories</div>
+        {{#each product.productCategory}}
+        <div class="category-row">
+          <div class="category-code">{{code}}</div>
+          <div class="category-name">{{name}}</div>
+          <div class="category-scheme">{{schemeName}}</div>
+        </div>
+        {{/each}}
+        {{/if}}
+      </div>
+    </div>
+
+    <!-- ── PHYSICAL DIMENSIONS ────────────────── -->
+    {{#if product.dimensions}}
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-teal">📐</div>
+        <h2>Physical Dimensions</h2>
+      </div>
+      <div class="section-body">
+        <div class="dimensions-grid">
+          {{#if product.dimensions.weight}}
+          <div class="dim-block"><div class="dim-icon">⚖️</div><div class="dim-value">{{product.dimensions.weight.value}}</div><div class="dim-unit">{{product.dimensions.weight.unit}}</div><div class="dim-label">Weight</div></div>
+          {{/if}}
+          {{#if product.dimensions.length}}
+          <div class="dim-block"><div class="dim-icon">↔️</div><div class="dim-value">{{product.dimensions.length.value}}</div><div class="dim-unit">{{product.dimensions.length.unit}}</div><div class="dim-label">Length</div></div>
+          {{/if}}
+          {{#if product.dimensions.width}}
+          <div class="dim-block"><div class="dim-icon">↕️</div><div class="dim-value">{{product.dimensions.width.value}}</div><div class="dim-unit">{{product.dimensions.width.unit}}</div><div class="dim-label">Width</div></div>
+          {{/if}}
+          {{#if product.dimensions.height}}
+          <div class="dim-block"><div class="dim-icon">📏</div><div class="dim-value">{{product.dimensions.height.value}}</div><div class="dim-unit">{{product.dimensions.height.unit}}</div><div class="dim-label">Height</div></div>
+          {{/if}}
+          {{#if product.dimensions.volume}}
+          <div class="dim-block"><div class="dim-icon">🧊</div><div class="dim-value">{{product.dimensions.volume.value}}</div><div class="dim-unit">{{product.dimensions.volume.unit}}</div><div class="dim-label">Volume</div></div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- ── MANUFACTURER & FACILITY ────────────── -->
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-dark">🏭</div>
+        <h2>Manufacturer &amp; Facility</h2>
+      </div>
+      <div class="section-body">
+        <div class="field-grid halves">
+          <div>
+            <div class="field-label" style="margin-bottom:8px">Produced By</div>
+            {{#if product.producedByParty.name}}
+            <div class="party-block">
+              <div class="party-name">{{product.producedByParty.name}}</div>
+              <div class="party-id">{{product.producedByParty.registeredId}}</div>
+              {{#if product.producedByParty.idScheme.name}}<div class="party-scheme">{{product.producedByParty.idScheme.name}}</div>{{/if}}
+            </div>
+            {{else}}<div class="field-value empty">Not specified</div>{{/if}}
+          </div>
+          <div>
+            <div class="field-label" style="margin-bottom:8px">Produced At Facility</div>
+            {{#if product.producedAtFacility.name}}
+            <div class="party-block">
+              <div class="party-name">{{product.producedAtFacility.name}}</div>
+              <div class="party-id">{{product.producedAtFacility.registeredId}}</div>
+              {{#if product.producedAtFacility.idScheme.name}}<div class="party-scheme">{{product.producedAtFacility.idScheme.name}}</div>{{/if}}
+            </div>
+            {{else}}<div class="field-value empty">Not specified</div>{{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── EMISSIONS SCORECARD ────────────────── -->
+    {{#if emissionsScorecard}}
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-yellow">🌡️</div>
+        <h2>Emissions Scorecard</h2>
+      </div>
+      <div class="section-body">
+        <div class="scorecard-grid">
+          <div class="score-item">
+            <div class="score-label">Carbon Footprint</div>
+            <div class="score-value">{{emissionsScorecard.carbonFootprint}}</div>
+            <div class="score-unit">CO₂e / {{emissionsScorecard.declaredUnit}}</div>
+          </div>
+          <div class="score-item">
+            <div class="score-label">Primary Sourced Ratio</div>
+            <div class="score-value">{{emissionsScorecard.primarySourcedRatio}}</div>
+            <div class="score-unit">Directly measured data fraction</div>
+            <div class="progress-bar">
+              <div class="progress-fill fill-green" style="width:{{emissionsScorecard.primarySourcedRatioPercent}}%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="field-grid thirds">
+          <div class="field">
+            <div class="field-label">Operational Scope</div>
+            <div class="field-value"><span class="status-badge status-neutral">{{emissionsScorecard.operationalScope}}</span></div>
+          </div>
+          {{#if emissionsScorecard.reportingStandard.name}}
+          <div class="field">
+            <div class="field-label">Reporting Standard</div>
+            <div class="field-value"><a href="{{emissionsScorecard.reportingStandard.id}}" target="_blank">{{emissionsScorecard.reportingStandard.name}}</a></div>
+          </div>
+          {{/if}}
+          {{#if emissionsScorecard.reportingStandard.issuingParty.name}}
+          <div class="field">
+            <div class="field-label">Issuing Party</div>
+            <div class="field-value">{{emissionsScorecard.reportingStandard.issuingParty.name}}</div>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- ── CIRCULARITY SCORECARD ──────────────── -->
+    {{#if circularityScorecard}}
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-green">♻️</div>
+        <h2>Circularity Scorecard</h2>
+      </div>
+      <div class="section-body">
+        <div class="scorecard-grid">
+          {{#if circularityScorecard.recycledContent}}
+          <div class="score-item">
+            <div class="score-label">Recycled Content</div>
+            <div class="score-value">{{circularityScorecard.recycledContent}}</div>
+            <div class="score-unit">by mass fraction</div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:{{circularityScorecard.recycledContentPercent}}%"></div></div>
+          </div>
+          {{/if}}
+          {{#if circularityScorecard.recyclableContent}}
+          <div class="score-item">
+            <div class="score-label">Recyclable Content</div>
+            <div class="score-value">{{circularityScorecard.recyclableContent}}</div>
+            <div class="score-unit">by mass fraction</div>
+            <div class="progress-bar"><div class="progress-fill fill-blue" style="width:{{circularityScorecard.recyclableContentPercent}}%"></div></div>
+          </div>
+          {{/if}}
+        </div>
+        {{#if circularityScorecard.repairability}}
+        <div class="divider"></div>
+        <div class="field"><div class="field-label">Repairability Score</div><div class="field-value number">{{circularityScorecard.repairability}}</div></div>
+        {{/if}}
+        {{#if circularityScorecard.recyclingInformation.linkURL}}
+        <div class="divider"></div>
+        <div class="field"><div class="field-label">Recycling Information</div><div class="field-value"><a href="{{circularityScorecard.recyclingInformation.linkURL}}" target="_blank">{{circularityScorecard.recyclingInformation.linkName}}</a></div></div>
+        {{/if}}
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- ── MATERIALS PROVENANCE ───────────────── -->
+    {{#if materialsProvenance.length}}
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-teal">🧱</div>
+        <h2>Materials Provenance</h2>
+      </div>
+      <div class="section-body">
+        {{#each materialsProvenance}}
+        <div class="material-item">
+          <div class="material-index">{{@index}}</div>
+          <div class="material-main">
+            <div class="mat-name">{{name}}</div>
+            <div class="mat-origin">{{originCountry}}{{#if materialType.name}} · {{materialType.name}}{{/if}}</div>
+          </div>
+          <div class="material-fraction">
+            <div class="frac-val">{{massFraction}}</div>
+            <div class="frac-label">mass frac.</div>
+            {{#if recycledMassFraction}}<div class="frac-recycled">{{recycledMassFraction}} recycled</div>{{/if}}
+          </div>
+          <div>
+            {{#if hazardous}}<span class="hazard-tag hazard-yes">⚠ Hazardous</span>{{else}}<span class="hazard-tag hazard-no">✓ Safe</span>{{/if}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- ── CONFORMITY CLAIMS ──────────────────── -->
+    {{#if conformityClaim.length}}
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-purple">📋</div>
+        <h2>Conformity Claims</h2>
+      </div>
+      <div class="section-body">
+        {{#each conformityClaim}}
+        <div class="claim-item">
+          <div class="claim-header">
+            <span class="topic-badge">{{conformityTopic}}</span>
+            <span class="claim-title">{{#if description}}{{description}}{{else}}Claim {{@index}}{{/if}}</span>
+            <span class="claim-conformance">
+              {{#if conformance}}<span class="status-badge status-true">✓ Conformant</span>{{else}}<span class="status-badge status-false">✗ Non-conformant</span>{{/if}}
+            </span>
+          </div>
+          <div class="claim-body">
+            <div class="field-grid halves" style="margin-bottom:12px">
+              {{#if referenceStandard.name}}
+              <div class="field"><div class="field-label">Reference Standard</div><div class="field-value"><a href="{{referenceStandard.id}}" target="_blank">{{referenceStandard.name}}</a></div></div>
+              {{/if}}
+              {{#if referenceRegulation.name}}
+              <div class="field"><div class="field-label">Reference Regulation</div><div class="field-value"><a href="{{referenceRegulation.id}}" target="_blank">{{referenceRegulation.name}}</a></div></div>
+              {{/if}}
+              {{#if assessmentDate}}
+              <div class="field"><div class="field-label">Assessment Date</div><div class="field-value mono">{{assessmentDate}}</div></div>
+              {{/if}}
+              {{#if referenceRegulation.jurisdictionCountry}}
+              <div class="field"><div class="field-label">Jurisdiction</div><div class="field-value mono">{{referenceRegulation.jurisdictionCountry}}</div></div>
+              {{/if}}
+            </div>
+            {{#if assessmentCriteria.length}}
+            <div class="field-label" style="margin-bottom:8px">Assessment Criteria</div>
+            {{#each assessmentCriteria}}
+            <div class="criterion-item">
+              <div class="criterion-name">{{name}}</div>
+              {{#if description}}<div class="criterion-desc">{{description}}</div>{{/if}}
+              <div class="criterion-meta">
+                {{#if conformityTopic}}<span class="topic-badge">{{conformityTopic}}</span>{{/if}}
+                {{#if status}}<span class="status-badge status-neutral">{{status}}</span>{{/if}}
+                {{#if performanceLevel}}<span style="font-size:0.75rem;color:var(--text-muted)">{{performanceLevel}}</span>{{/if}}
+              </div>
+            </div>
+            {{/each}}
+            {{/if}}
+            {{#if declaredValue.length}}
+            <div class="field-label" style="margin-bottom:8px;margin-top:12px">Declared Metrics</div>
+            <div class="metrics-row">
+              {{#each declaredValue}}
+              <div class="metric-chip">
+                <div class="mc-name">{{metricName}}</div>
+                <div class="mc-value">{{metricValue.value}} <span style="font-size:0.7rem;opacity:0.6">{{metricValue.unit}}</span></div>
+                {{#if score}}<div class="mc-score">Score: {{score}}</div>{{/if}}
+              </div>
+              {{/each}}
+            </div>
+            {{/if}}
+            {{#if conformityEvidence.linkURL}}
+            <a href="{{conformityEvidence.linkURL}}" target="_blank" class="evidence-block">
+              <div style="flex:1">
+                <div class="ev-label">Conformity Evidence</div>
+                <div class="ev-name">{{conformityEvidence.linkName}}</div>
+                {{#if conformityEvidence.hashDigest}}<div class="ev-hash">{{conformityEvidence.hashMethod}}: {{conformityEvidence.hashDigest}}</div>{{/if}}
+              </div>
+              <div class="ev-arrow">↗</div>
+            </a>
+            {{/if}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- ── TRACEABILITY INFORMATION ───────────── -->
+    {{#if traceabilityInformation.length}}
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-blue">🔗</div>
+        <h2>Traceability Information</h2>
+      </div>
+      <div class="section-body">
+        {{#each traceabilityInformation}}
+        <div class="trace-item">
+          <div class="trace-line">
+            <div class="trace-dot"></div>
+            {{#unless @last}}<div class="trace-connector"></div>{{/unless}}
+          </div>
+          <div class="trace-content">
+            <div class="trace-process">{{valueChainProcess}}</div>
+            {{#if verifiedRatio}}<div class="trace-ratio">Verified ratio: {{verifiedRatio}}</div>{{/if}}
+            {{#if traceabilityEvent.length}}
+            <div class="trace-links">
+              {{#each traceabilityEvent}}<a href="{{linkURL}}" target="_blank" class="trace-link-chip">🔗 {{linkName}}</a>{{/each}}
+            </div>
+            {{/if}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- ── DUE DILIGENCE DECLARATION ─────────── -->
+    {{#if dueDiligenceDeclaration.linkURL}}
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-red">⚖️</div>
+        <h2>Due Diligence Declaration</h2>
+      </div>
+      <div class="section-body">
+        <div class="field-grid halves">
+          <div class="field"><div class="field-label">Document Name</div><div class="field-value">{{dueDiligenceDeclaration.linkName}}</div></div>
+          <div class="field"><div class="field-label">Document Link</div><div class="field-value"><a href="{{dueDiligenceDeclaration.linkURL}}" target="_blank">{{dueDiligenceDeclaration.linkURL}}</a></div></div>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- ── FURTHER INFORMATION ────────────────── -->
+    {{#if product.furtherInformation.length}}
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-dark">📎</div>
+        <h2>Further Information</h2>
+      </div>
+      <div class="section-body">
+        {{#each product.furtherInformation}}
+        <div class="link-row">
+          <div class="link-row-info">
+            <div class="link-row-name">{{linkName}}</div>
+            <div class="link-row-type">{{linkType}}</div>
+          </div>
+          <a href="{{linkURL}}" target="_blank" class="link-row-btn">View →</a>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- ── CREDENTIAL ISSUER ──────────────────── -->
+    {{#if issuer.name}}
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-dark">🏛️</div>
+        <h2>Credential Issuer</h2>
+      </div>
+      <div class="section-body">
+        <div class="issuer-grid">
+          <div class="issuer-avatar">{{issuer.initial}}</div>
+          <div>
+            <div class="issuer-name">{{issuer.name}}</div>
+            <div class="issuer-did">{{issuer.id}}</div>
+          </div>
+        </div>
+        {{#if issuer.issuerAlsoKnownAs.length}}
+        <div class="divider"></div>
+        <div class="field-label" style="margin-bottom:8px">Also Known As</div>
+        <div class="known-as-list">
+          {{#each issuer.issuerAlsoKnownAs}}
+          <div class="known-as-item">
+            <div style="flex:1">
+              <div class="known-as-id">{{registeredId}}</div>
+              <div class="known-as-scheme">{{idScheme.name}}</div>
+            </div>
+            <a href="{{id}}" target="_blank" class="known-as-link">↗</a>
+          </div>
+          {{/each}}
+        </div>
+        {{/if}}
+      </div>
+    </div>
+    {{/if}}
+
+  </div><!-- /passport-body -->
+
