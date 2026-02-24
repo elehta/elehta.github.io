@@ -365,7 +365,7 @@
 
       const eventRows = (trace.traceabilityEvent || []).map(ev => `
         <tr>
-          <td style="font-weight:500;padding-bottom: 0">${esc(ev.linkName)}</td>
+          <td style="font-weight:500;padding-bottom: 0;padding-top: 4px;">${esc(ev.linkName)}</td>
           <td style="text-align:right;">${extLink(ev.linkURL, 'View Event')}</td>
         </tr>`).join('');
 
