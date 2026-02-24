@@ -1,0 +1,43 @@
+<style>
+  /* all CSS here */
+  .hazardous-badge { background: #ef4444; color: white; padding: 2px 8px; border-radius: 99px; }
+  .safe-badge      { background: #10b981; color: white; padding: 2px 8px; border-radius: 99px; }
+  .unknown-badge   { background: #f59e0b; color: white; padding: 2px 8px; border-radius: 99px; }
+</style>
+
+<div id="root">Loading...</div>
+
+<script>
+  // Read the credential data from the embedded data block
+  const vcScript = document.querySelector('script[type="application/vc"]');
+  const data = JSON.parse(vcScript.textContent);
+  const cs = data.credentialSubject;
+
+  // Render using plain DOM manipulation — no template engine needed
+  function hazardBadge(material) {
+    if (!('hazardous' in material)) {
+      return '<span class="unknown-badge">UNKNOWN</span>';
+    }
+    return material.hazardous
+      ? '<span class="hazardous-badge">HAZARDOUS</span>'
+      : '<span class="safe-badge">SAFE</span>';
+  }
+
+  const materialsRows = (cs.materialsProvenance || []).map(m => `
+    <tr>
+      <td>${m.name}</td>
+      <td>${m.massFraction * 100}%</td>
+      <td>${hazardBadge(m)}</td>
+      <td>${m.originCountry}</td>
+    </tr>
+  `).join('');
+
+  document.getElementById('root').innerHTML = `
+    <h2>${cs.name}</h2>
+    <p>${cs.description}</p>
+    <table>
+      <thead><tr><th>Material</th><th>Mass fraction</th><th>Hazardous</th><th>Origin</th></tr></thead>
+      <tbody>${materialsRows}</tbody>
+    </table>
+  `;
+</script>
