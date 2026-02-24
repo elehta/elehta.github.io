@@ -407,5 +407,15 @@
       </div>
     </article>`;
 
+  // Notify host page of the rendered height
+function reportHeight() {
+  const height = document.getElementById('dpp-root').scrollHeight;
+  window.parent.postMessage({ type: 'vc-render-height', height }, '*');
+}
+
+// Report after render, and again after images load
+reportHeight();
+window.addEventListener('load', reportHeight);
+  
 })();
 </script>
