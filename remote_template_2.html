@@ -370,12 +370,11 @@
         </tr>`).join('');
 
       return `
-        ${dataRow('Process Step', esc(trace.valueChainProcess))}
         ${verifiedRow}
         <table>
           <thead>
             <tr>
-              <th>Traceable Events</th>
+              <th>${esc(trace.valueChainProcess)}</th>
               <th style="text-align:right;">Event Data</th>
             </tr>
           </thead>
