@@ -106,6 +106,50 @@
 
   function pct(v) { return Math.round((v || 0) * 100); }
 
+    // ── Country code lookup ────────────────────────────────────────────────────
+  const COUNTRIES = {
+    AF:'Afghanistan',ZA:'South Africa',AL:'Albania',DZ:'Algeria',AD:'Andorra',AO:'Angola',
+    AG:'Antigua and Barbuda',SA:'Saudi Arabia',AR:'Argentina',AM:'Armenia',AU:'Australia',
+    AT:'Austria',AZ:'Azerbaijan',BS:'Bahamas',BH:'Bahrain',BD:'Bangladesh',BB:'Barbados',
+    BE:'Belgium',BZ:'Belize',BJ:'Benin',BT:'Bhutan',BY:'Belarus',BO:'Bolivia',
+    BA:'Bosnia and Herzegovina',BW:'Botswana',BR:'Brazil',BN:'Brunei',BG:'Bulgaria',
+    BF:'Burkina Faso',BI:'Burundi',CV:'Cape Verde',KH:'Cambodia',CM:'Cameroon',CA:'Canada',
+    CF:'Central African Republic',TD:'Chad',CL:'Chile',CN:'China',CY:'Cyprus',CO:'Colombia',
+    KM:'Comoros',CG:'Congo',CD:'DR Congo',KP:'North Korea',KR:'South Korea',CR:'Costa Rica',
+    CI:"Côte d'Ivoire",HR:'Croatia',CU:'Cuba',DK:'Denmark',DJ:'Djibouti',DM:'Dominica',
+    EC:'Ecuador',EG:'Egypt',SV:'El Salvador',AE:'United Arab Emirates',ER:'Eritrea',
+    SK:'Slovakia',SI:'Slovenia',ES:'Spain',US:'United States',EE:'Estonia',ET:'Ethiopia',
+    FJ:'Fiji',PH:'Philippines',FI:'Finland',FR:'France',GA:'Gabon',GM:'Gambia',GE:'Georgia',
+    GH:'Ghana',GD:'Grenada',GR:'Greece',GT:'Guatemala',GN:'Guinea',GW:'Guinea-Bissau',
+    GQ:'Equatorial Guinea',GY:'Guyana',HT:'Haiti',HN:'Honduras',HU:'Hungary',IN:'India',
+    ID:'Indonesia',IQ:'Iraq',IR:'Iran',IE:'Ireland',IS:'Iceland',IL:'Israel',IT:'Italy',
+    JM:'Jamaica',JP:'Japan',JO:'Jordan',KZ:'Kazakhstan',KE:'Kenya',KG:'Kyrgyzstan',
+    KI:'Kiribati',KW:'Kuwait',LA:'Laos',LS:'Lesotho',LV:'Latvia',LB:'Lebanon',LR:'Liberia',
+    LY:'Libya',LI:'Liechtenstein',LT:'Lithuania',LU:'Luxembourg',MG:'Madagascar',MW:'Malawi',
+    MY:'Malaysia',MV:'Maldives',ML:'Mali',MT:'Malta',MA:'Morocco',MH:'Marshall Islands',
+    MR:'Mauritania',MU:'Mauritius',MX:'Mexico',FM:'Micronesia',MD:'Moldova',MC:'Monaco',
+    MN:'Mongolia',ME:'Montenegro',MZ:'Mozambique',MM:'Myanmar',NA:'Namibia',NR:'Nauru',
+    NP:'Nepal',NI:'Nicaragua',NE:'Niger',NG:'Nigeria',NO:'Norway',NZ:'New Zealand',
+    OM:'Oman',NL:'Netherlands',PK:'Pakistan',PW:'Palau',PA:'Panama',PG:'Papua New Guinea',
+    PY:'Paraguay',PE:'Peru',PL:'Poland',PT:'Portugal',QA:'Qatar',GB:'United Kingdom',
+    DO:'Dominican Republic',CZ:'Czech Republic',MK:'North Macedonia',RO:'Romania',
+    RW:'Rwanda',RU:'Russia',KN:'Saint Kitts and Nevis',LC:'Saint Lucia',
+    VC:'Saint Vincent and the Grenadines',WS:'Samoa',SM:'San Marino',
+    ST:'São Tomé and Príncipe',SN:'Senegal',RS:'Serbia',SC:'Seychelles',SL:'Sierra Leone',
+    SG:'Singapore',SO:'Somalia',LK:'Sri Lanka',SD:'Sudan',SS:'South Sudan',SR:'Suriname',
+    SZ:'Eswatini',SE:'Sweden',CH:'Switzerland',SY:'Syria',TJ:'Tajikistan',TZ:'Tanzania',
+    TH:'Thailand',TL:'Timor-Leste',TG:'Togo',TO:'Tonga',TT:'Trinidad and Tobago',
+    TN:'Tunisia',TM:'Turkmenistan',TR:'Turkey',TV:'Tuvalu',UA:'Ukraine',UG:'Uganda',
+    UY:'Uruguay',UZ:'Uzbekistan',VU:'Vanuatu',VE:'Venezuela',VN:'Vietnam',YE:'Yemen',
+    ZM:'Zambia',ZW:'Zimbabwe'
+  };
+
+  function countryName(code) {
+    if (!code) return '';
+    const name = COUNTRIES[String(code).toUpperCase()];
+    return name ? `${name} (${code})` : code;
+  }
+  
   function scoreClass(v) {
     if (v >= 0.67) return 'score-fill-high';
     if (v >= 0.33) return 'score-fill-mid';
@@ -157,7 +201,7 @@
     let html = `<div class="field-grid">
       ${field('Product name', esc(cs.name), { full: true })}
       ${field('Manufacturer', esc(cs.producedByParty?.name))}
-      ${field('Country of production', esc(cs.countryOfProduction))}
+      ${field('Country of production', esc(countryName(cs.countryOfProduction)))}
       ${field('Production facility', esc(cs.producedAtFacility?.name))}
       ${cs.productionDate ? field('Production date', esc(cs.productionDate)) : ''}
       ${cs.batchNumber    ? field('Batch number',    esc(cs.batchNumber)) : ''}
@@ -181,7 +225,7 @@
         <td style="font-family:var(--mono);font-size:0.8rem;">${pct(m.massFraction)}%<br><span style="color:var(--muted);font-size:0.65rem;">${esc(m.massAmount?.value)} ${esc(m.massAmount?.unit)}</span></td>
         <td style="font-family:var(--mono);font-size:0.8rem;">${pct(m.recycledAmount)}%</td>
         <td>${hazardBadge(m)}</td>
-        <td style="font-family:var(--mono);font-size:0.75rem;">${esc(m.originCountry)}</td>
+        <td style="font-family:var(--mono);font-size:0.75rem;">${esc(countryName(m.originCountry))}</td>
       </tr>`).join('');
 
     return `
@@ -372,7 +416,7 @@
         </div>
         <div class="meta-cell">
           <div class="meta-cell-label">Country</div>
-          <div class="meta-cell-value">${esc(cs.countryOfProduction)}</div>
+          <div class="meta-cell-value">${esc(countryName(cs.countryOfProduction))}</div>
         </div>
         ${cs.productionDate ? `
         <div class="meta-cell">
