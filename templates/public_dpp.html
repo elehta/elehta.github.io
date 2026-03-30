@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Product Passport</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ─── Design Tokens ─────────────────────────────────────────────── */
+  :root {
+    --linen:       #F6F1E9;
+    --linen-dark:  #EDE6D8;
+    --linen-deep:  #DDD3C0;
+    --charcoal:    #1C1916;
+    --charcoal-60: #7A746C;
+    --charcoal-30: #C2BCB4;
+    --terra:       #B8613B;
+    --terra-light: #D4845F;
+    --terra-pale:  #F2E4DA;
+    --sage:        #5C7D63;
+    --sage-light:  #7FA888;
+    --sage-pale:   #DFF0E3;
+    --warm-gold:   #C09A5E;
+    --serif:       'Cormorant Garamond', Georgia, serif;
+    --sans:        'Jost', system-ui, sans-serif;
+  }
+
+  /* ─── Reset & Base ──────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    background: var(--linen);
+    color: var(--charcoal);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--terra); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ─── Keyframes ─────────────────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes dashIn {
+    from { stroke-dashoffset: var(--circ); }
+    to   { stroke-dashoffset: var(--offset); }
+  }
+
+  /* ─── Error / loading states ────────────────────────────────────── */
+  #loading {
+    padding: 48px 24px; text-align: center;
+    font-size: 0.85rem; color: var(--charcoal-60);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    animation: fadeIn 0.4s ease;
+  }
+  .error-banner {
+    padding: 48px 24px; max-width: 600px;
+    margin: 80px auto; text-align: center;
+  }
+  .error-banner h1 {
+    font-family: var(--serif); font-size: 1.8rem;
+    margin-bottom: 12px; color: var(--terra);
+  }
+  .error-banner p { font-size: 0.9rem; color: var(--charcoal-60); line-height: 1.7; }
+  .error-banner code {
+    display: block; margin-top: 16px; font-size: 0.75rem;
+    font-family: monospace; background: var(--linen-dark);
+    padding: 12px; color: var(--charcoal); word-break: break-all;
+  }
+
+  /* ─── App shell ─────────────────────────────────────────────────── */
+  #app { display: none; }
+
+  /* ─── Sticky header ─────────────────────────────────────────────── */
+  .site-header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(246,241,233,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--linen-deep);
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    animation: fadeIn 0.6s ease both;
+  }
+  .header-brand {
+    font-family: var(--serif); font-size: 1.15rem;
+    font-weight: 500; letter-spacing: 0.04em; color: var(--charcoal);
+  }
+  .header-badge {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--charcoal-60);
+  }
+  .badge-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--sage); box-shadow: 0 0 0 3px var(--sage-pale);
+  }
+
+  /* ─── Hero ──────────────────────────────────────────────────────── */
+  .hero {
+    padding: 72px 24px 56px; max-width: 900px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: end;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--terra); margin-bottom: 16px;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero-title {
+    font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; color: var(--charcoal);
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+  .hero-title em { font-style: italic; color: var(--terra); }
+  .hero-subtitle {
+    margin-top: 20px; font-size: 1rem; color: var(--charcoal-60);
+    max-width: 540px; line-height: 1.7; animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .hero-meta {
+    margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px;
+    animation: fadeUp 0.7s 0.4s ease both;
+  }
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 14px; border-radius: 99px;
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .pill-sage  { background: var(--sage-pale);  color: var(--sage); }
+  .pill-terra { background: var(--terra-pale); color: var(--terra); }
+  .pill-gold  { background: #F4EDD8; color: var(--warm-gold); }
+  .hero-gtin  { animation: fadeUp 0.7s 0.5s ease both; text-align: right; }
+  .gtin-label {
+    font-size: 0.65rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--charcoal-30); margin-bottom: 4px;
+  }
+  .gtin-value {
+    font-family: var(--serif); font-size: 1.4rem;
+    font-weight: 400; letter-spacing: 0.04em; color: var(--charcoal);
+  }
+  .gtin-sub { font-size: 0.68rem; color: var(--charcoal-60); margin-top: 4px; }
+
+  /* ─── Divider ───────────────────────────────────────────────────── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--linen-deep) 20%, var(--linen-deep) 80%, transparent);
+    margin: 0 auto; max-width: 852px;
+  }
+
+  /* ─── Sustainability band ───────────────────────────────────────── */
+  .sustain-band { background: var(--charcoal); padding: 56px 24px; }
+  .sustain-inner { max-width: 900px; margin: 0 auto; }
+  .sustain-headline {
+    font-family: var(--serif); font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 300; color: #F6F1E9; margin-bottom: 8px; line-height: 1.15;
+  }
+  .sustain-headline em { font-style: italic; color: var(--sage-light); }
+  .sustain-intro {
+    font-size: 0.88rem; color: rgba(246,241,233,0.55);
+    max-width: 560px; margin-bottom: 44px;
+  }
+  .metrics-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2px;
+  }
+  .metric-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    padding: 28px 24px; display: flex; flex-direction: column; align-items: center;
+    text-align: center; transition: background 0.25s; animation: fadeUp 0.7s ease both;
+  }
+  .metric-card:hover { background: rgba(255,255,255,0.07); }
+  .ring-wrap { position: relative; width: 80px; height: 80px; margin-bottom: 16px; }
+  .ring-wrap svg { transform: rotate(-90deg); }
+  .ring-bg { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 5; }
+  .ring-fg {
+    fill: none; stroke-width: 5; stroke-linecap: round;
+    stroke-dasharray: var(--circ); stroke-dashoffset: var(--circ);
+    animation: dashIn 1.4s cubic-bezier(0.35,0,0.1,1) forwards;
+    animation-delay: var(--delay, 0.4s);
+  }
+  .ring-center {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .ring-val {
+    font-family: var(--serif); font-size: 1.25rem;
+    font-weight: 400; color: #F6F1E9; line-height: 1;
+  }
+  .ring-unit { font-size: 0.6rem; color: rgba(246,241,233,0.5); letter-spacing: 0.05em; margin-top: 2px; }
+  .metric-label {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(246,241,233,0.55); margin-bottom: 4px;
+  }
+  .metric-note { font-size: 0.78rem; color: rgba(246,241,233,0.35); line-height: 1.4; }
+
+  /* ─── Sections ──────────────────────────────────────────────────── */
+  .section { padding: 56px 24px; max-width: 900px; margin: 0 auto; animation: fadeUp 0.7s ease both; }
+  .section-eyebrow {
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--terra); margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: var(--serif); font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 400; line-height: 1.15; margin-bottom: 28px; color: var(--charcoal);
+  }
+
+  /* ─── Facts grid ────────────────────────────────────────────────── */
+  .facts-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1px; background: var(--linen-deep); border: 1px solid var(--linen-deep);
+  }
+  .fact-cell { background: var(--linen); padding: 20px 22px; }
+  .fact-cell.full { grid-column: 1 / -1; }
+  .fact-label {
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--charcoal-60); margin-bottom: 6px;
+  }
+  .fact-value {
+    font-family: var(--serif); font-size: 1.05rem;
+    font-weight: 400; color: var(--charcoal); line-height: 1.3;
+  }
+
+  /* ─── Materials ─────────────────────────────────────────────────── */
+  .comp-bar {
+    height: 8px; border-radius: 4px;
+    background: var(--linen-deep); overflow: hidden; margin: 24px 0 8px;
+  }
+  .comp-bar-fill { height: 100%; animation: fadeIn 1.2s 0.6s ease both; }
+  .comp-legend {
+    display: flex; justify-content: space-between;
+    font-size: 0.72rem; color: var(--charcoal-60); flex-wrap: wrap; gap: 8px;
+  }
+  .comp-legend span { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+  .materials-list { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+  .material-row {
+    display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px;
+    padding: 20px 24px; background: var(--linen-dark); border-left: 3px solid var(--warm-gold);
+  }
+  .material-row.recycled { border-left-color: var(--sage); }
+  .material-name { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; margin-bottom: 4px; }
+  .material-meta { font-size: 0.78rem; color: var(--charcoal-60); }
+  .material-tag {
+    display: inline-block; font-size: 0.62rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 3px; margin-top: 6px;
+  }
+  .tag-recycled { background: var(--sage-pale); color: var(--sage); }
+  .tag-virgin   { background: #F4EDD8; color: var(--warm-gold); }
+  .fraction-bar-wrap { text-align: center; min-width: 72px; }
+  .fraction-val { font-family: var(--serif); font-size: 1.8rem; font-weight: 300; line-height: 1; color: var(--charcoal); }
+  .fraction-pct { font-size: 0.7rem; color: var(--charcoal-60); letter-spacing: 0.06em; }
+
+  /* ─── Certifications ────────────────────────────────────────────── */
+  .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .cert-card {
+    border: 1px solid var(--linen-deep); background: var(--linen); padding: 24px;
+    position: relative; overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .cert-card:hover { border-color: var(--terra-light); box-shadow: 0 6px 32px rgba(184,97,59,0.08); }
+  .cert-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: var(--terra);
+  }
+  .cert-card.sage::before { background: var(--sage); }
+  .cert-card.gold::before { background: var(--warm-gold); }
+  .cert-number { font-family: var(--serif); font-size: 0.78rem; color: var(--charcoal-30); letter-spacing: 0.06em; margin-bottom: 14px; }
+  .cert-name { font-family: var(--serif); font-size: 1.15rem; font-weight: 500; line-height: 1.25; color: var(--charcoal); margin-bottom: 10px; }
+  .cert-desc { font-size: 0.82rem; color: var(--charcoal-60); line-height: 1.6; margin-bottom: 16px; }
+  .cert-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .cert-chip {
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 3px; background: var(--linen-dark); color: var(--charcoal-60);
+  }
+  .cert-chip.green { background: var(--sage-pale); color: var(--sage); }
+  .cert-links { display: flex; flex-wrap: wrap; gap: 12px; }
+  .cert-link {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em; color: var(--terra);
+  }
+  .cert-link::after { content: '→'; }
+
+  /* ─── Packaging ─────────────────────────────────────────────────── */
+  .pack-desc {
+    font-size: 0.86rem; color: var(--charcoal-60); line-height: 1.7;
+    margin-bottom: 20px; padding: 20px; background: var(--linen-dark);
+    border-left: 3px solid var(--sage);
+  }
+  .pack-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--linen-deep); }
+  .pack-cell { background: var(--linen); padding: 18px 20px; }
+  .pack-label { font-size: 0.63rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--charcoal-60); margin-bottom: 5px; }
+  .pack-value { font-family: var(--serif); font-size: 0.95rem; color: var(--charcoal); }
+
+  /* ─── Related parties ───────────────────────────────────────────── */
+  .party-row {
+    display: flex; align-items: flex-start; gap: 20px;
+    padding: 22px 0; border-bottom: 1px solid var(--linen-deep);
+  }
+  .party-row:last-child { border-bottom: none; }
+  .party-role-badge {
+    flex-shrink: 0; width: 100px; font-size: 0.62rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--charcoal-60); padding-top: 3px;
+  }
+  .party-name { font-family: var(--serif); font-size: 1.05rem; font-weight: 500; margin-bottom: 4px; }
+  .party-detail { font-size: 0.82rem; color: var(--charcoal-60); line-height: 1.55; }
+  .party-id { margin-top: 6px; font-size: 0.7rem; color: var(--charcoal-30); font-family: monospace; word-break: break-all; }
+
+  /* ─── Verification strip ────────────────────────────────────────── */
+  .verify-strip {
+    background: var(--linen-dark);
+    border-top: 1px solid var(--linen-deep); border-bottom: 1px solid var(--linen-deep);
+    padding: 40px 24px;
+  }
+  .verify-inner { max-width: 900px; margin: 0 auto; }
+  .verify-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; margin-bottom: 18px; }
+  .verify-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .verify-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.8rem; }
+  .verify-icon {
+    width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; margin-top: 1px;
+  }
+  .icon-ok   { background: var(--sage-pale); color: var(--sage); }
+  .icon-info { background: var(--terra-pale); color: var(--terra); }
+  .verify-text { color: var(--charcoal-60); line-height: 1.5; }
+  .verify-text strong { color: var(--charcoal); font-weight: 500; }
+  .verify-id-block {
+    margin-top: 20px; padding: 14px 16px;
+    background: var(--linen); border: 1px solid var(--linen-deep);
+    font-size: 0.72rem; color: var(--charcoal-60);
+  }
+  .verify-id-block code {
+    display: block; font-size: 0.7rem; color: var(--charcoal);
+    margin-top: 4px; word-break: break-all; font-family: 'Courier New', monospace;
+  }
+
+  /* ─── Footer ────────────────────────────────────────────────────── */
+  .site-footer {
+    padding: 32px 24px; max-width: 900px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+    gap: 16px; border-top: 1px solid var(--linen-deep);
+    font-size: 0.72rem; color: var(--charcoal-30);
+  }
+  .untp-mark {
+    font-size: 0.6rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 3px 8px; border: 1px solid var(--charcoal-30); color: var(--charcoal-30); margin-right: 8px;
+  }
+
+  /* ─── Responsive ────────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .hero { grid-template-columns: 1fr; gap: 28px; }
+    .hero-gtin { text-align: left; }
+    .pack-grid { grid-template-columns: 1fr; }
+    .metrics-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Loading / error states ───────────────────────────────────── -->
+<div id="loading">Loading credential…</div>
+<div id="error" style="display:none"></div>
+
+<!-- ═══ APP SHELL — hidden until render() completes ════════════════ -->
+<div id="app">
+
+  <header class="site-header" role="banner">
+    <div class="header-brand" id="hdr-brand"></div>
+    <div class="header-badge">
+      <span class="badge-dot" aria-hidden="true"></span>
+      Digital Product Passport · UNTP v0.7.0
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div>
+        <p class="hero-eyebrow" id="hero-eyebrow"></p>
+        <h1 class="hero-title" id="hero-title"></h1>
+        <p class="hero-subtitle" id="hero-subtitle"></p>
+        <div class="hero-meta" id="hero-pills" role="list" aria-label="Product highlights"></div>
+      </div>
+      <div class="hero-gtin">
+        <p class="gtin-label" id="gtin-scheme-name">Identifier</p>
+        <p class="gtin-value" id="gtin-value"></p>
+        <p class="gtin-sub" id="gtin-sub"></p>
+      </div>
+    </section>
+
+    <div class="divider" role="separator"></div>
+
+    <section class="sustain-band" aria-labelledby="sustain-title">
+      <div class="sustain-inner">
+        <h2 class="sustain-headline" id="sustain-title">Made with <em>care</em> for what comes after.</h2>
+        <p class="sustain-intro" id="sustain-intro"></p>
+        <div class="metrics-grid" id="metrics-grid" role="list" aria-label="Sustainability metrics"></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="details-title">
+      <p class="section-eyebrow">Product Information</p>
+      <h2 class="section-title" id="details-title">Specifications &amp; Characteristics</h2>
+      <div class="facts-grid" id="facts-grid" role="table" aria-label="Product specifications"></div>
+    </section>
+
+    <div class="divider" role="separator"></div>
+
+    <section class="section" aria-labelledby="materials-title">
+      <p class="section-eyebrow">Material Composition</p>
+      <h2 class="section-title" id="materials-title">What it's made from</h2>
+      <div id="comp-bar-wrap" style="display:none">
+        <div class="comp-bar"><div class="comp-bar-fill" id="comp-bar-fill"></div></div>
+        <div class="comp-legend" id="comp-legend"></div>
+      </div>
+      <div class="materials-list" id="materials-list"></div>
+    </section>
+
+    <div class="divider" role="separator"></div>
+
+    <section class="section" aria-labelledby="certs-title">
+      <p class="section-eyebrow">Conformity Claims</p>
+      <h2 class="section-title" id="certs-title">Certifications &amp; Standards</h2>
+      <div class="cert-grid" id="cert-grid"></div>
+    </section>
+
+    <div class="divider" role="separator"></div>
+
+    <section class="section" id="packaging-section" style="display:none" aria-labelledby="pack-title">
+      <p class="section-eyebrow">Packaging</p>
+      <h2 class="section-title" id="pack-title">Designed to leave nothing behind</h2>
+      <p class="pack-desc" id="pack-desc"></p>
+      <div class="pack-grid" id="pack-grid"></div>
+    </section>
+
+    <div class="divider" id="pack-divider" role="separator" style="display:none"></div>
+
+    <section class="section" id="parties-section" style="display:none" aria-labelledby="parties-title">
+      <p class="section-eyebrow">Supply Chain</p>
+      <h2 class="section-title" id="parties-title">Who made this</h2>
+      <div id="parties-list" role="list" aria-label="Related parties"></div>
+    </section>
+
+    <div class="divider" id="parties-divider" role="separator" style="display:none"></div>
+
+    <section class="verify-strip" aria-labelledby="verify-title">
+      <div class="verify-inner">
+        <h2 class="verify-title" id="verify-title">Credential Integrity</h2>
+        <div class="verify-grid" id="verify-grid" role="list"></div>
+        <div class="verify-id-block">
+          <span>Credential ID</span>
+          <code id="cred-id"></code>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <p id="footer-copyright"></p>
+    <div>
+      <span class="untp-mark">UNTP</span>
+      <span>Digital Product Passport · v0.7.0 · Public View</span>
+    </div>
+  </footer>
+
+</div><!-- /#app -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+  CREDENTIAL DATA BLOCK
+  In production this <script> tag is injected by the identity resolver
+  or the wallet. The template reads it — the data never needs to change
+  for the template logic to work with any conformant UNTP DPP v0.7.0.
+═══════════════════════════════════════════════════════════════════ -->
+<script type="application/vc">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://vocabulary.uncefact.org/untp/0.7.0/context/"
+  ],
+  "type": ["VerifiableCredential", "DigitalProductPassport"],
+  "id": "https://vc.jfatextiles.pt/credentials/dpp/7f3a9c21-4b8d-4e72-a1f5-9e2b6c3d0f87",
+  "name": "Digital Product Passport – JFA Premium Terry Bath Towel (Public)",
+  "issuer": {
+    "type": ["CredentialIssuer"],
+    "id": "did:web:resolver.collab-cloud.eu",
+    "name": "JFA Textiles Lda",
+    "issuerAlsoKnownAs": [
+      {
+        "type": ["Party"],
+        "id": "https://eportugal.gov.pt/empresas/501234567",
+        "name": "JFA Textiles Lda",
+        "registeredId": "501234567"
+      }
+    ]
+  },
+  "validFrom": "2025-01-15T08:00:00Z",
+  "validUntil": "2030-01-15T08:00:00Z",
+  "credentialStatus": {
+    "type": "BitstringStatusListEntry",
+    "id": "https://vc.jfatextiles.pt/credentials/status/1#1042",
+    "statusPurpose": "revocation",
+    "statusListIndex": 1042,
+    "statusListCredential": "https://vc.jfatextiles.pt/credentials/status/1"
+  },
+  "credentialSubject": {
+    "type": ["Product"],
+    "id": "https://id.gs1.org/01/05601234000124",
+    "name": "JFA Premium Terry Bath Towel 70×140 cm",
+    "description": "High-quality double-loop terry bath towel made from 30% certified recycled cotton fibre and 70% premium virgin cotton. Features exceptional absorbency (600 GSM), superior softness and colourfast dyes. Safe for sensitive skin and tested for harmful substances to OEKO-TEX Standard 100 Class I.",
+    "idScheme": {
+      "type": ["IdentifierScheme"],
+      "id": "https://www.gs1.org/standards/id-keys/gtin",
+      "name": "GS1 Global Trade Item Number (GTIN-13)"
+    },
+    "modelNumber": "JFA-BTW-7014-WHT-600",
+    "batchNumber": "B2025-03-PRT-0142",
+    "itemNumber": "5601234000124",
+    "idGranularity": "model",
+    "productCategory": [
+      {
+        "type": ["Classification"],
+        "code": "26291",
+        "name": "Bed linen, table linen, toilet linen and kitchen linen, of cotton",
+        "schemeID": "https://unstats.un.org/unsd/classifications/Econ/cpc/",
+        "schemeName": "UN Central Product Classification (CPC)"
+      },
+      {
+        "type": ["Classification"],
+        "code": "6302.60",
+        "name": "Toilet linen and kitchen linen of cotton terry towelling",
+        "schemeID": "https://www.wcoomd.org/en/topics/nomenclature/hs-2022",
+        "schemeName": "Harmonized System (HS) 2022"
+      }
+    ],
+    "characteristics": {
+      "type": ["Characteristics"],
+      "fabricWeight": { "value": 600, "unit": "GRM" },
+      "pileHeight": { "value": 5, "unit": "MMT" },
+      "absorbencyRating": "Class A – High Absorbency (ISO 105-E01)",
+      "colourFastness": "Rating 4–5 (ISO 105-C06)",
+      "careInstructions": "Machine wash 60°C · Tumble dry low · Do not bleach · Do not iron the pile · Do not dry clean · First wash separately",
+      "fabricComposition": "30% Recycled Cotton Fibre, 70% Virgin Cotton",
+      "weaveType": "Terry – double-loop pile (both sides)",
+      "availableColours": ["White", "Stone Grey", "Soft Sage", "Dusty Rose", "Navy"],
+      "sizeOptions": ["30×50 cm (Guest)", "50×100 cm (Hand)", "70×140 cm (Bath)", "100×150 cm (Bath Sheet)"]
+    },
+    "dimensions": {
+      "type": ["Dimension"],
+      "weight": { "type": ["Measure"], "value": 0.59, "upperTolerance": 0.02, "lowerTolerance": 0.02, "unit": "KGM" },
+      "length": { "type": ["Measure"], "value": 1400, "upperTolerance": 10, "lowerTolerance": 10, "unit": "MMT" },
+      "width":  { "type": ["Measure"], "value": 700,  "upperTolerance": 10, "lowerTolerance": 10, "unit": "MMT" },
+      "height": { "type": ["Measure"], "value": 12,   "unit": "MMT" }
+    },
+    "producedAtFacility": {
+      "type": ["Facility"],
+      "id": "https://www.gleif.org/lei/213800PT0JFATXT0001/facilities/barcelos-plant-01",
+      "name": "JFA Textiles – Barcelos Manufacturing Plant",
+      "registeredId": "FAC-PT-2019-00142"
+    },
+    "productionDate": "2025-03-10",
+    "countryOfProduction": {
+      "type": ["Country"],
+      "countryCode": "PT",
+      "countryName": "Portugal"
+    },
+    "materialProvenance": [
+      {
+        "type": ["Material"],
+        "name": "Recycled Cotton Fibre (post-industrial, GRS certified)",
+        "originCountry": { "type": ["Country"], "countryCode": "PT", "countryName": "Portugal" },
+        "materialType": {
+          "type": ["Classification"],
+          "code": "26110", "name": "Cotton yarn and thread",
+          "schemeID": "https://unstats.un.org/unsd/classifications/Econ/cpc/",
+          "schemeName": "UN Central Product Classification (CPC)"
+        },
+        "massFraction": 0.30,
+        "mass": { "type": ["Measure"], "value": 177, "unit": "GRM" },
+        "recycledMassFraction": 1.0,
+        "hazardous": false
+      },
+      {
+        "type": ["Material"],
+        "name": "Virgin Cotton Fibre (long-staple, Better Cotton Initiative)",
+        "originCountry": { "type": ["Country"], "countryCode": "IN", "countryName": "India" },
+        "materialType": {
+          "type": ["Classification"],
+          "code": "01921", "name": "Raw cotton, not carded or combed",
+          "schemeID": "https://unstats.un.org/unsd/classifications/Econ/cpc/",
+          "schemeName": "UN Central Product Classification (CPC)"
+        },
+        "massFraction": 0.70,
+        "mass": { "type": ["Measure"], "value": 413, "unit": "GRM" },
+        "recycledMassFraction": 0.0,
+        "hazardous": false
+      }
+    ],
+    "packaging": {
+      "type": ["Package"],
+      "description": "Plastic-free retail packaging: FSC-certified recycled cardboard belly band with printed product information in water-based inks, enclosed in a recycled kraft paper bag with cotton rope handle. No plastic film or ties used.",
+      "dimensions": {
+        "type": ["Dimension"],
+        "weight": { "type": ["Measure"], "value": 0.045, "unit": "KGM" },
+        "length": { "type": ["Measure"], "value": 300, "unit": "MMT" },
+        "width":  { "type": ["Measure"], "value": 150, "unit": "MMT" },
+        "height": { "type": ["Measure"], "value": 80,  "unit": "MMT" }
+      },
+      "materialUsed": [
+        {
+          "type": ["Material"],
+          "name": "FSC-Certified Recycled Cardboard (belly band)",
+          "originCountry": { "type": ["Country"], "countryCode": "PT", "countryName": "Portugal" },
+          "materialType": {
+            "type": ["Classification"], "code": "32150",
+            "name": "Cartons, boxes and cases of non-corrugated paperboard",
+            "schemeID": "https://unstats.un.org/unsd/classifications/Econ/cpc/",
+            "schemeName": "UN Central Product Classification (CPC)"
+          },
+          "massFraction": 0.78,
+          "mass": { "type": ["Measure"], "value": 35.1, "unit": "GRM" },
+          "recycledMassFraction": 0.80,
+          "hazardous": false
+        },
+        {
+          "type": ["Material"],
+          "name": "Recycled Kraft Paper (outer bag)",
+          "originCountry": { "type": ["Country"], "countryCode": "PT", "countryName": "Portugal" },
+          "materialType": {
+            "type": ["Classification"], "code": "32110", "name": "Kraft paper and paperboard",
+            "schemeID": "https://unstats.un.org/unsd/classifications/Econ/cpc/",
+            "schemeName": "UN Central Product Classification (CPC)"
+          },
+          "massFraction": 0.18,
+          "mass": { "type": ["Measure"], "value": 8.1, "unit": "GRM" },
+          "recycledMassFraction": 0.60,
+          "hazardous": false
+        },
+        {
+          "type": ["Material"],
+          "name": "Natural Cotton Rope (handle)",
+          "originCountry": { "type": ["Country"], "countryCode": "PT", "countryName": "Portugal" },
+          "materialType": {
+            "type": ["Classification"], "code": "26110", "name": "Cotton yarn and thread",
+            "schemeID": "https://unstats.un.org/unsd/classifications/Econ/cpc/",
+            "schemeName": "UN Central Product Classification (CPC)"
+          },
+          "massFraction": 0.04,
+          "mass": { "type": ["Measure"], "value": 1.8, "unit": "GRM" },
+          "recycledMassFraction": 0.0,
+          "hazardous": false
+        }
+      ]
+    },
+    "relatedParty": [
+      {
+        "type": ["PartyRole"],
+        "role": "manufacturer",
+        "party": {
+          "type": ["Party"],
+          "id": "https://www.gleif.org/lei/213800PT0JFATXT0001",
+          "name": "JFA Textiles Lda",
+          "description": "Portuguese textile manufacturer established in 1987, specialising in high-quality terry and woven fabric household goods for retail and hospitality markets.",
+          "registeredId": "501234567",
+          "idScheme": { "type": ["IdentifierScheme"], "id": "https://www.gleif.org/", "name": "Global Legal Entity Identifier Foundation (GLEIF LEI)" },
+          "registrationCountry": { "type": ["Country"], "countryCode": "PT", "countryName": "Portugal" },
+          "partyAddress": {
+            "type": ["Address"],
+            "streetAddress": "Rua da Indústria Têxtil 45",
+            "postalCode": "4750-812",
+            "addressLocality": "Barcelos",
+            "addressRegion": "Braga",
+            "addressCountry": { "type": ["Country"], "countryCode": "PT", "countryName": "Portugal" }
+          },
+          "organisationWebsite": "https://www.jfatextiles.pt"
+        }
+      },
+      {
+        "type": ["PartyRole"],
+        "role": "brandOwner",
+        "party": {
+          "type": ["Party"],
+          "id": "https://www.gleif.org/lei/213800PT0JFATXT0001",
+          "name": "JFA Textiles Lda",
+          "description": "Brand owner of the JFA Premium home textile product range.",
+          "registeredId": "501234567",
+          "registrationCountry": { "type": ["Country"], "countryCode": "PT", "countryName": "Portugal" },
+          "organisationWebsite": "https://www.jfatextiles.pt"
+        }
+      }
+    ],
+    "performanceClaim": [
+      {
+        "type": ["Claim"],
+        "id": "https://vc.jfatextiles.pt/claims/product/oekotex-100-class-i-2025",
+        "name": "OEKO-TEX® Standard 100 — Product Class I",
+        "description": "All product components independently tested for 100+ harmful substances. Class I is the most stringent testing grade, suitable for items with extensive skin contact including babies. Certified annually with unannounced audits.",
+        "claimDate": "2025-01-10",
+        "applicablePeriod": { "type": ["Period"], "startDate": "2025-01-10", "endDate": "2026-01-09" },
+        "referenceStandard": [
+          { "type": ["Standard"], "id": "https://www.oeko-tex.com/en/our-standards/oeko-tex-standard-100", "name": "OEKO-TEX Standard 100 (Edition 2025)" }
+        ],
+        "referenceCriteria": [
+          { "type": ["Criterion"], "id": "https://www.oeko-tex.com/en/our-standards/oeko-tex-standard-100", "name": "OEKO-TEX Standard 100 Class I – Harmful Substance Limit Values" }
+        ],
+        "claimedPerformance": [
+          {
+            "type": ["Performance"],
+            "score": { "type": ["Score"], "code": "CLASS-I", "rank": 1, "definition": "Most stringent OEKO-TEX 100 class. All components comply with limit values for extensive skin contact." }
+          }
+        ],
+        "evidence": [
+          { "type": ["Link"], "linkURL": "https://www.oeko-tex.com/certificate/verify/PT-JFA-2025-00142", "linkName": "Verify certificate online", "mediaType": "text/html" }
+        ],
+        "conformityTopic": {
+          "type": ["ConformityTopic"],
+          "id": "https://vocabulary.uncefact.org/conformityTopic#product.safety",
+          "name": "Product Safety"
+        }
+      },
+      {
+        "type": ["Claim"],
+        "id": "https://vc.jfatextiles.pt/claims/product/grs-v4-recycled-content-2025",
+        "name": "Global Recycled Standard (GRS) v4.0 — 30% Recycled Cotton",
+        "description": "Full-scope GRS v4.0 certificate covering yarn spinning, weaving, dyeing and finishing. 30% of fibre by mass is post-industrial recycled cotton with full chain-of-custody traceability. Issued by Control Union Certifications.",
+        "claimDate": "2025-01-15",
+        "applicablePeriod": { "type": ["Period"], "startDate": "2025-01-01", "endDate": "2025-12-31" },
+        "referenceStandard": [
+          { "type": ["Standard"], "id": "https://textileexchange.org/standards/recycled-claim-standard-global-recycled-standard/", "name": "Global Recycled Standard (GRS) version 4.0" }
+        ],
+        "referenceCriteria": [
+          { "type": ["Criterion"], "id": "https://textileexchange.org/wp-content/uploads/2017/06/GRS_v4.0.pdf", "name": "GRS v4.0 – Recycled Input Requirements and Chain of Custody" }
+        ],
+        "claimedPerformance": [
+          {
+            "type": ["Performance"],
+            "metric": { "type": ["PerformanceMetric"], "id": "https://textileexchange.org/standards/grs/metrics/recycled-fibre-mass-fraction", "name": "Recycled fibre mass fraction in finished product" },
+            "measure": { "type": ["Measure"], "value": 0.30, "unit": "P1" },
+            "score": { "type": ["Score"], "code": "GRS-FULL-SCOPE", "rank": 1, "definition": "Full-scope GRS v4.0 certificate. Recycled content exceeds the 20% minimum threshold." }
+          }
+        ],
+        "evidence": [
+          { "type": ["Link"], "linkURL": "https://www.controlunion.com/certificate/verify/PT-2025-GRS-00089", "linkName": "Verify certificate online", "mediaType": "text/html" }
+        ],
+        "conformityTopic": {
+          "type": ["ConformityTopic"],
+          "id": "https://vocabulary.uncefact.org/conformityTopic#environment.circularEconomy",
+          "name": "Environment – Circular Economy"
+        }
+      },
+      {
+        "type": ["Claim"],
+        "id": "https://vc.jfatextiles.pt/claims/product/carbon-footprint-2024-lca",
+        "name": "Product Carbon Footprint — ISO 14067:2018",
+        "description": "LCA-based carbon footprint of 4.8 kg CO₂e per kg of finished product (cradle-to-gate), verified by Bureau Veritas. The 30% recycled cotton content contributes an estimated 18% reduction vs. an all-virgin equivalent.",
+        "claimDate": "2025-01-15",
+        "applicablePeriod": { "type": ["Period"], "startDate": "2024-01-01", "endDate": "2024-12-31" },
+        "referenceStandard": [
+          { "type": ["Standard"], "id": "https://www.iso.org/standard/71206.html", "name": "ISO 14067:2018 – Carbon footprint of products" }
+        ],
+        "referenceCriteria": [
+          { "type": ["Criterion"], "id": "https://www.iso.org/standard/71206.html", "name": "ISO 14067:2018 – Quantification requirements" }
+        ],
+        "claimedPerformance": [
+          {
+            "type": ["Performance"],
+            "metric": { "type": ["PerformanceMetric"], "id": "https://vocabulary.uncefact.org/metrics/GHG-emissions-intensity-per-kg-product", "name": "GHG emissions intensity – kg CO₂e per kg finished product" },
+            "measure": { "type": ["Measure"], "value": 4.8, "upperTolerance": 0.35, "lowerTolerance": 0.35, "unit": "KGM" }
+          },
+          {
+            "type": ["Performance"],
+            "metric": { "type": ["PerformanceMetric"], "id": "https://vocabulary.uncefact.org/metrics/freshwater-consumption-intensity-per-kg", "name": "Freshwater consumption intensity – L per kg finished product" },
+            "measure": { "type": ["Measure"], "value": 62.5, "unit": "LTR" }
+          },
+          {
+            "type": ["Performance"],
+            "metric": { "type": ["PerformanceMetric"], "id": "https://vocabulary.uncefact.org/metrics/renewable-energy-fraction-manufacturing", "name": "Renewable energy share in manufacturing operations" },
+            "measure": { "type": ["Measure"], "value": 0.78, "unit": "P1" }
+          }
+        ],
+        "evidence": [
+          { "type": ["Link"], "linkURL": "https://vc.jfatextiles.pt/docs/lca-report-bath-towel-2024-public-summary.pdf", "linkName": "LCA public summary (PDF)", "mediaType": "application/pdf" }
+        ],
+        "conformityTopic": {
+          "type": ["ConformityTopic"],
+          "id": "https://vocabulary.uncefact.org/conformityTopic#environment.emissions",
+          "name": "Environment – GHG Emissions"
+        }
+      }
+    ]
+  }
+}
+</script>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+  RENDER SCRIPT
+  Reads the <script type="application/vc"> data block and builds
+  the full page DOM from it. No data is hardcoded here — swap the
+  data block above for any conformant UNTP DPP v0.7.0 credential
+  and this script will render it correctly.
+═══════════════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ─── Small DOM/formatting helpers ──────────────────────────────── */
+
+  function el(id) { return document.getElementById(id); }
+
+  function setText(id, val) {
+    const node = el(id);
+    if (node && val != null) node.textContent = String(val);
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    try {
+      return new Date(iso).toLocaleDateString('en-GB', {
+        day: 'numeric', month: 'long', year: 'numeric'
+      });
+    } catch (_) { return iso; }
+  }
+
+  // UNECE Rec20 code → human label overrides (extend as needed)
+  const UNIT = { KGM: 'kg', GRM: 'g', MMT: 'mm', LTR: 'L', P1: '' };
+  function ul(code) { return UNIT[code] ?? code; }
+
+  function fmtMeasure(m) {
+    if (!m) return '—';
+    const tol = m.upperTolerance != null ? ` ± ${m.upperTolerance}` : '';
+    return `${m.value}${tol} ${ul(m.unit)}`.trim();
+  }
+
+  // Safely escape text before inserting as innerHTML attribute values
+  function esc(str) {
+    return String(str ?? '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function addFactCell(grid, label, value, spanFull) {
+    const div = document.createElement('div');
+    div.className = 'fact-cell' + (spanFull ? ' full' : '');
+    div.innerHTML = `<p class="fact-label">${esc(label)}</p><p class="fact-value">${esc(value || '—')}</p>`;
+    grid.appendChild(div);
+  }
+
+  /* ─── SVG ring metric card ───────────────────────────────────────
+     r = 33  →  circumference = 2π×33 ≈ 207.3
+     pct: 0–1 proportion of the ring to fill (1 = full circle)    */
+  const CIRC = 207.3;
+
+  function ringCard({ valDisplay, unitDisplay, label, note, pct, color, delay }) {
+    const clampedPct = Math.max(0, Math.min(1, pct));
+    const offset = (CIRC * (1 - clampedPct)).toFixed(1);
+    return `
+      <div class="metric-card" role="listitem">
+        <div class="ring-wrap" aria-hidden="true">
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle class="ring-bg" cx="40" cy="40" r="33"/>
+            <circle class="ring-fg" cx="40" cy="40" r="33"
+              style="--circ:${CIRC};--offset:${offset};--delay:${delay}s;stroke:${esc(color)}"/>
+          </svg>
+          <div class="ring-center">
+            <span class="ring-val">${esc(valDisplay)}</span>
+            <span class="ring-unit">${esc(unitDisplay)}</span>
+          </div>
+        </div>
+        <p class="metric-label">${esc(label)}</p>
+        <p class="metric-note">${esc(note)}</p>
+      </div>`;
+  }
+
+  /* ─── Metric extraction config ────────────────────────────────────
+     For each sustainability metric we care about, describe:
+       - how to find it in claimedPerformance (by metric id/name fragment)
+       - how to derive a 0–1 ring fill (pct) from the raw measure value
+       - display formatting                                           */
+  const METRIC_CONFIGS = [
+    {
+      match: m => /GHG|emissions.intensity/i.test(m.metric?.id + ' ' + m.metric?.name),
+      label: 'Carbon Footprint',
+      note: 'Per kg finished product · cradle-to-gate',
+      color: '#7FA888',
+      // ring shows how far below a ~8 kg CO₂e/kg conventional-cotton benchmark we are
+      build: m => ({
+        valDisplay: m.measure.value,
+        unitDisplay: `kg CO₂e/kg`,
+        pct: 1 - m.measure.value / 8
+      })
+    },
+    {
+      match: m => /freshwater|water.consumption/i.test(m.metric?.id + ' ' + m.metric?.name),
+      label: 'Freshwater Use',
+      note: 'Per kg finished product · cradle-to-gate',
+      color: '#C09A5E',
+      // ring shows how far below a ~110 L/kg benchmark we are
+      build: m => ({
+        valDisplay: m.measure.value,
+        unitDisplay: `L/kg`,
+        pct: 1 - m.measure.value / 110
+      })
+    },
+    {
+      match: m => /renewable.energy/i.test(m.metric?.id + ' ' + m.metric?.name),
+      label: 'Renewable Energy',
+      note: 'Share of manufacturing energy',
+      color: '#7FA888',
+      build: m => ({
+        valDisplay: `${Math.round(m.measure.value * 100)}%`,
+        unitDisplay: 'renew.',
+        pct: m.measure.value
+      })
+    },
+    {
+      match: m => /recycled.fibre|recycled-fibre/i.test(m.metric?.id + ' ' + m.metric?.name),
+      label: 'Recycled Fibre',
+      note: 'By mass fraction · certified',
+      color: '#C09A5E',
+      build: m => ({
+        valDisplay: `${Math.round(m.measure.value * 100)}%`,
+        unitDisplay: 'recycled',
+        pct: m.measure.value
+      })
+    }
+  ];
+
+  /* ─── Cert card accent colours ───────────────────────────────────── */
+  const CERT_ACCENTS = ['', 'sage', 'gold']; // cycles for claim index 0, 1, 2, …
+
+  /* ══════════════════════════════════════════════════════════════════
+     MAIN RENDER
+  ══════════════════════════════════════════════════════════════════ */
+  function render(vc) {
+    const cs     = vc.credentialSubject;
+    const ch     = cs.characteristics || {};
+    const dim    = cs.dimensions      || {};
+    const fac    = cs.producedAtFacility || {};
+    const cop    = cs.countryOfProduction || {};
+    const issuer = vc.issuer || {};
+    const claims = cs.performanceClaim || [];
+    const mats   = cs.materialProvenance || [];
+
+    /* ── Header ──────────────────────────────────────────────────── */
+    setText('hdr-brand', issuer.name || 'Digital Product Passport');
+
+    /* ── Hero ────────────────────────────────────────────────────── */
+    const catLabel   = (cs.productCategory || []).map(c => c.name).join(' · ') || 'Product';
+    const madeIn     = cop.countryName ? `Made in ${cop.countryName}` : '';
+    setText('hero-eyebrow', [catLabel, madeIn].filter(Boolean).join(' · '));
+
+    // Split product name roughly in half at a word boundary for the italic second line
+    const fullName = cs.name || vc.name || 'Product';
+    const words    = fullName.split(' ');
+    const mid      = Math.ceil(words.length / 2);
+    const line1    = words.slice(0, mid).join(' ');
+    const line2    = words.slice(mid).join(' ');
+    el('hero-title').innerHTML = line2
+      ? `${esc(line1)}<br><em>${esc(line2)}</em>`
+      : esc(line1);
+
+    setText('hero-subtitle', cs.description || '');
+
+    // Pills: derive from material provenance + claim conformity topics
+    const pills = el('hero-pills');
+    const recycledMat = mats.find(m => (m.recycledMassFraction || 0) > 0);
+    if (recycledMat) {
+      pills.innerHTML += `<span class="hero-pill pill-sage" role="listitem">✓ ${Math.round(recycledMat.massFraction * 100)}% Recycled Fibre</span>`;
+    }
+    claims.forEach(c => {
+      const topic = (c.conformityTopic?.name || '').toLowerCase();
+      const stdShort = (c.referenceStandard?.[0]?.name || '').split(/[–(]/)[0].trim();
+      if (/safety/.test(topic) && stdShort)
+        pills.innerHTML += `<span class="hero-pill pill-terra" role="listitem">✓ ${esc(stdShort)}</span>`;
+      if (/circular/.test(topic))
+        pills.innerHTML += `<span class="hero-pill pill-gold"  role="listitem">✓ Circular Economy Certified</span>`;
+    });
+    if ((cs.packaging?.description || '').toLowerCase().includes('plastic-free'))
+      pills.innerHTML += `<span class="hero-pill pill-sage" role="listitem">✓ Plastic-Free Packaging</span>`;
+
+    // GTIN / identifier block
+    setText('gtin-scheme-name', cs.idScheme?.name?.replace(/\(.*\)/, '').trim() || 'Identifier');
+    setText('gtin-value', cs.itemNumber || cs.batchNumber || cs.id || '—');
+    const parenMatch = cs.idScheme?.name?.match(/\(([^)]+)\)/);
+    const granLabel  = cs.idGranularity ? `${cs.idGranularity} level` : '';
+    setText('gtin-sub', [parenMatch?.[1], granLabel].filter(Boolean).join(' · '));
+
+    /* ── Sustainability metrics ──────────────────────────────────── */
+
+    // Collect all Performance objects that have a numeric measure + metric
+    const allPerfs = [];
+    claims.forEach(c => {
+      (c.claimedPerformance || []).forEach(p => {
+        if (p.measure && p.metric) allPerfs.push(p);
+      });
+    });
+
+    const metricsGrid = el('metrics-grid');
+    let delay = 0.30;
+
+    METRIC_CONFIGS.forEach(cfg => {
+      const perf = allPerfs.find(p => cfg.match(p));
+      if (!perf) return;
+      const d = cfg.build(perf);
+      metricsGrid.innerHTML += ringCard({ ...d, label: cfg.label, note: cfg.note, color: cfg.color, delay });
+      delay += 0.15;
+    });
+
+    // Recycled-fibre fallback: synthesise from materialProvenance if no dedicated metric claim exists
+    const hasRecycledMetric = allPerfs.some(p => /recycled.fibre/i.test((p.metric?.id || '') + (p.metric?.name || '')));
+    if (!hasRecycledMetric && mats.length) {
+      const totalRecycled = mats.reduce((sum, m) => sum + m.massFraction * (m.recycledMassFraction || 0), 0);
+      if (totalRecycled > 0) {
+        metricsGrid.innerHTML += ringCard({
+          valDisplay: `${Math.round(totalRecycled * 100)}%`,
+          unitDisplay: 'recycled',
+          label: 'Recycled Fibre', note: 'By mass fraction · certified',
+          pct: totalRecycled, color: '#C09A5E', delay
+        });
+      }
+    }
+
+    // Sustainability intro: look for an LCA/ISO-14067 claim for the data-year
+    const lcaClaim = claims.find(c =>
+      JSON.stringify(c.referenceStandard || '').includes('14067') ||
+      JSON.stringify(c.referenceCriteria || '').includes('14067')
+    );
+    setText('sustain-intro',
+      lcaClaim?.applicablePeriod
+        ? `Independently assessed to ISO 14067:2018. All figures are cradle-to-gate and third-party verified. Data year: ${lcaClaim.applicablePeriod.startDate?.slice(0, 4)}.`
+        : 'Independently assessed sustainability metrics for this product.'
+    );
+
+    /* ── Product facts grid ──────────────────────────────────────── */
+    const fg = el('facts-grid');
+    if (cs.modelNumber)       addFactCell(fg, 'Model Number',        cs.modelNumber);
+    if (ch.fabricWeight)      addFactCell(fg, 'Fabric Weight',       `${ch.fabricWeight.value} ${ul(ch.fabricWeight.unit)}`);
+    if (dim.length && dim.width)
+                              addFactCell(fg, 'Size',                `${dim.length.value / 10} × ${dim.width.value / 10} cm`);
+    if (dim.weight)           addFactCell(fg, 'Weight (each)',        fmtMeasure(dim.weight));
+    if (ch.pileHeight)        addFactCell(fg, 'Pile Height',         `${ch.pileHeight.value} ${ul(ch.pileHeight.unit)}`);
+    if (ch.weaveType)         addFactCell(fg, 'Weave Type',          ch.weaveType);
+    if (ch.absorbencyRating)  addFactCell(fg, 'Absorbency',          ch.absorbencyRating);
+    if (ch.colourFastness)    addFactCell(fg, 'Colour Fastness',     ch.colourFastness);
+    if (ch.availableColours)  addFactCell(fg, 'Available Colours',   ch.availableColours.join(' · '));
+    if (cs.batchNumber)       addFactCell(fg, 'Batch Number',        cs.batchNumber);
+    if (cs.productionDate)    addFactCell(fg, 'Production Date',     fmtDate(cs.productionDate));
+    if (cop.countryName)      addFactCell(fg, 'Country of Production', `${cop.countryName} (${cop.countryCode})`);
+    if (fac.name)             addFactCell(fg, 'Production Facility', fac.name);
+    if (ch.careInstructions)  addFactCell(fg, 'Care Instructions',   ch.careInstructions, true);
+    if (cs.productCategory?.length) {
+      addFactCell(fg, 'Classification',
+        cs.productCategory.map(c => `${c.schemeName}: ${c.code} – ${c.name}`).join(' / '),
+        true
+      );
+    }
+
+    /* ── Material composition ────────────────────────────────────── */
+    if (mats.length) {
+      el('comp-bar-wrap').style.display = 'block';
+      // Build gradient: each material fills its massFraction slice
+      let pos = 0;
+      const gradientStops = mats.map(m => {
+        const color = (m.recycledMassFraction || 0) > 0 ? 'var(--sage)' : 'var(--warm-gold)';
+        const from  = (pos * 100).toFixed(1) + '%';
+        pos += m.massFraction;
+        const to    = (pos * 100).toFixed(1) + '%';
+        return `${color} ${from}, ${color} ${to}`;
+      }).join(', ');
+      el('comp-bar-fill').style.background = `linear-gradient(90deg, ${gradientStops})`;
+
+      el('comp-legend').innerHTML = mats.map(m => {
+        const color = (m.recycledMassFraction || 0) > 0 ? 'var(--sage)' : 'var(--warm-gold)';
+        const shortName = m.name.split('(')[0].trim();
+        return `<span><span class="legend-dot" style="background:${color}"></span>${Math.round(m.massFraction * 100)}% ${esc(shortName)}</span>`;
+      }).join('');
+    }
+
+    const matList = el('materials-list');
+    mats.forEach(m => {
+      const isRecycled  = (m.recycledMassFraction || 0) > 0;
+      const recycledPct = isRecycled ? Math.round(m.recycledMassFraction * 100) : 0;
+      const shortName   = m.name.split('(')[0].trim();
+      const massStr     = m.mass ? ` · ${fmtMeasure(m.mass)}` : '';
+      const tagHtml     = isRecycled
+        ? `<span class="material-tag tag-recycled">${recycledPct}% Recycled · ${esc(m.materialType?.name || '')}</span>`
+        : `<span class="material-tag tag-virgin">Virgin Fibre · ${esc(m.originCountry?.countryName || '')}</span>`;
+
+      matList.innerHTML += `
+        <div class="material-row ${isRecycled ? 'recycled' : ''}" role="article">
+          <div>
+            <p class="material-name">${esc(shortName)}</p>
+            <p class="material-meta">Origin: ${esc(m.originCountry?.countryName || '—')} (${esc(m.originCountry?.countryCode || '?')})${esc(massStr)}</p>
+            ${tagHtml}
+          </div>
+          <div class="fraction-bar-wrap">
+            <p class="fraction-val">${Math.round(m.massFraction * 100)}</p>
+            <p class="fraction-pct">% by mass</p>
+          </div>
+        </div>`;
+    });
+
+    /* ── Certifications / performance claims ─────────────────────── */
+    const certGrid = el('cert-grid');
+    claims.forEach((claim, idx) => {
+      const accentClass = CERT_ACCENTS[idx % CERT_ACCENTS.length];
+      const topic  = claim.conformityTopic?.name || 'Conformity';
+      const period = claim.applicablePeriod
+        ? `${fmtDate(claim.applicablePeriod.startDate)} – ${fmtDate(claim.applicablePeriod.endDate)}`
+        : (claim.claimDate ? `Dated ${fmtDate(claim.claimDate)}` : '');
+      const scoreChip = (claim.claimedPerformance || [])
+        .flatMap(p => p.score ? [`Score: ${p.score.code}`] : [])
+        .join(' · ');
+      const stdName = [
+        ...(claim.referenceStandard  || []).map(s => s.name.split('(')[0].trim()),
+        ...(claim.referenceRegulation || []).map(r => r.name.split('(')[0].trim())
+      ].join('; ');
+      const evidenceHtml = (claim.evidence || [])
+        .map(e => `<a class="cert-link" href="${esc(e.linkURL)}" target="_blank" rel="noopener">${esc(e.linkName)}</a>`)
+        .join('');
+
+      certGrid.innerHTML += `
+        <article class="cert-card ${accentClass}" aria-labelledby="cert-name-${idx}">
+          <p class="cert-number">Claim ${idx + 1} of ${claims.length}</p>
+          <h3 class="cert-name" id="cert-name-${idx}">${esc(claim.name)}</h3>
+          <p class="cert-desc">${esc(claim.description || '')}</p>
+          <div class="cert-meta">
+            <span class="cert-chip green">${esc(topic)}</span>
+            ${period   ? `<span class="cert-chip">${esc(period)}</span>`   : ''}
+            ${scoreChip ? `<span class="cert-chip">${esc(scoreChip)}</span>` : ''}
+            ${stdName   ? `<span class="cert-chip">${esc(stdName)}</span>`   : ''}
+          </div>
+          <div class="cert-links">${evidenceHtml}</div>
+        </article>`;
+    });
+
+    /* ── Packaging ───────────────────────────────────────────────── */
+    const pkg = cs.packaging;
+    if (pkg) {
+      el('packaging-section').style.display = '';
+      el('pack-divider').style.display      = '';
+      setText('pack-desc', pkg.description || '');
+
+      const pg = el('pack-grid');
+
+      const addPackCell = (lbl, val) => {
+        const div = document.createElement('div');
+        div.className = 'pack-cell';
+        div.innerHTML = `<p class="pack-label">${esc(lbl)}</p><p class="pack-value">${esc(val)}</p>`;
+        pg.appendChild(div);
+      };
+
+      if (pkg.dimensions?.weight) addPackCell('Packaging weight', fmtMeasure(pkg.dimensions.weight));
+      if (pkg.dimensions?.length && pkg.dimensions?.width && pkg.dimensions?.height) {
+        const d = pkg.dimensions;
+        addPackCell('Packed dimensions', `${d.length.value} × ${d.width.value} × ${d.height.value} mm`);
+      }
+      (pkg.materialUsed || []).forEach(m => {
+        const recycledPct = Math.round((m.recycledMassFraction || 0) * 100);
+        addPackCell(
+          m.name.split('(')[0].trim(),
+          `${Math.round(m.massFraction * 100)}% of pack weight · ${recycledPct}% recycled content`
+        );
+      });
+    }
+
+    /* ── Related parties ─────────────────────────────────────────── */
+    const parties = cs.relatedParty || [];
+    if (parties.length) {
+      el('parties-section').style.display = '';
+      el('parties-divider').style.display = '';
+      const pList = el('parties-list');
+
+      parties.forEach(pr => {
+        const p = pr.party || {};
+        const addr = p.partyAddress
+          ? [p.partyAddress.streetAddress, p.partyAddress.postalCode + ' ' + p.partyAddress.addressLocality,
+             p.partyAddress.addressRegion, p.partyAddress.addressCountry?.countryName].filter(Boolean).join(', ')
+          : (p.registrationCountry?.countryName || '');
+        const webLink = p.organisationWebsite
+          ? `<a href="${esc(p.organisationWebsite)}" target="_blank" rel="noopener">${esc(p.organisationWebsite.replace(/^https?:\/\//, ''))}</a>`
+          : '';
+        const idSchemeLabel = p.idScheme?.name ? `${esc(p.idScheme.name)}: ` : '';
+        const entityLink    = p.id
+          ? `<a href="${esc(p.id)}" target="_blank" rel="noopener">${esc(p.id)}</a>`
+          : '';
+
+        pList.innerHTML += `
+          <div class="party-row" role="listitem">
+            <p class="party-role-badge">${esc(pr.role)}</p>
+            <div>
+              <p class="party-name">${esc(p.name)}</p>
+              <p class="party-detail">
+                ${p.description ? esc(p.description) + '<br>' : ''}
+                ${esc(addr)}${webLink ? ' · ' + webLink : ''}
+              </p>
+              <p class="party-id">${idSchemeLabel}${esc(p.registeredId || '')} ${entityLink}</p>
+            </div>
+          </div>`;
+      });
+    }
+
+    /* ── Verification strip ──────────────────────────────────────── */
+    const vg = el('verify-grid');
+    vg.innerHTML = `
+      <div class="verify-item" role="listitem">
+        <div class="verify-icon icon-ok">✓</div>
+        <p class="verify-text"><strong>Verifiable Credential</strong><br>W3C VCDM 2.0 · UNTP DPP v0.7.0</p>
+      </div>
+      <div class="verify-item" role="listitem">
+        <div class="verify-icon icon-ok">✓</div>
+        <p class="verify-text"><strong>Issuer</strong><br>${esc(issuer.name || '—')}<br>
+          <small style="font-family:monospace;font-size:0.68rem">${esc(issuer.id || '—')}</small></p>
+      </div>
+      <div class="verify-item" role="listitem">
+        <div class="verify-icon icon-ok">✓</div>
+        <p class="verify-text"><strong>Valid from</strong><br>${fmtDate(vc.validFrom)}
+          ${vc.validUntil ? ' · Expires ' + fmtDate(vc.validUntil) : ''}</p>
+      </div>`;
+
+    if (vc.credentialStatus) {
+      const s = vc.credentialStatus;
+      vg.innerHTML += `
+        <div class="verify-item" role="listitem">
+          <div class="verify-icon icon-info">i</div>
+          <p class="verify-text"><strong>Status</strong><br>${esc(s.statusPurpose)} list · Entry #${esc(String(s.statusListIndex))}</p>
+        </div>`;
+    }
+
+    setText('cred-id', vc.id || '—');
+
+    /* ── Footer ──────────────────────────────────────────────────── */
+    const year = new Date(vc.validFrom).getFullYear() || new Date().getFullYear();
+    setText('footer-copyright', `© ${year} ${issuer.name || ''}`);
+
+    /* ── Reveal ──────────────────────────────────────────────────── */
+    el('loading').style.display = 'none';
+    el('app').style.display     = 'block';
+  }
+
+  /* ─── Bootstrap ───────────────────────────────────────────────────── */
+  function boot() {
+    try {
+      const vcScript = document.querySelector('script[type="application/vc"]');
+      if (!vcScript) throw new Error('No credential data block found. Expected a <script type="application/vc"> element.');
+
+      const vc = JSON.parse(vcScript.textContent);
+
+      if (!vc.credentialSubject)
+        throw new Error('Credential data is missing the required "credentialSubject" field.');
+      if (!Array.isArray(vc.type) || !vc.type.includes('DigitalProductPassport'))
+        throw new Error('Credential type does not include "DigitalProductPassport".');
+
+      render(vc);
+
+    } catch (err) {
+      el('loading').style.display = 'none';
+      const errDiv = el('error');
+      errDiv.style.display = 'block';
+      errDiv.innerHTML = `
+        <div class="error-banner">
+          <h1>Unable to display passport</h1>
+          <p>The credential data could not be loaded or parsed. Please ensure a valid UNTP
+             Digital Product Passport v0.7.0 is embedded in this page as
+             <code style="font-size:0.8em">&lt;script type="application/vc"&gt;</code>.</p>
+          <code>${esc(err.message)}</code>
+        </div>`;
+    }
+  }
+
+  // Run after DOM is ready whether the script is in <head> or <body>
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+})();
+</script>
+
+</body>
+</html>
