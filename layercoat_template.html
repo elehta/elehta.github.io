@@ -7,10 +7,13 @@
   body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 17px; line-height: 1.6; }
   #dpp-root { max-width: 860px; margin: 0 auto; padding-top: 60px; padding-bottom: 30px; padding-left: 16px; padding-right: 16px; }
 
-  .dpp-header { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 20px; padding-bottom: 24px; border-bottom: 1px solid var(--border); margin-bottom: 28px; animation: fadeDown 0.4s ease both; }
+  .dpp-header { display: grid; grid-template-columns: 1fr 25%; align-items: start; gap: 20px; padding-bottom: 24px; border-bottom: 1px solid var(--border); margin-bottom: 28px; animation: fadeDown 0.4s ease both; }
+  .dpp-header-text { min-width: 0; }
   .dpp-eyebrow { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
   .dpp-title { font-size: 2.4rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.01em; text-transform: uppercase; color: #fff; }
   .dpp-subtitle { font-family: var(--mono); font-size: 0.78rem; color: var(--text-dim); margin-top: 10px; word-break: break-all; }
+  .dpp-logo-area { display: flex; align-items: flex-start; justify-content: flex-end; }
+  .dpp-logo { width: 100%; max-width: 180px; height: auto; object-fit: contain; }
   .dpp-image { width: 120px; height: 120px; object-fit: cover; border: 1px solid var(--border); filter: grayscale(20%); }
 
   .meta-strip { display: flex; gap: 0; margin-bottom: 28px; border: 1px solid var(--border); overflow: hidden; animation: fadeUp 0.4s 0.1s ease both; flex-wrap: wrap; }
@@ -114,6 +117,9 @@
   .section:nth-child(9) { animation-delay: 0.45s; }
 
   @media (max-width: 600px) {
+    .dpp-header { grid-template-columns: 1fr; gap: 16px; }
+    .dpp-logo-area { justify-content: flex-start; }
+    .dpp-logo { max-width: 120px; }
     .dpp-title { font-size: 1.6rem; }
     .meta-strip { flex-direction: column; }
     .meta-cell { border-right: none; }
@@ -467,14 +473,14 @@
 
     document.getElementById('dpp-root').innerHTML =
       '<div class="dpp-header">' +
-        '<div>' +
+        '<div class="dpp-header-text">' +
           '<div class="dpp-eyebrow">Digital Product Passport</div>' +
           '<div class="dpp-title">' + esc(cs.name) + '</div>' +
           '<div class="dpp-subtitle">' + esc(cs.id) + '</div>' +
         '</div>' +
-        (imgSrc
-          ? '<img src="' + esc(imgSrc) + '" class="dpp-image" onerror="this.onerror=null;this.style.display=\'none\';" alt="Product">'
-          : '') +
+        '<div class="dpp-logo-area">' +
+          '<img src="https://elehta.github.io/layercoat_logo.png" class="dpp-logo" alt="LayerCoat" onerror="this.onerror=null;this.style.display=\'none\';">' +
+        '</div>' +
       '</div>' +
 
       '<div class="meta-strip">' +
