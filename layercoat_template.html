@@ -103,6 +103,16 @@
 
   .variant-notice { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); padding: 10px 14px; border: 1px dashed var(--border); margin-top: 16px; letter-spacing: 0.05em; }
 
+  /* Verified-by trust badges — surfaced right under the meta-strip */
+  .verified-by { margin-bottom: 28px; padding: 14px 16px; border: 1px solid var(--border); background: var(--surface); animation: fadeUp 0.4s 0.12s ease both; }
+  .verified-by-label { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .verified-by-label::before { content: '✓'; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; background: var(--accent); color: #000; font-size: 0.7rem; font-weight: 900; border-radius: 50%; }
+  .verified-by-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .verified-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border: 1px solid var(--accent); color: var(--text); text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; }
+  .verified-badge:hover { background: var(--accent); color: #000; }
+  .verified-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .verified-badge:hover .verified-badge-dot { background: #000; }
+
   @keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeUp   { from { opacity: 0; transform: translateY(10px);  } to { opacity: 1; transform: translateY(0); } }
 
@@ -448,14 +458,38 @@
     return html;
   }
 
-  function renderVariants(cs) {
-    if (!cs.otherVariants || !cs.otherVariants.length) return '';
-    var roles = cs.otherVariants.map(function(v) {
-      return (v.accessRole || []).map(function(r) {
-        return r.replace('untp:accessRole#', '');
-      }).join(', ');
-    }).join(' · ');
-    return '<div class="variant-notice">Other views available: ' + esc(roles) + '</div>';
+  function renderVerifiedBy(cs) {
+    if (!cs.performanceClaim || !cs.performanceClaim.length) return '';
+
+    // Collect unique standards from claims that have evidence links.
+    // A standard backed by external evidence = independently verified.
+    var seen = {};
+    var badges = [];
+    cs.performanceClaim.forEach(function(claim) {
+      if (!claim.evidence || !claim.evidence.length) return;
+      var standards = claim.referenceStandard || [];
+      standards.forEach(function(std) {
+        var key = std.id || std.name;
+        if (!key || seen[key]) return;
+        seen[key] = true;
+        // Use first evidence link as the target (could aggregate, but first is simplest)
+        var target = claim.evidence[0].linkURL;
+        badges.push({ name: std.name, href: target });
+      });
+    });
+
+    if (!badges.length) return '';
+
+    var html = '<div class="verified-by">' +
+      '<div class="verified-by-label">Independently verified</div>' +
+      '<div class="verified-by-badges">';
+    badges.forEach(function(b) {
+      html += '<a href="' + esc(b.href) + '" target="_blank" class="verified-badge" title="View certificate">' +
+        '<span class="verified-badge-dot"></span>' + esc(b.name) +
+      '</a>';
+    });
+    html += '</div></div>';
+    return html;
   }
 
   // ── Bootstrap ──────────────────────────────────────────────────────────────
@@ -490,14 +524,15 @@
         (cs.modelNumber ? '<div class="meta-cell"><div class="meta-cell-label">Model</div><div class="meta-cell-value">' + esc(cs.modelNumber) + '</div></div>' : '') +
       '</div>' +
 
+      renderVerifiedBy(cs) +
+
       section(1, 'Identity & Product Info',        renderIdentity(vc, cs),    0.05) +
       section(2, 'Issuer & Validity',               renderIssuer(vc),          0.10) +
       section(3, 'Material Provenance',              renderMaterials(cs),       0.15) +
       (renderDimensions(cs) ? section(4, 'Dimensions', renderDimensions(cs), 0.20) : '') +
       section(5, 'Performance Claims & Conformity',  renderClaims(cs),          0.25) +
       section(6, 'Linked Documents & Traceability',  renderDocuments(cs),       0.30) +
-      section(7, 'Characteristics & End-of-Life',    renderCharacteristics(cs), 0.35) +
-      renderVariants(cs);
+      section(7, 'Characteristics & End-of-Life',    renderCharacteristics(cs), 0.35);
 
   } catch (err) {
     document.getElementById('dpp-root').innerHTML =
