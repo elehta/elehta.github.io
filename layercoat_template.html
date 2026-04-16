@@ -96,6 +96,42 @@
   .contaminant-detail { font-size: 0.88rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 4px; }
   .contaminant-cas { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
 
+  /* ── Supply chain map ────────────────────────────────────────────── */
+  .supply-map-wrap { position: relative; background: var(--surface2); border: 1px solid var(--border); overflow: hidden; }
+  .supply-map-svg { display: block; width: 100%; height: auto; }
+  .supply-map-svg path { fill: #5a5d64; stroke: var(--border); stroke-width: 0.3; transition: fill 0.2s ease; }
+  .supply-map-svg path.origin-country { fill: #7c8088; }
+  .supply-map-svg path.origin-country.active { fill: var(--accent); }
+  .supply-map-svg path.factory-country { fill: #6e7a72; }
+
+  .supply-line { fill: none; stroke: var(--accent); stroke-width: 1.4; stroke-linecap: round; opacity: 0.7; stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: drawLine 1.2s ease-out forwards; pointer-events: none; }
+  @keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+  .origin-dot { fill: var(--accent); stroke: #fff; stroke-width: 1.2; cursor: pointer; transition: r 0.2s ease; }
+  .origin-dot:hover, .origin-dot.active { r: 7; }
+  .factory-dot { fill: var(--accent); stroke: #fff; stroke-width: 1.5; }
+  .factory-dot-pulse { fill: var(--accent); opacity: 0.5; animation: factoryPulse 2s ease-out infinite; pointer-events: none; }
+  @keyframes factoryPulse { 0% { r: 4; opacity: 0.6; } 100% { r: 16; opacity: 0; } }
+
+  .map-label { font-family: var(--mono); font-size: 9px; fill: var(--text); paint-order: stroke; stroke: var(--surface2); stroke-width: 3; pointer-events: none; }
+  .map-label-factory { font-weight: 700; fill: var(--accent); }
+
+  .map-tooltip { position: absolute; padding: 8px 12px; background: var(--surface); border: 1px solid var(--accent); color: var(--text); font-size: 0.82rem; pointer-events: none; opacity: 0; transition: opacity 0.15s ease; max-width: 260px; z-index: 10; }
+  .map-tooltip.visible { opacity: 1; }
+  .map-tooltip-title { font-family: var(--mono); font-size: 0.66rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+
+  .map-legend { display: flex; gap: 16px; flex-wrap: wrap; padding: 10px 14px; font-family: var(--mono); font-size: 0.7rem; color: var(--text-dim); background: var(--surface); border-top: 1px solid var(--border); }
+  .map-legend-item { display: flex; align-items: center; gap: 6px; }
+  .map-legend-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 1.5px solid #fff; flex-shrink: 0; }
+  .map-legend-dot.factory { box-shadow: 0 0 0 3px rgba(0,201,138,0.3); }
+
+  .materials-interactive .contaminant-card { cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+  .materials-interactive .contaminant-card.active,
+  .materials-interactive tr.active td { background: var(--surface); }
+  /* Make data-table rows respond to highlight state */
+  .data-table tr[data-cc] { cursor: pointer; }
+  .data-table tr[data-cc].active td { background: rgba(0,201,138,0.12); }
+
   .step-list { list-style: none; padding: 0; counter-reset: step; }
   .step-list li { padding: 10px 0 10px 40px; border-bottom: 1px solid var(--border); position: relative; font-size: 0.95rem; color: var(--text-dim); line-height: 1.5; }
   .step-list li:last-child { border-bottom: none; }
@@ -190,6 +226,12 @@
 <div id="dpp-root"></div>
 
 <script>
+  // ── World map ───────────────────────────────────────────────────────────────
+  // The map SVG is fetched from GitHub Pages at render time. CSP allows this
+  // via connect-src https:. The SVG uses ISO 3166-1 alpha-2 country codes
+  // (lowercase) as path IDs, matching UNTP's countryCode fields.
+  var WORLD_MAP_URL = 'https://elehta.github.io/worldmap.svg';
+
   // ── Helpers ────────────────────────────────────────────────────────────────
 
   function esc(v) {
@@ -332,8 +374,14 @@
     mats.forEach(function(m) { totalRecycled += (m.massFraction || 0) * (m.recycledMassFraction || 0); });
     var html = '<div style="margin-bottom:16px;">' + scoreRow('Overall recycled content', totalRecycled) + '</div>';
 
-    var rows = mats.map(function(m) {
-      return '<tr>' +
+    var rows = mats.map(function(m, idx) {
+      var cc = '';
+      if (m.originCountry && typeof m.originCountry === 'object' && m.originCountry.countryCode) {
+        cc = String(m.originCountry.countryCode).toLowerCase();
+      } else if (typeof m.originCountry === 'string') {
+        cc = m.originCountry.toLowerCase();
+      }
+      return '<tr data-cc="' + esc(cc) + '" data-material-idx="' + idx + '">' +
         '<td>' + esc(m.name) + '</td>' +
         '<td style="font-family:var(--mono);font-size:0.8rem;">' + pct(m.massFraction) + '%' +
           (m.mass ? '<br><span style="color:var(--muted);font-size:0.65rem;">' + measureDisplay(m.mass) + '</span>' : '') +
@@ -349,6 +397,254 @@
       '</tr></thead><tbody>' + rows + '</tbody></table>';
 
     return html;
+  }
+
+  /**
+   * Render the supply chain map placeholder. The actual map SVG is
+   * fetched from WORLD_MAP_URL by enhanceSupplyChainMap() after the
+   * placeholder is in the DOM.
+   */
+  var _mapEnhanceCfg = null;
+
+  function renderSupplyChainMap(cs) {
+    var mats = cs.materialProvenance || cs.materialsProvenance;
+    if (!mats || !mats.length) return '';
+    var factoryCC = '';
+    if (cs.countryOfProduction && cs.countryOfProduction.countryCode) {
+      factoryCC = String(cs.countryOfProduction.countryCode).toLowerCase();
+    }
+    var factoryName = cs.producedAtFacility ? cs.producedAtFacility.name : 'Manufacturing facility';
+    var factoryCountryName = cs.countryOfProduction ? (cs.countryOfProduction.countryName || cs.countryOfProduction.countryCode) : '';
+
+    // Collect unique origins (a country may appear in multiple materials)
+    var origins = {};
+    mats.forEach(function(m, idx) {
+      if (!m.originCountry) return;
+      var cc = typeof m.originCountry === 'object'
+        ? (m.originCountry.countryCode || '').toLowerCase()
+        : String(m.originCountry).toLowerCase();
+      if (!cc || cc === factoryCC) return;
+      if (!origins[cc]) {
+        origins[cc] = {
+          code: cc,
+          name: typeof m.originCountry === 'object'
+            ? (m.originCountry.countryName || cc.toUpperCase())
+            : cc.toUpperCase(),
+          materials: []
+        };
+      }
+      origins[cc].materials.push({ name: m.name, idx: idx, mass: m.massFraction });
+    });
+
+    // Stash config for enhanceSupplyChainMap() to pick up post-render
+    _mapEnhanceCfg = {
+      factoryCC: factoryCC,
+      factoryName: factoryName,
+      factoryCountryName: factoryCountryName,
+      origins: origins
+    };
+
+    return '<div class="supply-map-wrap" id="supply-map-wrap">' +
+        '<div id="supply-map-slot" style="min-height:240px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-family:var(--mono);font-size:0.8rem;letter-spacing:0.05em;">Loading map…</div>' +
+        '<div class="map-tooltip" id="map-tooltip"></div>' +
+        '<div class="map-legend">' +
+          '<div class="map-legend-item"><span class="map-legend-dot factory"></span>Manufacturing facility (' + esc(factoryCountryName) + ')</div>' +
+          '<div class="map-legend-item"><span class="map-legend-dot"></span>Material origin (hover to highlight)</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  /**
+   * Fetch the world map, inject it into the placeholder, then compute
+   * centroids from country paths, draw origin dots / connection lines /
+   * factory marker, and wire up hover cross-highlighting with the
+   * materials table.
+   */
+  function enhanceSupplyChainMap() {
+    var cfg = _mapEnhanceCfg;
+    if (!cfg) return;
+    var slot = document.getElementById('supply-map-slot');
+    if (!slot) return;
+
+    fetch(WORLD_MAP_URL)
+      .then(function(resp) {
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        return resp.text();
+      })
+      .then(function(svgText) {
+        slot.outerHTML = svgText;
+        _enhanceMap(cfg);
+      })
+      .catch(function(err) {
+        slot.textContent = 'Map unavailable (' + err.message + ')';
+      });
+  }
+
+  function _enhanceMap(cfg) {
+    var wrap = document.getElementById('supply-map-wrap');
+    if (!wrap) return;
+    var svg = wrap.querySelector('svg');
+    if (!svg) return;
+    svg.setAttribute('class', 'supply-map-svg');
+    svg.removeAttribute('width');
+    svg.removeAttribute('height');
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+
+    var tooltip = document.getElementById('map-tooltip');
+
+    function centroid(cc) {
+      var el = svg.querySelector('#' + cc);
+      if (!el) return null;
+      var mainland = el.querySelector('.mainland');
+      var target = mainland || el;
+      try {
+        var bb = target.getBBox();
+        return { x: bb.x + bb.width / 2, y: bb.y + bb.height / 2 };
+      } catch (e) { return null; }
+    }
+
+    function showTooltip(html, evt) {
+      tooltip.innerHTML = html;
+      tooltip.classList.add('visible');
+      positionTooltip(evt);
+    }
+    function positionTooltip(evt) {
+      var rect = wrap.getBoundingClientRect();
+      var x = evt.clientX - rect.left + 12;
+      var y = evt.clientY - rect.top + 12;
+      if (x + 280 > rect.width) x = evt.clientX - rect.left - 280;
+      if (y + 100 > rect.height) y = evt.clientY - rect.top - 100;
+      tooltip.style.left = x + 'px';
+      tooltip.style.top = y + 'px';
+    }
+    function hideTooltip() { tooltip.classList.remove('visible'); }
+
+    // Mark factory country
+    if (cfg.factoryCC) {
+      var factoryPath = svg.querySelector('#' + cfg.factoryCC);
+      if (factoryPath) {
+        var fp = factoryPath.querySelector('.mainland') || factoryPath;
+        fp.classList.add('factory-country');
+      }
+    }
+
+    // Mark origin countries
+    Object.keys(cfg.origins).forEach(function(cc) {
+      var el = svg.querySelector('#' + cc);
+      if (!el) return;
+      var path = el.querySelector('.mainland') || el;
+      path.classList.add('origin-country');
+      path.setAttribute('data-cc', cc);
+    });
+
+    var factoryC = cfg.factoryCC ? centroid(cfg.factoryCC) : null;
+
+    // Draw lines first, then dots on top
+    var linesG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    var dotsG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    var labelsG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+
+    var originList = [];
+    Object.keys(cfg.origins).forEach(function(k) { originList.push(cfg.origins[k]); });
+
+    originList.forEach(function(origin, i) {
+      var c = centroid(origin.code);
+      if (!c) return;
+
+      // Curved connection line, arcing upward
+      if (factoryC) {
+        var midX = (c.x + factoryC.x) / 2;
+        var midY = Math.min(c.y, factoryC.y) - Math.abs(c.x - factoryC.x) * 0.2 - 20;
+        var line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        line.setAttribute('d', 'M ' + c.x + ' ' + c.y + ' Q ' + midX + ' ' + midY + ' ' + factoryC.x + ' ' + factoryC.y);
+        line.setAttribute('class', 'supply-line');
+        var dist = Math.sqrt(Math.pow(c.x - factoryC.x, 2) + Math.pow(c.y - factoryC.y, 2)) * 1.6;
+        line.style.strokeDasharray = dist;
+        line.style.strokeDashoffset = dist;
+        line.style.animationDelay = (0.3 + i * 0.25) + 's';
+        linesG.appendChild(line);
+      }
+
+      // Dot
+      var dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('cx', c.x);
+      dot.setAttribute('cy', c.y);
+      dot.setAttribute('r', 5);
+      dot.setAttribute('class', 'origin-dot');
+      dot.setAttribute('data-cc', origin.code);
+      dotsG.appendChild(dot);
+
+      // Country code label
+      var label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      label.setAttribute('x', c.x);
+      label.setAttribute('y', c.y - 9);
+      label.setAttribute('text-anchor', 'middle');
+      label.setAttribute('class', 'map-label');
+      label.textContent = origin.code.toUpperCase();
+      labelsG.appendChild(label);
+
+      // Interactions
+      dot.addEventListener('mouseenter', function(evt) {
+        highlightCountry(origin.code, true);
+        var matsHtml = origin.materials.map(function(m) {
+          return '<div style="margin-bottom:4px;line-height:1.4;">• ' + m.name +
+            ' <span style="color:var(--muted)">(' + Math.round((m.mass || 0) * 100) + '%)</span></div>';
+        }).join('');
+        showTooltip('<div class="map-tooltip-title">' + origin.name + '</div>' + matsHtml, evt);
+      });
+      dot.addEventListener('mousemove', positionTooltip);
+      dot.addEventListener('mouseleave', function() {
+        highlightCountry(origin.code, false);
+        hideTooltip();
+      });
+    });
+
+    // Factory marker (pulse + solid dot + label)
+    if (factoryC) {
+      var pulse = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      pulse.setAttribute('cx', factoryC.x);
+      pulse.setAttribute('cy', factoryC.y);
+      pulse.setAttribute('r', 4);
+      pulse.setAttribute('class', 'factory-dot-pulse');
+      dotsG.appendChild(pulse);
+
+      var fDot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      fDot.setAttribute('cx', factoryC.x);
+      fDot.setAttribute('cy', factoryC.y);
+      fDot.setAttribute('r', 5);
+      fDot.setAttribute('class', 'factory-dot');
+      dotsG.appendChild(fDot);
+
+      var fLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      fLabel.setAttribute('x', factoryC.x);
+      fLabel.setAttribute('y', factoryC.y - 10);
+      fLabel.setAttribute('text-anchor', 'middle');
+      fLabel.setAttribute('class', 'map-label map-label-factory');
+      fLabel.textContent = '★ ' + (cfg.factoryCC || '').toUpperCase();
+      labelsG.appendChild(fLabel);
+    }
+
+    svg.appendChild(linesG);
+    svg.appendChild(dotsG);
+    svg.appendChild(labelsG);
+
+    // Cross-highlight: hovering a table row highlights the map dot and vice versa
+    function highlightCountry(cc, on) {
+      var dot = svg.querySelector('.origin-dot[data-cc="' + cc + '"]');
+      var countryPath = svg.querySelector('path.origin-country[data-cc="' + cc + '"]');
+      if (dot) dot.classList.toggle('active', on);
+      if (countryPath) countryPath.classList.toggle('active', on);
+      document.querySelectorAll('tr[data-cc="' + cc + '"]').forEach(function(tr) {
+        tr.classList.toggle('active', on);
+      });
+    }
+
+    document.querySelectorAll('tr[data-cc]').forEach(function(tr) {
+      var cc = tr.getAttribute('data-cc');
+      if (!cc || !cfg.origins[cc]) return;
+      tr.addEventListener('mouseenter', function() { highlightCountry(cc, true); });
+      tr.addEventListener('mouseleave', function() { highlightCountry(cc, false); });
+    });
   }
 
   function renderDimensions(cs) {
@@ -681,13 +977,18 @@
       section(1, 'Identity & Product Info',        renderIdentity(vc, cs),    0.05) +
       section(2, 'Issuer & Validity',               renderIssuer(vc),          0.10) +
       section(3, 'Material Provenance',              renderMaterials(cs),       0.15) +
-      (renderDimensions(cs) ? section(4, 'Dimensions', renderDimensions(cs), 0.20) : '') +
-      section(5, 'Performance Claims & Conformity',  renderClaims(cs),          0.25) +
-      section(6, 'Linked Documents & Traceability',  renderDocuments(cs),       0.30) +
-      section(7, 'Characteristics & End-of-Life',    renderCharacteristics(cs), 0.35) +
+      section(4, 'Global Supply Chain',              renderSupplyChainMap(cs),  0.18) +
+      (renderDimensions(cs) ? section(5, 'Dimensions', renderDimensions(cs), 0.20) : '') +
+      section(6, 'Performance Claims & Conformity',  renderClaims(cs),          0.25) +
+      section(7, 'Linked Documents & Traceability',  renderDocuments(cs),       0.30) +
+      section(8, 'Characteristics & End-of-Life',    renderCharacteristics(cs), 0.35) +
       '<div class="extra-divider"><span class="extra-divider-label">LayerCoat programme</span></div>' +
-      section(8, 'After You Buy — Lifecycle & Buy-back', renderLifecycle(vc),   0.40,
+      section(9, 'After You Buy — Lifecycle & Buy-back', renderLifecycle(vc),   0.40,
               { modifier: 'section-lifecycle', extraTag: 'Extra' });
+
+    // After all markup is in the DOM, enhance the map (computes centroids,
+    // draws dots and connection lines, wires up interactions).
+    enhanceSupplyChainMap();
 
   } catch (err) {
     document.getElementById('dpp-root').innerHTML =
