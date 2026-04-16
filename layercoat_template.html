@@ -127,29 +127,46 @@
   .section:nth-child(9) { animation-delay: 0.45s; }
 
   /* ── Lifecycle / "After you buy" section ────────────────────────────── */
+
+  /* A subtle divider and label to separate LayerCoat's optional programme
+     content from the standard DPP sections above. */
+  .extra-divider { margin: 36px 0 16px 0; display: flex; align-items: center; gap: 14px; }
+  .extra-divider::before, .extra-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .extra-divider-label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; }
+
+  /* Override .section styling specifically for the lifecycle block so it
+     reads as a LayerCoat brand add-on rather than a standard DPP section. */
+  .section.section-lifecycle { border: 1px solid #c97a2e; background: linear-gradient(180deg, #4a3e33 0%, var(--surface) 220px); box-shadow: 0 0 0 1px rgba(201, 122, 46, 0.15); }
+  .section.section-lifecycle .section-header { background: linear-gradient(90deg, #5a4234 0%, #4a3a31 100%); border-bottom: 1px solid #c97a2e; }
+  .section.section-lifecycle .section-header:hover { background: linear-gradient(90deg, #634936 0%, #513f34 100%); }
+  .section.section-lifecycle .section-number { color: #e89454; opacity: 1; }
+  .section.section-lifecycle .section-title { color: #fff; }
+  .section-extra-tag { font-family: var(--mono); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; padding: 3px 7px; background: #c97a2e; color: #1a1410; border-radius: 2px; margin-right: 8px; }
+
   .lifecycle-layout { display: grid; grid-template-columns: 1fr 280px; gap: 20px; align-items: start; }
   .lifecycle-image-area { display: flex; flex-direction: column; gap: 8px; align-items: center; }
   .lifecycle-image { width: 100%; aspect-ratio: 4 / 5; background: var(--surface2); border: 1px solid var(--border); object-fit: cover; }
   .lifecycle-image-placeholder { width: 100%; aspect-ratio: 4 / 5; background: var(--surface2); border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; padding: 20px; text-align: center; color: var(--muted); font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.05em; line-height: 1.5; }
   .lifecycle-image-caption { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.08em; text-align: center; text-transform: uppercase; }
 
-  .buyback-callout { background: var(--surface2); border: 1px solid var(--accent); padding: 16px; margin-bottom: 20px; }
-  .buyback-callout-label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+  .buyback-callout { background: linear-gradient(135deg, #5a4234 0%, #4a3a31 100%); border: 1px solid #c97a2e; padding: 18px; margin-bottom: 20px; box-shadow: inset 0 0 30px rgba(232, 148, 84, 0.08); }
+  .buyback-callout-label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.15em; color: #e89454; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .buyback-callout-label::before { content: '↻'; display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #c97a2e; color: #1a1410; font-size: 0.85rem; font-weight: 900; border-radius: 50%; }
   .buyback-value-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
-  .buyback-value { font-family: var(--mono); font-size: 2.2rem; font-weight: 700; color: #fff; }
+  .buyback-value { font-family: var(--mono); font-size: 2.4rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
   .buyback-of { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); }
-  .buyback-provenance { font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim); margin-top: 8px; line-height: 1.5; }
-  .buyback-provenance strong { color: var(--accent); font-weight: 700; }
+  .buyback-provenance { font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim); margin-top: 10px; line-height: 1.5; }
+  .buyback-provenance strong { color: #e89454; font-weight: 700; }
 
   .timeline { position: relative; padding-left: 28px; margin-top: 6px; }
   .timeline::before { content: ''; position: absolute; left: 8px; top: 12px; bottom: 12px; width: 2px; background: var(--border); }
   .timeline-item { position: relative; padding-bottom: 18px; }
   .timeline-item:last-child { padding-bottom: 0; }
   .timeline-item::before { content: ''; position: absolute; left: -24px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--surface); border: 2px solid var(--border); }
-  .timeline-item.current::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0,201,138,0.2); }
+  .timeline-item.current::before { background: #c97a2e; border-color: #c97a2e; box-shadow: 0 0 0 4px rgba(201, 122, 46, 0.25); }
   .timeline-item.future::before { background: var(--surface); }
   .timeline-when { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; }
-  .timeline-item.current .timeline-when { color: var(--accent); }
+  .timeline-item.current .timeline-when { color: #e89454; }
   .timeline-what { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
   .timeline-detail { font-size: 0.82rem; color: var(--text-dim); line-height: 1.5; }
 
@@ -225,11 +242,17 @@
     return '<div class="' + cls + '"><div class="field-label">' + label + '</div><div class="' + valCls + '">' + value + '</div></div>';
   }
 
-  function section(number, title, body, delay) {
-    return '<div class="section" style="animation-delay:' + delay + 's">' +
+  function section(number, title, body, delay, opts) {
+    opts = opts || {};
+    var sectionCls = 'section' + (opts.modifier ? ' ' + opts.modifier : '');
+    var extraTag = opts.extraTag
+      ? '<span class="section-extra-tag">' + esc(opts.extraTag) + '</span>'
+      : '';
+    return '<div class="' + sectionCls + '" style="animation-delay:' + delay + 's">' +
       '<div class="section-header" onclick="this.parentElement.classList.toggle(\'collapsed\')">' +
       '<span class="section-number">' + String(number).padStart(2, '0') + '</span>' +
       '<span class="section-title">' + title + '</span>' +
+      extraTag +
       '<span class="section-toggle">▼</span></div>' +
       '<div class="section-body">' + body + '</div></div>';
   }
@@ -662,7 +685,9 @@
       section(5, 'Performance Claims & Conformity',  renderClaims(cs),          0.25) +
       section(6, 'Linked Documents & Traceability',  renderDocuments(cs),       0.30) +
       section(7, 'Characteristics & End-of-Life',    renderCharacteristics(cs), 0.35) +
-      section(8, 'After You Buy — Lifecycle & Buy-back', renderLifecycle(vc),   0.40);
+      '<div class="extra-divider"><span class="extra-divider-label">LayerCoat programme</span></div>' +
+      section(8, 'After You Buy — Lifecycle & Buy-back', renderLifecycle(vc),   0.40,
+              { modifier: 'section-lifecycle', extraTag: 'Extra' });
 
   } catch (err) {
     document.getElementById('dpp-root').innerHTML =
