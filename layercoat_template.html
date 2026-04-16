@@ -404,21 +404,10 @@
       '</div>';
     }).join('');
 
-    // Render stubs (access-restricted claims)
-    if (stubs.length) {
-      html += '<div style="margin-top:16px;">';
-      stubs.forEach(function(stub) {
-        var roles = (stub.accessRole || []).map(function(r) {
-          return r.replace('untp:accessRole#', '');
-        }).join(', ');
-        html += '<div class="claim-stub">' +
-          '<span class="claim-stub-lock">🔒</span>' +
-          '<span class="claim-stub-name">' + esc(stub.name) + '</span>' +
-          '<div class="claim-stub-role">Available to: ' + esc(roles) + '</div>' +
-        '</div>';
-      });
-      html += '</div>';
-    }
+    // Note: access-restricted claim stubs are intentionally not rendered in
+    // this consumer-facing (anonymous-role) template — disclosing the
+    // existence of role-specific information would leak the UNTP access
+    // model to end customers.
 
     return html;
   }
