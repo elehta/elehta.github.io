@@ -126,6 +126,33 @@
   .section:nth-child(8) { animation-delay: 0.40s; }
   .section:nth-child(9) { animation-delay: 0.45s; }
 
+  /* ── Lifecycle / "After you buy" section ────────────────────────────── */
+  .lifecycle-layout { display: grid; grid-template-columns: 1fr 280px; gap: 20px; align-items: start; }
+  .lifecycle-image-area { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+  .lifecycle-image { width: 100%; aspect-ratio: 4 / 5; background: var(--surface2); border: 1px solid var(--border); object-fit: cover; }
+  .lifecycle-image-placeholder { width: 100%; aspect-ratio: 4 / 5; background: var(--surface2); border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; padding: 20px; text-align: center; color: var(--muted); font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.05em; line-height: 1.5; }
+  .lifecycle-image-caption { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.08em; text-align: center; text-transform: uppercase; }
+
+  .buyback-callout { background: var(--surface2); border: 1px solid var(--accent); padding: 16px; margin-bottom: 20px; }
+  .buyback-callout-label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+  .buyback-value-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+  .buyback-value { font-family: var(--mono); font-size: 2.2rem; font-weight: 700; color: #fff; }
+  .buyback-of { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); }
+  .buyback-provenance { font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim); margin-top: 8px; line-height: 1.5; }
+  .buyback-provenance strong { color: var(--accent); font-weight: 700; }
+
+  .timeline { position: relative; padding-left: 28px; margin-top: 6px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 12px; bottom: 12px; width: 2px; background: var(--border); }
+  .timeline-item { position: relative; padding-bottom: 18px; }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item::before { content: ''; position: absolute; left: -24px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--surface); border: 2px solid var(--border); }
+  .timeline-item.current::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0,201,138,0.2); }
+  .timeline-item.future::before { background: var(--surface); }
+  .timeline-when { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; }
+  .timeline-item.current .timeline-when { color: var(--accent); }
+  .timeline-what { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .timeline-detail { font-size: 0.82rem; color: var(--text-dim); line-height: 1.5; }
+
   @media (max-width: 600px) {
     .dpp-header { grid-template-columns: 1fr; gap: 16px; }
     .dpp-logo-area { justify-content: flex-start; }
@@ -137,6 +164,9 @@
     .field.full { grid-column: span 1; }
     .score-label { width: 120px; }
     .metric-grid { grid-template-columns: 1fr; }
+    .lifecycle-layout { grid-template-columns: 1fr; }
+    .lifecycle-image-area { max-width: 280px; margin: 0 auto; }
+    .buyback-value { font-size: 1.8rem; }
   }
 </style>
 
@@ -492,6 +522,116 @@
     return html;
   }
 
+  /**
+   * "After you buy" lifecycle preview with live buy-back value estimate.
+   *
+   * Pricing model: flat premium-outdoor depreciation curve anchored at
+   *   yr 0 → 100%, yr 3 → 70%, yr 5 → 50%, yr 8 → 25%, yr 10 → 0%
+   * Linear interpolation between anchors. Uses vc.validFrom as the
+   * product issuance / "born on" date so the viewer can see that the
+   * estimate is derived from the credential itself.
+   */
+  function renderLifecycle(vc) {
+    var PRICE = 590;  // Demo original retail price in EUR
+    var CURVE = [
+      { year: 0, frac: 1.00 },
+      { year: 3, frac: 0.70 },
+      { year: 5, frac: 0.50 },
+      { year: 8, frac: 0.25 }
+    ];
+
+    var validFrom = vc.validFrom;
+    if (!validFrom) return '';
+
+    var issuedDate = new Date(validFrom);
+    var now = new Date();
+    var ageMs = now - issuedDate;
+    var ageYears = ageMs / (365.25 * 24 * 3600 * 1000);
+    if (ageYears < 0) ageYears = 0;
+
+    // Interpolate the value fraction from the curve.
+    // Beyond the last anchor, the value holds at the final fraction
+    // (buy-back programme doesn't drop to zero — old jackets still have value).
+    var frac;
+    var last = CURVE[CURVE.length - 1];
+    if (ageYears >= last.year) {
+      frac = last.frac;
+    } else {
+      frac = CURVE[0].frac;
+      for (var i = 0; i < CURVE.length - 1; i++) {
+        if (ageYears >= CURVE[i].year && ageYears < CURVE[i + 1].year) {
+          var span = CURVE[i + 1].year - CURVE[i].year;
+          var progress = (ageYears - CURVE[i].year) / span;
+          frac = CURVE[i].frac + (CURVE[i + 1].frac - CURVE[i].frac) * progress;
+          break;
+        }
+      }
+    }
+    var currentValue = Math.round(PRICE * frac);
+
+    // Format issued date for display
+    var issuedLabel = issuedDate.toISOString().slice(0, 10);
+    var ageLabel = ageYears < 1
+      ? (Math.round(ageYears * 12) + ' months old')
+      : (ageYears.toFixed(1) + ' years old');
+
+    // Build timeline. Each milestone has a year offset from issuance.
+    var milestones = [
+      { year: 0,  when: 'At purchase',         what: 'DPP registered to you',
+        detail: 'Scan this passport to claim ownership and activate your 2-year manufacturer warranty.' },
+      { year: 2,  when: 'Year 2',              what: 'Free DWR re-treatment',
+        detail: 'One complimentary durable water-repellent re-treatment at any authorised LayerCoat service centre.' },
+      { year: 3,  when: 'Year 3+',             what: 'Repair service network',
+        detail: 'Zip replacement, seam re-taping, fabric patching. 20+ authorised repair centres across Europe.' },
+      { year: 5,  when: 'Year 5',              what: 'Lifetime seam guarantee check',
+        detail: 'Free inspection and re-taping of all critical seams — because a hardshell is only as good as its seams.' },
+      { year: 7,  when: 'Any time',            what: 'Buy-back programme',
+        detail: 'Return your X3 and receive store credit based on age and condition. We refurbish and resell, or recycle responsibly.' },
+      { year: 10, when: 'End of life',         what: 'Closed-loop recycling',
+        detail: 'Free return drop-off. Face fabric and fleece enter our rNylon/rPET streams; membrane and trim go to specialist processors.' }
+    ];
+
+    var timelineHtml = '<div class="timeline">';
+    milestones.forEach(function(m) {
+      var cls = 'timeline-item';
+      if (Math.abs(ageYears - m.year) < 0.5) cls += ' current';
+      else if (m.year > ageYears) cls += ' future';
+      else cls += ' past';
+      timelineHtml += '<div class="' + cls + '">' +
+        '<div class="timeline-when">' + esc(m.when) + '</div>' +
+        '<div class="timeline-what">' + esc(m.what) + '</div>' +
+        '<div class="timeline-detail">' + esc(m.detail) + '</div>' +
+      '</div>';
+    });
+    timelineHtml += '</div>';
+
+    var buybackHtml =
+      '<div class="buyback-callout">' +
+        '<div class="buyback-callout-label">Buy-back estimate — today</div>' +
+        '<div class="buyback-value-row">' +
+          '<span class="buyback-value">€' + currentValue + '</span>' +
+          '<span class="buyback-of">of €' + PRICE + ' original</span>' +
+        '</div>' +
+        '<div class="buyback-provenance">' +
+          'Based on DPP issued <strong>' + esc(issuedLabel) + '</strong> · ' + esc(ageLabel) + ' · ' +
+          'subject to condition inspection at buy-back' +
+        '</div>' +
+      '</div>';
+
+    var imageHtml =
+      '<div class="lifecycle-image-area">' +
+        '<img src="https://elehta.github.io/layercoat_buyback.jpg" class="lifecycle-image" ' +
+          'onerror="this.onerror=null;this.outerHTML=\'<div class=&quot;lifecycle-image-placeholder&quot;>Illustration: a well-worn X3 jacket folded on a wooden crate stamped with the LayerCoat logo — the buy-back return point</div>\';" ' +
+          'alt="LayerCoat buy-back programme">' +
+        '<div class="lifecycle-image-caption">The return, the second life</div>' +
+      '</div>';
+
+    return '<div class="lifecycle-layout">' +
+      '<div>' + buybackHtml + timelineHtml + '</div>' +
+      imageHtml +
+    '</div>';
+  }
+
   // ── Bootstrap ──────────────────────────────────────────────────────────────
 
   try {
@@ -532,7 +672,8 @@
       (renderDimensions(cs) ? section(4, 'Dimensions', renderDimensions(cs), 0.20) : '') +
       section(5, 'Performance Claims & Conformity',  renderClaims(cs),          0.25) +
       section(6, 'Linked Documents & Traceability',  renderDocuments(cs),       0.30) +
-      section(7, 'Characteristics & End-of-Life',    renderCharacteristics(cs), 0.35);
+      section(7, 'Characteristics & End-of-Life',    renderCharacteristics(cs), 0.35) +
+      section(8, 'After You Buy — Lifecycle & Buy-back', renderLifecycle(vc),   0.40);
 
   } catch (err) {
     document.getElementById('dpp-root').innerHTML =
